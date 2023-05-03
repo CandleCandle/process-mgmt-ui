@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Process Graphs</title>
+        <style>
+            table.results {
+                border-spacing: 0px;
+                border: 1px solid #777;
+            }
+
+            table.results td,
+            table.results th {
+                border: 1px solid #777;
+                padding: 5px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <section>
+            <h2>Instructions</h2>
+            <ol>
+                <li>Select a data set</li>
+                <li>Add at least one output requirement</li>
+                <li>For each missing item, add imports, exports, or extra processes</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Data Set</h2>
+            <select name="data_set" id="data_set">
+                <option value="select_first">SELECT</option>
+            </select>
+            <br />
+            <span id="data_selection_display">No data set selected</span><!-- "Foo, version 0.0.1" -->
+        </section>
+
+        <section>
+            <h2>Output Requirements</h2>
+            <table>
+                <tr><td><label for="requirement_selection_id">Requirement ID</label></td><td><input type="text" id="requirement_id" /></label></td></tr>
+                <tr><td><label for="requirement_selection_quantity">Requirement Quantity</label></td><td><input type="text" id="requirement_quantity" /></label></td></tr>
+            </table>
+
+            <table class="results">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <!-- text shows "Update" when the requirement type is already in the list -->
+                            <button id="add_requirement">Add/Update</button>
+                            <button id="import_type">Import</button>
+                            <button id="export_type">Export</button>
+                        </td>
+                        <td>plate</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Process Search</h2>
+
+            <table>
+                <tr><td><label for="process_selection_id">Process ID</label></td><td><input type="text" id="process_selection_id" /></label></td></tr>
+                <tr><td><label for="process_selection_fg">Factory Group</label></td><td><input type="text" id="process_selection_fg" /></label></td></tr>
+                <tr><td><label for="process_selection_input">Inputs</label></td><td><input type="text" id="process_selection_input" /></label></td></tr>
+                <tr><td><label for="process_selection_output">Outputs</label></td><td><input type="text" id="process_selection_output" /></label></td></tr>
+                <tr><td colspan="2">
+                    <button id="fill_search">Next Unknown ...</button>
+                </td></tr>
+                <tr><td colspan="2">
+                    <button id="perform_process_search">Search</button>
+                    <!-- either import or export should be enabled: +ive -> export. -ive -> import -->
+                    <button id="add_as_import">Import</button>
+                    <button id="add_as_export">Export</button>
+                </td></tr>
+            </table>
+
+            <table class="results">
+                <thead>
+                    <tr>
+                        <th rowspan="2">&nbsp;</th>
+                        <th rowspan="2">id</th>
+                        <th rowspan="2">Factory Group</th>
+                        <th colspan="2">Input</th>
+                        <th colspan="2">Output</th>
+                    </tr>
+                    <tr>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2"><button id="use">Use</button></td>
+                        <td rowspan="2">metal-plates</td>
+                        <td rowspan="2">plate-maker</td>
+                        <td>metal</td><td>1</td>
+                        <td>plate</td><td>1</td>
+                    </tr>
+                    <tr>
+                        <td>press-mold</td><td>1</td>
+                        <td>press-mold</td><td>0.9</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2>Included Processes</h2>
+            (Table like search results)
+        </section>
+        <section>
+            <h2>Current Matrix</h2>
+            <table class="results">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>process 0</td>
+                    <td>process 1</td>
+                    <td>process 2</td>
+                    <td>process 3</td>
+                    <td>process 4</td>
+                    <td>import 0</td>
+                    <td>import 1</td>
+                    <td>export 0</td>
+                    <td>import 1</td>
+                    <td>requirements</td>
+                </tr>
+                <tr>
+                    <td>item 0</td>
+                </tr>
+                <tr>
+                    <td>item 1</td>
+                </tr>
+                <tr>
+                    <td>item 2</td>
+                </tr>
+                <tr>
+                    <td>item 3</td>
+                </tr>
+                <tr>
+                    <td>item 4</td>
+                </tr>
+                <tr>
+                    <td>item 5</td>
+                </tr>
+            </table>
+        </section>
+
+
+	<script src="process-mgmt-ui.bundle.js"></script>
+
+
+
+    </body>
+</html>
