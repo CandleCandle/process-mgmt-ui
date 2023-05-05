@@ -36,20 +36,20 @@
         </section>
 
         <section>
-            <h2>Output Requirements</h2>
+            <h2>Output Requirements (Item Search)</h2>
             <table>
-                <tr><td><label for="requirement_selection_id">Requirement ID</label></td><td><input type="text" id="requirement_id" /></label></td></tr>
-                <tr><td><label for="requirement_selection_quantity">Requirement Quantity</label></td><td><input type="text" id="requirement_quantity" /></label></td></tr>
+                <tr><td><label for="requirement_selection_id">Requirement ID</label></td><td><input type="text" id="requirement_selection_id" /></label></td></tr>
+                <tr><td><label for="requirement_selection_quantity">Requirement Quantity</label></td><td><input type="text" id="requirement_selection_quantity" /></label></td></tr>
             </table>
 
-            <table class="results">
+            <table id="requirement_results", class="results">
                 <thead>
                     <tr>
                         <th>&nbsp;</th>
                         <th>ID</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="requirement_results_tbody">
                     <tr>
                         <td>
                             <!-- text shows "Update" when the requirement type is already in the list -->
