@@ -80,24 +80,28 @@ function handleRequirementSelectionId(event) {
     });
 }
 
-function inputs_changed() {
-    console.log(graph_inputs.requirements);
-    let table_id = 'input_table';
-    let tbody_id = 'input_table_tbody';
+function changeTableBody(table_id, tbody_id, create_tbody_cb) {
     let table = document.getElementById(table_id);
     let old_tbody = document.getElementById(tbody_id);
     let replacement = document.createElement('tbody');
     replacement.id = tbody_id;
 
-    graph_inputs.requirements.forEach(stack=>{
-        let row = replacement.insertRow(-1);
-        let buttons = row.insertCell(-1);
-        buttons.appendChild(createItemRemovalButton(stack));
-        row.insertCell(-1).textContent = stack.quantity;
-        row.insertCell(-1).textContent = stack.item.id;
-    })
+    create_tbody_cb(replacement);
 
     table.replaceChild(replacement, old_tbody);
+}
+
+function inputs_changed() {
+    console.log(graph_inputs.requirements);
+    changeTableBody('input_table', 'input_table_tbody', replacement => {
+        graph_inputs.requirements.forEach(stack=>{
+            let row = replacement.insertRow(-1);
+            let buttons = row.insertCell(-1);
+            buttons.appendChild(createItemRemovalButton(stack));
+            row.insertCell(-1).textContent = stack.quantity;
+            row.insertCell(-1).textContent = stack.item.id;
+        });
+    });
 }
 
 function createItemRemovalButton(stack) {
@@ -119,24 +123,17 @@ function performRequirementSearch(str, cb) {
 }
 
 function updateRequirementSearchResults(results) {
-    let table_id = 'requirement_results';
-    let tbody_id = 'requirement_results_tbody';
-    let table = document.getElementById(table_id);
-    let old_tbody = document.getElementById(tbody_id);
-    let replacement = document.createElement('tbody');
-    replacement.id = tbody_id;
-
-    results.sort((a, b) => a.id.localeCompare(b.id))
-        .forEach(item => {
-            let row = replacement.insertRow(-1);
-            let buttons = row.insertCell(-1);
-            buttons.appendChild(createItemAddUpdateButton(item));
-            buttons.appendChild(createItemImportButton(item));
-            buttons.appendChild(createItemExportButton(item));
-            row.insertCell(-1).textContent = item.id;
-        });
-
-    table.replaceChild(replacement, old_tbody);
+    changeTableBody('requirement_results', 'requirement_results_tbody', replacement => {
+        results.sort((a, b) => a.id.localeCompare(b.id))
+            .forEach(item => {
+                let row = replacement.insertRow(-1);
+                let buttons = row.insertCell(-1);
+                buttons.appendChild(createItemAddUpdateButton(item));
+                buttons.appendChild(createItemImportButton(item));
+                buttons.appendChild(createItemExportButton(item));
+                row.insertCell(-1).textContent = item.id;
+            });
+    });
 }
 
 function createItemAddUpdateButton(item) {
