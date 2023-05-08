@@ -63,7 +63,7 @@ let data_sets = {
     'factorio-ff-1.1.76': 'Factorio FF (1.1.76)',
     'plan-b-terraform': 'Plan B, Terraform',
     'satisfactory': "Satisfactory",
-    'vt': "Voxel Tychoon",
+    'vt': "Voxel Tycoon",
 };
 
 let sets = document.getElementById('data_set');
