@@ -36,13 +36,17 @@
         </section>
 
         <section>
-            <h2>Output Requirements (Item Search)</h2>
+            <h2>Item Search</h2>
             <table>
-                <tr><td><label for="requirement_selection_id">Requirement ID</label></td><td><input type="text" id="requirement_selection_id" /></label></td></tr>
-                <tr><td><label for="requirement_selection_quantity">Requirement Quantity</label></td><td><input type="text" id="requirement_selection_quantity" /></label></td></tr>
+                <tr>
+                    <td><label for="requirement_selection_id">ID Search</label></td>
+                    <td><input type="text" id="requirement_selection_id" /></label></td>
+                    <td><label for="requirement_selection_quantity">Requirement Quantity</label></td>
+                    <td><input type="text" id="requirement_selection_quantity" /></label></td>
+                </tr>
             </table>
 
-            <table id="requirement_results", class="results">
+            <table id="requirement_results" class="results">
                 <thead>
                     <tr>
                         <th>&nbsp;</th>
@@ -50,14 +54,24 @@
                     </tr>
                 </thead>
                 <tbody id="requirement_results_tbody">
+                </tbody>
+            </table>
+
+            <h3>Current Requirements</h3>
+
+            <table id="input_table" class="results">
+                <thead>
                     <tr>
-                        <td>
-                            <!-- text shows "Update" when the requirement type is already in the list -->
-                            <button id="add_requirement">Add/Update</button>
-                            <button id="import_type">Import</button>
-                            <button id="export_type">Export</button>
-                        </td>
-                        <td>plate</td>
+                        <th>&nbsp;</th>
+                        <th>Want # amount </th>
+                        <th>What ye want</th>
+                    </tr>
+                </thead>
+                <tbody id="input_table_tbody">
+                    <tr>
+                        <td><button>Remove</button></td>
+                        <td>cake</td>
+                        <td>1</td>
                     </tr>
                 </tbody>
             </table>

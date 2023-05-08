@@ -24,6 +24,13 @@ class GraphInputs {
     contains_requirement(item) {
         return this.requirements.some(stack => stack.item.id === item.id);
     }
+
+    remove_requirement(item){
+        if (this.contains_requirement(item)){
+            let i = this.requirements.findIndex(stack => stack.item.id === item.id);
+            this.requirements.splice(i, 1);
+        }
+    }
 }
 
 let graph_inputs = new GraphInputs();
@@ -73,6 +80,37 @@ function handleRequirementSelectionId(event) {
     });
 }
 
+function inputs_changed() {
+    console.log(graph_inputs.requirements);
+    let table_id = 'input_table';
+    let tbody_id = 'input_table_tbody';
+    let table = document.getElementById(table_id);
+    let old_tbody = document.getElementById(tbody_id);
+    let replacement = document.createElement('tbody');
+    replacement.id = tbody_id;
+
+    graph_inputs.requirements.forEach(stack=>{
+        let row = replacement.insertRow(-1);
+        let buttons = row.insertCell(-1);
+        buttons.appendChild(createItemRemovalButton(stack));
+        row.insertCell(-1).textContent = stack.quantity;
+        row.insertCell(-1).textContent = stack.item.id;
+    })
+
+    table.replaceChild(replacement, old_tbody);
+}
+
+function createItemRemovalButton(stack) {
+    let button_of_removal = document.createElement('button');
+    button_of_removal.textContent = 'Remove';
+    button_of_removal.addEventListener('click', e => {
+        console.log('remove item:', stack.item.id);
+        graph_inputs.remove_requirement(stack.item);
+        inputs_changed();
+    })
+    return button_of_removal;
+}
+
 function performRequirementSearch(str, cb) {
     let search = new RegExp('.*' + str + '.*', 'i');
     cb(Object.values(data.items).filter(
@@ -109,7 +147,7 @@ function createItemAddUpdateButton(item) {
         if (!q || q.length === 0) q = 1;
         console.log('add/update item:', item.id, q);
         graph_inputs.add_requirement(new Stack(item, Number(q)));
-        console.log(graph_inputs.requirements);
+        inputs_changed();
     });
     return button;
 }
