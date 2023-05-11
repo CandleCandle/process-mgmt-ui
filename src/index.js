@@ -165,6 +165,59 @@ function createItemExportButton(item) {
     return button;
 }
 
+function handleProcessSearchById(event) {
+    onEnter(event, event => {
+        let search = new RegExp('.*' + event.target.value + '.*', 'i');
+        performProcessSearch(process => process.id.match(search));
+    });
+}
+
+function performProcessSearch(matcher) {
+    let results = Object.values(data.processes)
+        .filter(matcher)
+        .sort((proc_a, proc_b) => proc_a.id.localeCompare(proc_b.id));
+    updateProcessSearchResults(results);
+}
+
+function updateProcessSearchResults(results) {
+    changeTableBody("process_search_results", "process_search_results_tbody", replacement =>{
+        results.forEach(process => {
+            let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
+            for (let row_idx = 0; row_idx < max_rowspan; ++row_idx) {
+                let row = replacement.insertRow(-1);
+                if (row_idx === 0) {
+                    let cells = []
+                    cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
+                    cells[0].appendChild(createProcessUseButton(process));
+                    cells[1].innerText = process.id;
+                    cells[2].innerText = process.factory_group.id
+                    cells.forEach(c => c.rowSpan = max_rowspan);
+                }
+                if (process.inputs.length > row_idx) {
+                    row.insertCell(-1).innerText = process.inputs[row_idx].item.id;
+                    row.insertCell(-1).innerText = process.inputs[row_idx].quantity;
+                } else {
+                    row.insertCell(-1).innerText = '';
+                    row.insertCell(-1).innerText = '';
+                }
+                if (process.outputs.length > row_idx) {
+                    row.insertCell(-1).innerText = process.outputs[row_idx].item.id;
+                    row.insertCell(-1).innerText = process.outputs[row_idx].quantity;
+                } else {
+                    row.insertCell(-1).innerText = '';
+                    row.insertCell(-1).innerText = '';
+                }
+            }
+        });
+    });
+}
+
+function createProcessUseButton(process) {
+    let button = document.createElement('button');
+    button.innerText = 'Use';
+    return button;
+}
 
 document.getElementById('data_set').addEventListener('change', handleDataSetChange);
 document.getElementById('requirement_selection_id').addEventListener('keyup', handleRequirementSelectionId);
+document.getElementById('process_selection_id').addEventListener('keyup', handleProcessSearchById);
