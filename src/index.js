@@ -176,10 +176,10 @@ function performProcessSearch(matcher) {
     let results = Object.values(data.processes)
         .filter(matcher)
         .sort((proc_a, proc_b) => proc_a.id.localeCompare(proc_b.id));
-    updateProcessSearchResults(results);
+    updateProcessSearchResults(results, createProcessUseButton);
 }
 
-function updateProcessSearchResults(results) {
+function updateProcessSearchResults(results, action_buttons) {
     changeTableBody("process_search_results", "process_search_results_tbody", replacement =>{
         results.forEach(process => {
             let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
@@ -188,7 +188,7 @@ function updateProcessSearchResults(results) {
                 if (row_idx === 0) {
                     let cells = []
                     cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
-                    cells[0].appendChild(createProcessUseButton(process));
+                    cells[0].appendChild(action_buttons(process));
                     cells[1].innerText = process.id;
                     cells[2].innerText = process.factory_group.id
                     cells.forEach(c => c.rowSpan = max_rowspan);
