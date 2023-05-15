@@ -36,10 +36,22 @@ class GraphInputs {
             this.imports.push(item);
         }
     }
+    removeImport(item) {
+        let i = this.imports.findIndex(i => i.id === item.id);
+        if (i >= 0) {
+            this.imports.splice(i, 1);
+        }
+    }
 
     addExport(item) {
         if (!this.exports.some(i => i.id === item.id)) {
             this.exports.push(item);
+        }
+    }
+    removeExport(item) {
+        let i = this.exports.findIndex(i => i.id === item.id);
+        if (i >= 0) {
+            this.exports.splice(i, 1);
         }
     }
 
@@ -127,13 +139,22 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
 function inputsChanged() {
     console.log(graph_inputs.requirements);
     changeTableBody('input_table', 'input_table_tbody', replacement => {
-        graph_inputs.requirements.forEach(stack=>{
+        graph_inputs.requirements.forEach(stack => {
             let row = replacement.insertRow(-1);
             let buttons = row.insertCell(-1);
             buttons.appendChild(createItemRemovalButton(stack));
             row.insertCell(-1).textContent = stack.quantity;
             row.insertCell(-1).textContent = stack.item.id;
         });
+        let import_export = (item, button_cb, text) => {
+            let row = replacement.insertRow(-1);
+            let buttons = row.insertCell(-1);
+            buttons.appendChild(button_cb(item));
+            row.insertCell(-1).textContent = text;
+            row.insertCell(-1).textContent = item.id;
+        };
+        graph_inputs.imports.forEach(item => import_export(item, createImportRemovalButton, '(import)'));
+        graph_inputs.exports.forEach(item => import_export(item, createExportRemovalButton, '(export)'));
     });
     changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody', (cell, process) => {
         let b = document.createElement('button');
@@ -144,14 +165,23 @@ function inputsChanged() {
     updateMatrix(graph_inputs);
 }
 
+function createExportRemovalButton(item) {
+    return createRequirementImportExportRemovalButton(item, () => graph_inputs.removeExport(item))
+}
+function createImportRemovalButton(item) {
+    return createRequirementImportExportRemovalButton(item, () => graph_inputs.removeImport(item))
+}
 function createItemRemovalButton(stack) {
+    return createRequirementImportExportRemovalButton(stack.item, () => graph_inputs.remove_requirement(stack.item))
+}
+function createRequirementImportExportRemovalButton(item, cb) {
     let button_of_removal = document.createElement('button');
     button_of_removal.textContent = 'Remove';
     button_of_removal.addEventListener('click', e => {
-        console.log('remove item:', stack.item.id);
-        graph_inputs.remove_requirement(stack.item);
+        console.log('remove item:', item.id);
+        cb();
         inputsChanged();
-    })
+    });
     return button_of_removal;
 }
 
