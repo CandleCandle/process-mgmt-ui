@@ -1,4 +1,8 @@
-import { Stack } from 'process-mgmt/src/structures.js';
+import { Factory, Stack, ProcessChain } from 'process-mgmt/src/structures.js';
+import { RateVisitor } from 'process-mgmt/src/visit/rate_visitor.js';
+import { LinearAlgebra } from 'process-mgmt/src/visit/linear_algebra_visitor.js';
+import { RateGraphRenderer } from 'process-mgmt/src/visit/rate_graph_renderer.js';
+import { ProcessCountVisitor } from 'process-mgmt/src/visit/process_count_visitor.js';
 
 
 let data = null;
@@ -21,14 +25,43 @@ class GraphInputs {
         }
     }
 
+    add_process(process) {
+        if (!this.contains_process(process)) {
+            this.processes.push(process);
+        }
+    }
+
+    addImport(item) {
+        if (!this.imports.some(i => i.id === item.id)) {
+            this.imports.push(item);
+        }
+    }
+
+    addExport(item) {
+        if (!this.exports.some(i => i.id === item.id)) {
+            this.exports.push(item);
+        }
+    }
+
     contains_requirement(item) {
         return this.requirements.some(stack => stack.item.id === item.id);
     }
 
-    remove_requirement(item){
+    contains_process(process) {
+        return this.processes.some(proc => proc.id === process.id);
+    }
+
+    remove_requirement(item) {
         if (this.contains_requirement(item)){
             let i = this.requirements.findIndex(stack => stack.item.id === item.id);
             this.requirements.splice(i, 1);
+        }
+    }
+
+    remove_process(process) {
+        if (this.contains_process(process)) {
+            let i = this.processes.findIndex(proc => proc.id === process.id);
+            thid.processes.splice(i, 1);
         }
     }
 }
@@ -91,7 +124,7 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
     table.replaceChild(replacement, old_tbody);
 }
 
-function inputs_changed() {
+function inputsChanged() {
     console.log(graph_inputs.requirements);
     changeTableBody('input_table', 'input_table_tbody', replacement => {
         graph_inputs.requirements.forEach(stack=>{
@@ -102,6 +135,13 @@ function inputs_changed() {
             row.insertCell(-1).textContent = stack.item.id;
         });
     });
+    changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody', (cell, process) => {
+        let b = document.createElement('button');
+        b.innerText = 'Remove';
+        b.addEventListener('click', event => graph_inputs.remove_process(process));
+        cell.appendChild(b);
+    });
+    updateMatrix(graph_inputs);
 }
 
 function createItemRemovalButton(stack) {
@@ -110,7 +150,7 @@ function createItemRemovalButton(stack) {
     button_of_removal.addEventListener('click', e => {
         console.log('remove item:', stack.item.id);
         graph_inputs.remove_requirement(stack.item);
-        inputs_changed();
+        inputsChanged();
     })
     return button_of_removal;
 }
@@ -144,7 +184,7 @@ function createItemAddUpdateButton(item) {
         if (!q || q.length === 0) q = 1;
         console.log('add/update item:', item.id, q);
         graph_inputs.add_requirement(new Stack(item, Number(q)));
-        inputs_changed();
+        inputsChanged();
     });
     return button;
 }
@@ -152,7 +192,8 @@ function createItemImportButton(item) {
     let button = document.createElement('button');
     button.textContent = 'Import';
     button.addEventListener('click', e => {
-        console.log('import item:', item.id);
+        graph_inputs.addImport(item);
+        inputsChanged();
     });
     return button;
 }
@@ -160,7 +201,8 @@ function createItemExportButton(item) {
     let button = document.createElement('button');
     button.textContent = 'Export';
     button.addEventListener('click', e => {
-        console.log('export item:', item.id);
+        graph_inputs.addExport(item);
+        inputsChanged();
     });
     return button;
 }
@@ -179,16 +221,20 @@ function performProcessSearch(matcher) {
     updateProcessSearchResults(results, createProcessUseButton);
 }
 
-function updateProcessSearchResults(results, action_buttons) {
-    changeTableBody("process_search_results", "process_search_results_tbody", replacement =>{
-        results.forEach(process => {
+function updateProcessSearchResults(results) {
+    changeProcessTableBody(results, "process_search_results", "process_search_results_tbody", createProcessUseButton);
+}
+
+function changeProcessTableBody(processes, table_id, tbody_id, button_cb) {
+    changeTableBody(table_id, tbody_id, replacement =>{
+        processes.forEach(process => {
             let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
             for (let row_idx = 0; row_idx < max_rowspan; ++row_idx) {
                 let row = replacement.insertRow(-1);
                 if (row_idx === 0) {
                     let cells = []
                     cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
-                    cells[0].appendChild(action_buttons(process));
+                    button_cb(cells[0], process);
                     cells[1].innerText = process.id;
                     cells[2].innerText = process.factory_group.id
                     cells.forEach(c => c.rowSpan = max_rowspan);
@@ -212,10 +258,52 @@ function updateProcessSearchResults(results, action_buttons) {
     });
 }
 
-function createProcessUseButton(process) {
+function createProcessUseButton(cell, process) {
     let button = document.createElement('button');
     button.innerText = 'Use';
-    return button;
+    button.addEventListener('click', event => {
+        graph_inputs.add_process(process);
+        inputsChanged();
+        changeTableBody("process_search_results", "process_search_results_tbody", () => {});
+    });
+    cell.appendChild(button);
+}
+
+function updateMatrix(inputs) {
+    console.log('inputs', graph_inputs);
+    if (graph_inputs.processes.length == 0) return;
+    let linear_algebra_visitor = new LinearAlgebra(inputs.requirements, inputs.imports.map(i => i.id), inputs.exports.map(i => i.id));
+    linear_algebra_visitor.print_matricies = true;
+    let chain = new ProcessChain(inputs.processes)
+        .accept(new RateVisitor(proc => new Factory('__name__', '__group__', null, 1, 1)))
+        .accept(new ProcessCountVisitor())
+        .accept(linear_algebra_visitor)
+        ;
+    console.log('chain', chain);
+    console.log('la', linear_algebra_visitor);
+    updateMatrixTable(linear_algebra_visitor, 'augmented_matrix_table', linear_algebra_visitor.augmented_matrix);
+    updateMatrixTable(linear_algebra_visitor, 'reduced_matrix_table', linear_algebra_visitor.reduced_matrix);
+
+    console.log(chain.accept(new RateGraphRenderer()).join('\n'));
+}
+
+function updateMatrixTable(linear_algebra_visitor, table_id, matrix) {
+    let table = document.getElementById(table_id);
+    let tbody = document.createElement('tbody');
+    let header_row = tbody.insertRow(-1);
+    header_row.insertCell(-1).innerText = ' ';
+    linear_algebra_visitor.columns.forEach(column => {
+        header_row.insertCell(-1).innerText = column.process.id;
+    });
+    table.replaceChild(tbody, table.getElementsByTagName('tbody')[0]);
+
+    for (let r = 0; r < matrix.data.length; ++r) {
+        let row = tbody.insertRow(-1);
+        row.insertCell(-1).innerText = linear_algebra_visitor.items[r].id;
+        for (let c = 0; c < matrix.data[r].length; ++c) {
+            row.insertCell(-1).innerText =  matrix.data[r][c];
+        }
+    }
 }
 
 document.getElementById('data_set').addEventListener('change', handleDataSetChange);
