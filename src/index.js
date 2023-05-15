@@ -3,7 +3,6 @@ import { RateVisitor } from 'process-mgmt/src/visit/rate_visitor.js';
 import { LinearAlgebra } from 'process-mgmt/src/visit/linear_algebra_visitor.js';
 import { RateGraphRenderer } from 'process-mgmt/src/visit/rate_graph_renderer.js';
 import { ProcessCountVisitor } from 'process-mgmt/src/visit/process_count_visitor.js';
-// import { default as graphviz } from 'node-graphviz';
 
 let data = null;
 
@@ -137,7 +136,6 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
 }
 
 function inputsChanged() {
-    console.log(graph_inputs.requirements);
     changeTableBody('input_table', 'input_table_tbody', replacement => {
         graph_inputs.requirements.forEach(stack => {
             let row = replacement.insertRow(-1);
@@ -186,6 +184,10 @@ function createRequirementImportExportRemovalButton(item, cb) {
 }
 
 function performRequirementSearch(str, cb) {
+    if (str.length === 0) {
+        clearItemSearch();
+        return;
+    }
     let search = new RegExp('.*' + str + '.*', 'i');
     cb(Object.values(data.items).filter(
         item => item.id.match(search) || item.name.match(search)
@@ -206,15 +208,22 @@ function updateRequirementSearchResults(results) {
     });
 }
 
+function clearItemSearch() {
+    updateRequirementSearchResults([]);
+    document.getElementById('requirement_selection_id').value = '';
+    document.getElementById('requirement_selection_quantity').value = '';
+}
+
 function createItemAddUpdateButton(item) {
     let button = document.createElement('button');
-    button.textContent = graph_inputs.contains_requirement(item) ? 'Update' : 'Add';
+    button.textContent = graph_inputs.contains_requirement(item) ? 'Update Requirement' : 'Add Requirement';
     button.addEventListener('click', e => {
         let q = document.getElementById('requirement_selection_quantity').value;
         if (!q || q.length === 0) q = 1;
         console.log('add/update item:', item.id, q);
         graph_inputs.add_requirement(new Stack(item, Number(q)));
         inputsChanged();
+        clearItemSearch();
     });
     return button;
 }
@@ -224,6 +233,7 @@ function createItemImportButton(item) {
     button.addEventListener('click', e => {
         graph_inputs.addImport(item);
         inputsChanged();
+        clearItemSearch();
     });
     return button;
 }
@@ -233,6 +243,7 @@ function createItemExportButton(item) {
     button.addEventListener('click', e => {
         graph_inputs.addExport(item);
         inputsChanged();
+        clearItemSearch();
     });
     return button;
 }
@@ -315,7 +326,33 @@ function createProcessUseButton(cell, process) {
 
 function updateMatrix(inputs) {
     console.log('inputs', graph_inputs);
-    if (graph_inputs.processes.length == 0) return;
+
+    if (graph_inputs.processes.length == 0) {
+        // XXX Bodge the input when we have no prcesses.
+        let bodge = {
+            items: [],
+            mtx: [],
+            augmented_matrix: {
+                getRow: (idx) => {
+                    return { data: [bodge.mtx[idx]] };
+                }
+            }
+        };
+        graph_inputs.requirements.forEach(req => {
+            bodge.items.push(req.item);
+            bodge.mtx.push([1]);
+        });
+        graph_inputs.imports.forEach(imp => {
+            bodge.items.push(imp);
+            bodge.mtx.push([1]);
+        });
+        graph_inputs.exports.forEach(exp => {
+            bodge.items.push(exp);
+            bodge.mtx.push([-1]);
+        });
+        updateUnknownsTable(bodge);
+        return;
+    };
     let linear_algebra_visitor = new LinearAlgebra(inputs.requirements, inputs.imports.map(i => i.id), inputs.exports.map(i => i.id));
     linear_algebra_visitor.print_matricies = true;
     let chain = new ProcessChain(inputs.processes)
@@ -324,6 +361,8 @@ function updateMatrix(inputs) {
         .accept(linear_algebra_visitor);
     updateMatrixTable(linear_algebra_visitor, 'augmented_matrix_table', linear_algebra_visitor.augmented_matrix);
     updateMatrixTable(linear_algebra_visitor, 'reduced_matrix_table', linear_algebra_visitor.reduced_matrix);
+    updateUnknownsTable(linear_algebra_visitor);
+
 
     let data = chain.accept(new RateGraphRenderer()).join('\n');
     console.log(data);
@@ -353,6 +392,75 @@ function updateMatrixTable(linear_algebra_visitor, table_id, matrix) {
             row.insertCell(-1).innerText =  matrix.data[r][c];
         }
     }
+}
+
+function updateUnknownsTable(linear_algebra_visitor) {
+
+    changeTableBody('unknowns_table', 'unknowns_table_tbody', replacement => {
+        linear_algebra_visitor.items.forEach((item, idx) => {
+            let matrix = linear_algebra_visitor.augmented_matrix;
+            console.log('row', item.id, matrix.getRow(idx));
+            let status = matrix.getRow(idx).data[0].reduce((prev, cur) => {
+                if (cur > 0) prev.positive++;
+                if (cur < 0) prev.negative++;
+                return prev;
+                }, {negative: 0, positive: 0});
+            console.log('status', status);
+            if (status.negative > 0 && status.positive === 0) {
+                // "input requirement", import or search process outputs
+                let row = replacement.insertRow(-1);
+                createUnknownImportButtons(row.insertCell(-1), item);
+                row.insertCell(-1).innerText = item.id;
+            }
+            if (status.positive > 0 && status.negative === 0) {
+                if (status.positive === 1 && graph_inputs.contains_requirement(item)) {
+                    // "input requirement", import or search process outputs
+                    let row = replacement.insertRow(-1);
+                    createUnknownImportButtons(row.insertCell(-1), item);
+                    row.insertCell(-1).innerText = item.id;
+                } else if (status.positive > 1 && graph_inputs.contains_requirement(item)) {
+                    // nothing; the requirement is satisfied
+                } else {
+                    // "output requirement", export or search process inputs
+                    let row = replacement.insertRow(-1);
+                    createUnknownExportButtons(row.insertCell(-1), item);
+                    row.insertCell(-1).innerText = item.id;
+                }
+            }
+        });
+    });
+}
+
+function createUnknownImportButtons(cell, item) {
+    let bi = document.createElement('button');
+    bi.innerText = 'Import';
+    bi.addEventListener('click', event => {
+        graph_inputs.addImport(item);
+        inputsChanged();
+    });
+    cell.appendChild(bi);
+    let bs = document.createElement('button');
+    bs.innerText = 'Search Process Outputs';
+    bs.addEventListener('click', event => {
+        handleProcessSearchByOutput({target: {value: '^' + item.id + '$'}})
+    });
+    cell.appendChild(bs);
+}
+
+function createUnknownExportButtons(cell, item) {
+    let be = document.createElement('button');
+    be.innerText = 'Export';
+    be.addEventListener('click', event => {
+        graph_inputs.addExport(item);
+        inputsChanged();
+    });
+    cell.appendChild(be);
+    let bs = document.createElement('button');
+    bs.innerText = 'Search Process Inputs';
+    bs.addEventListener('click', event => {
+        handleProcessSearchByInput({target: {value: '^' + item.id + '$'}})
+    });
+    cell.appendChild(bs);
 }
 
 document.getElementById('data_set').addEventListener('change', handleDataSetChange);

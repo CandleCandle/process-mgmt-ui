@@ -23,7 +23,7 @@
             <ol>
                 <li>Select a data set</li>
                 <li>Add at least one output requirement</li>
-                <li>For each missing item, add imports, exports, or extra processes</li>
+                <li>For each unknown item, add imports, exports, or extra processes</li>
             </ol>
         </section>
 
@@ -74,6 +74,19 @@
         </section>
 
         <section>
+            <h2>Unknowns</h2>
+            <table class="results" id="unknowns_table">
+                <thead>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>Item</td>
+                    </tr>
+                </thead>
+                <tbody id="unknowns_table_tbody"></tbody>
+            </table>
+        </section>
+
+        <section>
             <h2>Process Search</h2>
 
             <table>
@@ -81,15 +94,6 @@
                 <tr><td><label for="process_selection_fg">Factory Group</label></td><td><input type="text" id="process_selection_fg" disabled/></label></td></tr>
                 <tr><td><label for="process_selection_input">Inputs</label></td><td><input type="text" id="process_selection_input" /></label></td></tr>
                 <tr><td><label for="process_selection_output">Outputs</label></td><td><input type="text" id="process_selection_output" /></label></td></tr>
-                <tr><td colspan="2">
-                    <button id="fill_search" disabled>Next Unknown ...</button>
-                </td></tr>
-                <tr><td colspan="2">
-                    <button id="perform_process_search" disabled>Search</button>
-                    <!-- either import or export should be enabled: +ive -> export. -ive -> import -->
-                    <button id="add_as_import" disabled>Import</button>
-                    <button id="add_as_export" disabled>Export</button>
-                </td></tr>
             </table>
 
             <table id="process_search_results" class="results">
