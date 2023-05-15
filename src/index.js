@@ -244,6 +244,20 @@ function handleProcessSearchById(event) {
     });
 }
 
+function handleProcessSearchByOutput(event) {
+    onEnter(event, event => {
+        let search = new RegExp('.*' + event.target.value + '.*', 'i');
+        performProcessSearch(process => process.outputs.some(output => output.item.id.match(search)));
+    });
+}
+
+function handleProcessSearchByInput(event) {
+    onEnter(event, event => {
+        let search = new RegExp('.*' + event.target.value + '.*', 'i');
+        performProcessSearch(process => process.inputs.some(input => input.item.id.match(search)));
+    });
+}
+
 function performProcessSearch(matcher) {
     let results = Object.values(data.processes)
         .filter(matcher)
@@ -344,3 +358,6 @@ function updateMatrixTable(linear_algebra_visitor, table_id, matrix) {
 document.getElementById('data_set').addEventListener('change', handleDataSetChange);
 document.getElementById('requirement_selection_id').addEventListener('keyup', handleRequirementSelectionId);
 document.getElementById('process_selection_id').addEventListener('keyup', handleProcessSearchById);
+
+document.getElementById('process_selection_output').addEventListener('keyup', handleProcessSearchByOutput);
+document.getElementById('process_selection_input').addEventListener('keyup', handleProcessSearchByInput);
