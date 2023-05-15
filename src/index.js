@@ -3,7 +3,7 @@ import { RateVisitor } from 'process-mgmt/src/visit/rate_visitor.js';
 import { LinearAlgebra } from 'process-mgmt/src/visit/linear_algebra_visitor.js';
 import { RateGraphRenderer } from 'process-mgmt/src/visit/rate_graph_renderer.js';
 import { ProcessCountVisitor } from 'process-mgmt/src/visit/process_count_visitor.js';
-
+// import { default as graphviz } from 'node-graphviz';
 
 let data = null;
 
@@ -275,16 +275,21 @@ function updateMatrix(inputs) {
     let linear_algebra_visitor = new LinearAlgebra(inputs.requirements, inputs.imports.map(i => i.id), inputs.exports.map(i => i.id));
     linear_algebra_visitor.print_matricies = true;
     let chain = new ProcessChain(inputs.processes)
-        .accept(new RateVisitor(proc => new Factory('__name__', '__group__', null, 1, 1)))
+        .accept(new RateVisitor(proc => new Factory('__name__', '__name__', null, 1, 1)))
         .accept(new ProcessCountVisitor())
-        .accept(linear_algebra_visitor)
-        ;
-    console.log('chain', chain);
-    console.log('la', linear_algebra_visitor);
+        .accept(linear_algebra_visitor);
     updateMatrixTable(linear_algebra_visitor, 'augmented_matrix_table', linear_algebra_visitor.augmented_matrix);
     updateMatrixTable(linear_algebra_visitor, 'reduced_matrix_table', linear_algebra_visitor.reduced_matrix);
 
-    console.log(chain.accept(new RateGraphRenderer()).join('\n'));
+    let data = chain.accept(new RateGraphRenderer()).join('\n');
+    console.log(data);
+
+    document.getElementById('image_container').innerHTML = Viz(
+        data,
+        {
+            format: 'svg',
+            engine: 'dot'
+        });
 }
 
 function updateMatrixTable(linear_algebra_visitor, table_id, matrix) {
