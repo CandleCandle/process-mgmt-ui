@@ -4,26 +4,65 @@ import { LinearAlgebra } from 'process-mgmt/src/visit/linear_algebra_visitor.js'
 import { RateGraphRenderer } from 'process-mgmt/src/visit/rate_graph_renderer.js';
 import { ProcessCountVisitor } from 'process-mgmt/src/visit/process_count_visitor.js';
 
-let data = null;
-
 const ROW_A = 'row_a';
 const ROW_B = 'row_b';
 
+// Global state
+let data = null;
+let graph_inputs = null;
+
 class Modifiers {
-    constructor() {
-        this.duration = 1;
-        this.output = 1;
+    constructor(duration = 1, output = 1) {
+        this.duration = duration;
+        this.output = output;
     }
 }
 
+function reduceEntriesToObject(prev, kv) {
+    prev[kv[0]] = kv[1];
+    return prev;
+}
+
 class GraphInputs {
-    constructor() {
+    constructor(game_id) {
+        this.game_id = game_id;
         this.requirements = []; // [Stack]
         this.imports = []; // [Item]
         this.exports = []; // [Item]
         this.processes = []; // [Process]
         this.default_factory_groups = {}; // factory_group.id => factory type
         this.process_modifiers = {}; // process.id => Modifiers
+    }
+
+    static fromSerial(serial, data) {
+        let gi = new GraphInputs(serial.game_id);
+        gi.requirements = serial.requirements.map(req => new Stack(data.items[req.id], req.q));
+        gi.imports = serial.imports.map(i => data.items[i]);
+        gi.exports = serial.exports.map(e => data.items[e]);
+        gi.processes = serial.processes.map(p => data.processes[p]);
+        gi.default_factory_groups = Object.entries(serial.default_factory_groups)
+            .map(([k,v]) => [k, data.factories[v]])
+            .reduce(reduceEntriesToObject, {});
+        gi.process_modifiers = Object.entries(serial.process_modifiers)
+            .map(([k,v]) => [k, new Modifiers(v.d, v.o)])
+            .reduce(reduceEntriesToObject, {});
+        return gi;
+    }
+
+    toSerial() {
+        return {
+            game_id: this.game_id,
+            requirements: this.requirements.map(req => {return {id: req.item.id, q: req.quantity}}),
+            imports: this.imports.map(item => item.id),
+            exports: this.exports.map(item => item.id),
+            processes: this.processes.map(proc => proc.id),
+            default_factory_groups: Object.entries(this.default_factory_groups)
+                .map(([k, v]) => [k, v.id])
+                .reduce(reduceEntriesToObject, {}),
+            process_modifiers: Object.entries(this.process_modifiers)
+                .map(([k, v]) => [k, {d: v.duration, o: v.output}])
+                .reduce(reduceEntriesToObject, {})
+        };
     }
 
     getFactoryForProcess(process) {
@@ -102,8 +141,6 @@ class GraphInputs {
     }
 }
 
-let graph_inputs = new GraphInputs();
-
 function handleDataSetChange(event) {
     console.log('attempting to load data: ', event.target.value);
     import(/* webpackChunkName: 'game_data' */ `process-mgmt/src/${event.target.value}/data.js`)
@@ -113,7 +150,7 @@ function handleDataSetChange(event) {
 function updateDataSet(replacement_data) {
     data = replacement_data;
     document.getElementById('data_selection_display').textContent = data.game + ' at version ' + data.version;
-    graph_inputs = new GraphInputs();
+    graph_inputs = new GraphInputs(data.game);
     inputsChanged();
 }
 
@@ -126,24 +163,6 @@ function onEnter(e, cb) {
         cb(e);
     }
 }
-
-let data_sets = {
-    'dsp': 'DSP',
-    'factorio-ab-1.1.38': 'Factorio AB (1.1.38)',
-    'factorio-py-1.1.53': 'Factorio PY (1.1.53)',
-    'factorio-ff-1.1.76': 'Factorio FF (1.1.76)',
-    'plan-b-terraform': 'Plan B, Terraform',
-    'satisfactory': "Satisfactory",
-    'vt': "Voxel Tycoon",
-};
-
-let sets = document.getElementById('data_set');
-Object.entries(data_sets).forEach(element => {
-    let e = document.createElement('option');
-    e.value = element[0];
-    e.innerText = element[1];
-    sets.appendChild(e);
-});
 
 function handleRequirementSelectionId(event) {
     onEnter(event, e => {
@@ -163,6 +182,7 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
 }
 
 function inputsChanged() {
+    console.log('serial', graph_inputs.toSerial());
     changeTableBody('input_table', 'input_table_tbody', replacement => {
         let idx = 0;
         graph_inputs.requirements.forEach(stack => {
@@ -550,6 +570,28 @@ function createUnknownExportButtons(cell, item) {
     });
     cell.appendChild(bs);
 }
+
+
+
+let data_sets = {
+    'dsp': 'DSP',
+    'factorio-ab-1.1.38': 'Factorio AB (1.1.38)',
+    'factorio-py-1.1.53': 'Factorio PY (1.1.53)',
+    'factorio-ff-1.1.76': 'Factorio FF (1.1.76)',
+    'plan-b-terraform': 'Plan B, Terraform',
+    'satisfactory': "Satisfactory",
+    'vt': "Voxel Tycoon",
+};
+
+let sets = document.getElementById('data_set');
+Object.entries(data_sets).forEach(element => {
+    let e = document.createElement('option');
+    e.value = element[0];
+    e.innerText = element[1];
+    sets.appendChild(e);
+});
+
+graph_inputs = new GraphInputs(null);
 
 document.getElementById('data_set').addEventListener('change', handleDataSetChange);
 document.getElementById('requirement_selection_id').addEventListener('keyup', handleRequirementSelectionId);
