@@ -18,8 +18,8 @@ class Modifiers {
     }
 }
 
-function reduceEntriesToObject(prev, kv) {
-    prev[kv[0]] = kv[1];
+function reduceEntriesToObject(prev, [k,v]) {
+    prev[k] = v;
     return prev;
 }
 
@@ -41,10 +41,10 @@ class GraphInputs {
         gi.exports = serial.exports.map(e => data.items[e]);
         gi.processes = serial.processes.map(p => data.processes[p]);
         gi.default_factory_groups = Object.entries(serial.default_factory_groups)
-            .map(([k,v]) => [k, data.factories[v]])
+            .map(([k, v]) => [k, data.factories[v]])
             .reduce(reduceEntriesToObject, {});
         gi.process_modifiers = Object.entries(serial.process_modifiers)
-            .map(([k,v]) => [k, new Modifiers(v.d, v.o)])
+            .map(([k, v]) => [k, new Modifiers(v.d, v.o)])
             .reduce(reduceEntriesToObject, {});
         return gi;
     }
@@ -182,7 +182,7 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
 }
 
 function inputsChanged() {
-    console.log('serial', graph_inputs.toSerial());
+    window.location.hash = '#' + btoa(JSON.stringify(graph_inputs.toSerial()));
     changeTableBody('input_table', 'input_table_tbody', replacement => {
         let idx = 0;
         graph_inputs.requirements.forEach(stack => {
