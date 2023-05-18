@@ -9,12 +9,32 @@ let data = null;
 const ROW_A = 'row_a';
 const ROW_B = 'row_b';
 
+class Modifiers {
+    constructor() {
+        this.duration = 1;
+        this.output = 1;
+    }
+}
+
 class GraphInputs {
     constructor() {
         this.requirements = []; // [Stack]
         this.imports = []; // [Item]
         this.exports = []; // [Item]
         this.processes = []; // [Process]
+        this.default_factory_groups = {}; // factory_group.id => factory type
+        this.process_modifiers = {}; // process.id => Modifiers
+    }
+
+    getFactoryForProcess(process) {
+        if (this.default_factory_groups[process.factory_group.id]) {
+            return this.default_factory_groups[process.factory_group.id].modify(1, 1);
+        }
+        let all_suitable_factories = factoriesForFactoryGroup(process.factory_group.id);
+        if (all_suitable_factories.length > 0) {
+            return all_suitable_factories[0];
+        }
+        return new Factory('__default__', '__default__', null, 1, 1);
     }
 
     add_requirement(req) {
@@ -24,6 +44,9 @@ class GraphInputs {
         } else {
             this.requirements.push(req);
         }
+    }
+    setFactoryForFactoryGroup(factory_group_id, factory) {
+        this.default_factory_groups[factory_group_id] = factory;
     }
 
     add_process(process) {
@@ -90,6 +113,8 @@ function handleDataSetChange(event) {
 function updateDataSet(replacement_data) {
     data = replacement_data;
     document.getElementById('data_selection_display').textContent = data.game + ' at version ' + data.version;
+    graph_inputs = new GraphInputs();
+    inputsChanged();
 }
 
 function onEnter(e, cb) {
@@ -165,7 +190,56 @@ function inputsChanged() {
         b.addEventListener('click', event => graph_inputs.remove_process(process));
         cell.appendChild(b);
     });
+    updateDefaultFactoriesTable();
     updateMatrix(graph_inputs);
+}
+
+function factoriesForFactoryGroup(factory_group_id) {
+    return Object.values(data.factories)
+        .filter(factory => factory.groups.some(fg => fg.id === factory_group_id))
+        .sort((fa, fb) => fa.duration_modifier > fb.duration_modifier);
+}
+
+function createFactorySelectForFactoryGroup(factory_group_id, selected_factory) {
+    let select = document.createElement('select');
+    factoriesForFactoryGroup(factory_group_id)
+        .forEach(factory => {
+            let opt = document.createElement('option');
+            opt.innerText = factory.name;
+            opt.value = factory.id;
+            if (selected_factory && factory.id === selected_factory.id) {
+                opt.selected = true;
+            }
+            select.appendChild(opt);
+        });
+    select.addEventListener('change', event => {
+        graph_inputs.setFactoryForFactoryGroup(factory_group_id, data.factories[event.target.value]);
+        inputsChanged();
+    });
+    return select;
+}
+
+function updateDefaultFactoriesTable() {
+    changeTableBody('default_factories', 'default_factories_tbody', replacement => {
+        graph_inputs.processes
+            .map(p => p.factory_group.id)
+            .reduce((prev, cur) => {
+                if (!prev.includes(cur)) {
+                    prev.push(cur);
+                }
+                return prev;
+            }, [])
+            .sort((a, b) => a.localeCompare(b))
+            .forEach((factory_group_id, idx) => {
+                let row = replacement.insertRow(-1);
+                setBgColour(row.insertCell(-1), idx).innerText = factory_group_id;
+                setBgColour(row.insertCell(-1), idx).appendChild(
+                    createFactorySelectForFactoryGroup(
+                        factory_group_id,
+                        graph_inputs.default_factory_groups[factory_group_id])
+                )
+            });
+    });
 }
 
 function createExportRemovalButton(item) {
@@ -367,7 +441,7 @@ function updateMatrix(inputs) {
     let linear_algebra_visitor = new LinearAlgebra(inputs.requirements, inputs.imports.map(i => i.id), inputs.exports.map(i => i.id));
     linear_algebra_visitor.print_matricies = true;
     let chain = new ProcessChain(inputs.processes)
-        .accept(new RateVisitor(proc => new Factory('__name__', '__name__', null, 1, 1)))
+        .accept(new RateVisitor(proc => graph_inputs.getFactoryForProcess(proc)))
         .accept(new ProcessCountVisitor())
         .accept(linear_algebra_visitor);
     updateMatrixTable(linear_algebra_visitor, 'augmented_matrix_table', linear_algebra_visitor.augmented_matrix);
