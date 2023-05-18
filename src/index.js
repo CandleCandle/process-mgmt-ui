@@ -6,6 +6,8 @@ import { ProcessCountVisitor } from 'process-mgmt/src/visit/process_count_visito
 
 let data = null;
 
+const ROW_A = 'row_a';
+const ROW_B = 'row_b';
 
 class GraphInputs {
     constructor() {
@@ -137,19 +139,22 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
 
 function inputsChanged() {
     changeTableBody('input_table', 'input_table_tbody', replacement => {
+        let idx = 0;
         graph_inputs.requirements.forEach(stack => {
             let row = replacement.insertRow(-1);
-            let buttons = row.insertCell(-1);
+            let buttons = setBgColour(row.insertCell(-1), idx);
             buttons.appendChild(createItemRemovalButton(stack));
-            row.insertCell(-1).textContent = stack.quantity;
-            row.insertCell(-1).textContent = stack.item.id;
+            setBgColour(row.insertCell(-1), idx).textContent = stack.quantity;
+            setBgColour(row.insertCell(-1), idx).textContent = stack.item.id;
+            idx++;
         });
         let import_export = (item, button_cb, text) => {
             let row = replacement.insertRow(-1);
-            let buttons = row.insertCell(-1);
+            let buttons = setBgColour(row.insertCell(-1), idx);
             buttons.appendChild(button_cb(item));
-            row.insertCell(-1).textContent = text;
-            row.insertCell(-1).textContent = item.id;
+            setBgColour(row.insertCell(-1), idx).textContent = text;
+            setBgColour(row.insertCell(-1), idx).textContent = item.id;
+            idx++;
         };
         graph_inputs.imports.forEach(item => import_export(item, createImportRemovalButton, '(import)'));
         graph_inputs.exports.forEach(item => import_export(item, createExportRemovalButton, '(export)'));
@@ -194,16 +199,21 @@ function performRequirementSearch(str, cb) {
     ));
 }
 
+function setBgColour(cell, idx) {
+    cell.className = (idx % 2 === 0 ? ROW_A : ROW_B);
+    return cell;
+}
+
 function updateRequirementSearchResults(results) {
     changeTableBody('requirement_results', 'requirement_results_tbody', replacement => {
         results.sort((a, b) => a.id.localeCompare(b.id))
-            .forEach(item => {
+            .forEach((item, idx) => {
                 let row = replacement.insertRow(-1);
-                let buttons = row.insertCell(-1);
+                let buttons = setBgColour(row.insertCell(-1), idx);
                 buttons.appendChild(createItemAddUpdateButton(item));
                 buttons.appendChild(createItemImportButton(item));
                 buttons.appendChild(createItemExportButton(item));
-                row.insertCell(-1).textContent = item.id;
+                setBgColour(row.insertCell(-1), idx).textContent = item.id;
             });
     });
 }
@@ -282,7 +292,7 @@ function updateProcessSearchResults(results) {
 
 function changeProcessTableBody(processes, table_id, tbody_id, button_cb) {
     changeTableBody(table_id, tbody_id, replacement =>{
-        processes.forEach(process => {
+        processes.forEach((process, idx) => {
             let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
             for (let row_idx = 0; row_idx < max_rowspan; ++row_idx) {
                 let row = replacement.insertRow(-1);
@@ -293,21 +303,21 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb) {
                     cells[1].innerText = process.id;
                     cells[2].innerText = process.factory_group.id;
                     cells[3].innerText = process.duration;
-                    cells.forEach(c => c.rowSpan = max_rowspan);
+                    cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
                 }
                 if (process.inputs.length > row_idx) {
-                    row.insertCell(-1).innerText = process.inputs[row_idx].item.id;
-                    row.insertCell(-1).innerText = process.inputs[row_idx].quantity;
+                    setBgColour(row.insertCell(-1), idx).innerText = process.inputs[row_idx].item.id;
+                    setBgColour(row.insertCell(-1), idx).innerText = process.inputs[row_idx].quantity;
                 } else {
-                    row.insertCell(-1).innerText = '';
-                    row.insertCell(-1).innerText = '';
+                    setBgColour(row.insertCell(-1), idx).innerText = '';
+                    setBgColour(row.insertCell(-1), idx).innerText = '';
                 }
                 if (process.outputs.length > row_idx) {
-                    row.insertCell(-1).innerText = process.outputs[row_idx].item.id;
-                    row.insertCell(-1).innerText = process.outputs[row_idx].quantity;
+                    setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].item.id;
+                    setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].quantity;
                 } else {
-                    row.insertCell(-1).innerText = '';
-                    row.insertCell(-1).innerText = '';
+                    setBgColour(row.insertCell(-1), idx).innerText = '';
+                    setBgColour(row.insertCell(-1), idx).innerText = '';
                 }
             }
         });
@@ -387,17 +397,17 @@ function updateMatrixTable(linear_algebra_visitor, table_id, matrix) {
     table.replaceChild(tbody, table.getElementsByTagName('tbody')[0]);
 
     for (let r = 0; r < matrix.data.length; ++r) {
-        let row = tbody.insertRow(-1);
-        row.insertCell(-1).innerText = linear_algebra_visitor.items[r].id;
+        let row = setBgColour(tbody.insertRow(-1), r);
+        setBgColour(row.insertCell(-1), r).innerText = linear_algebra_visitor.items[r].id;
         for (let c = 0; c < matrix.data[r].length; ++c) {
-            row.insertCell(-1).innerText =  matrix.data[r][c];
+            setBgColour(row.insertCell(-1), r).innerText =  matrix.data[r][c];
         }
     }
 }
 
 function updateUnknownsTable(linear_algebra_visitor) {
-
     changeTableBody('unknowns_table', 'unknowns_table_tbody', replacement => {
+        let row_idx = 0;
         linear_algebra_visitor.items.forEach((item, idx) => {
             let matrix = linear_algebra_visitor.augmented_matrix;
             console.log('row', item.id, matrix.getRow(idx));
@@ -410,22 +420,25 @@ function updateUnknownsTable(linear_algebra_visitor) {
             if (status.negative > 0 && status.positive === 0) {
                 // "input requirement", import or search process outputs
                 let row = replacement.insertRow(-1);
-                createUnknownImportButtons(row.insertCell(-1), item);
-                row.insertCell(-1).innerText = item.id;
+                createUnknownImportButtons(setBgColour(row.insertCell(-1), row_idx), item);
+                setBgColour(row.insertCell(-1), row_idx).innerText = item.id;
+                row_idx++;
             }
             if (status.positive > 0 && status.negative === 0) {
                 if (status.positive === 1 && graph_inputs.contains_requirement(item)) {
                     // "input requirement", import or search process outputs
                     let row = replacement.insertRow(-1);
-                    createUnknownImportButtons(row.insertCell(-1), item);
-                    row.insertCell(-1).innerText = item.id;
+                    createUnknownImportButtons(setBgColour(row.insertCell(-1), row_idx), item);
+                    setBgColour(row.insertCell(-1), row_idx).innerText = item.id;
+                    row_idx++;
                 } else if (status.positive > 1 && graph_inputs.contains_requirement(item)) {
                     // nothing; the requirement is satisfied
                 } else {
                     // "output requirement", export or search process inputs
                     let row = replacement.insertRow(-1);
-                    createUnknownExportButtons(row.insertCell(-1), item);
-                    row.insertCell(-1).innerText = item.id;
+                    createUnknownExportButtons(setBgColour(row.insertCell(-1), row_idx), item);
+                    setBgColour(row.insertCell(-1), row_idx).innerText = item.id;
+                    row_idx++;
                 }
             }
         });
