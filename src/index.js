@@ -483,3 +483,10 @@ document.getElementById('process_selection_id').addEventListener('keyup', handle
 
 document.getElementById('process_selection_output').addEventListener('keyup', handleProcessSearchByOutput);
 document.getElementById('process_selection_input').addEventListener('keyup', handleProcessSearchByInput);
+
+[...document.getElementsByClassName('hidable')].forEach(hidable => {
+    hidable.addEventListener('click', evt => {
+        let hideDiv = hidable.parentElement.getElementsByTagName('div')[0];
+        hideDiv.classList.toggle('invisible')
+    });
+});
