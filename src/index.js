@@ -136,22 +136,28 @@ class GraphInputs {
     remove_process(process) {
         if (this.contains_process(process)) {
             let i = this.processes.findIndex(proc => proc.id === process.id);
-            thid.processes.splice(i, 1);
+            this.processes.splice(i, 1);
         }
     }
 }
 
 function handleDataSetChange(event) {
     console.log('attempting to load data: ', event.target.value);
-    import(/* webpackChunkName: 'game_data' */ `process-mgmt/src/${event.target.value}/data.js`)
-        .then(module => updateDataSet(module.default));
+    loadDataSet(event.target.value)
+        .then(module => module.default)
+        .then(d => [d, new GraphInputs(d.game)])
+        .then(postDataChange)
+        .then(inputsChanged);
 }
 
-function updateDataSet(replacement_data) {
-    data = replacement_data;
+function postDataChange([new_data, new_graph_inputs]) {
+    data = new_data;
+    graph_inputs = new_graph_inputs;
     document.getElementById('data_selection_display').textContent = data.game + ' at version ' + data.version;
-    graph_inputs = new GraphInputs(data.game);
-    inputsChanged();
+}
+
+function loadDataSet(str) {
+    return import(/* webpackChunkName: 'game_data' */`process-mgmt/src/${str}/data.js`)
 }
 
 function onEnter(e, cb) {
@@ -207,7 +213,10 @@ function inputsChanged() {
     changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody', (cell, process) => {
         let b = document.createElement('button');
         b.innerText = 'Remove';
-        b.addEventListener('click', event => graph_inputs.remove_process(process));
+        b.addEventListener('click', event => {
+            graph_inputs.remove_process(process);
+            inputsChanged();
+        });
         cell.appendChild(b);
     });
     updateDefaultFactoriesTable();
@@ -456,6 +465,7 @@ function updateMatrix(inputs) {
             bodge.mtx.push([-1]);
         });
         updateUnknownsTable(bodge);
+        document.getElementById('image_container').innerHTML = null;
         return;
     };
     let linear_algebra_visitor = new LinearAlgebra(inputs.requirements, inputs.imports.map(i => i.id), inputs.exports.map(i => i.id));
@@ -504,13 +514,11 @@ function updateUnknownsTable(linear_algebra_visitor) {
         let row_idx = 0;
         linear_algebra_visitor.items.forEach((item, idx) => {
             let matrix = linear_algebra_visitor.augmented_matrix;
-            console.log('row', item.id, matrix.getRow(idx));
             let status = matrix.getRow(idx).data[0].reduce((prev, cur) => {
                 if (cur > 0) prev.positive++;
                 if (cur < 0) prev.negative++;
                 return prev;
                 }, {negative: 0, positive: 0});
-            console.log('status', status);
             if (status.negative > 0 && status.positive === 0) {
                 // "input requirement", import or search process outputs
                 let row = replacement.insertRow(-1);
@@ -606,3 +614,13 @@ document.getElementById('process_selection_input').addEventListener('keyup', han
         hideDiv.classList.toggle('invisible')
     });
 });
+
+if (window.location.hash) {
+    console.log('hash detected', window.location.hash);
+    let blob = JSON.parse(atob(window.location.hash.slice(1)));
+
+    loadDataSet(blob.game_id)
+        .then(d => [d, GraphInputs.fromSerial(blob, d)])
+        .then(postDataChange)
+        .then(inputsChanged);
+}
