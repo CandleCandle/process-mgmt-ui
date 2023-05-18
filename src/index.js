@@ -288,10 +288,11 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb) {
                 let row = replacement.insertRow(-1);
                 if (row_idx === 0) {
                     let cells = []
-                    cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
+                    cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
                     button_cb(cells[0], process);
                     cells[1].innerText = process.id;
-                    cells[2].innerText = process.factory_group.id
+                    cells[2].innerText = process.factory_group.id;
+                    cells[3].innerText = process.duration;
                     cells.forEach(c => c.rowSpan = max_rowspan);
                 }
                 if (process.inputs.length > row_idx) {
