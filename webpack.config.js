@@ -43,9 +43,4 @@ export default {
 		filename: 'process-mgmt-ui.bundle.js',
 	},
 
-	optimization: {
-        minimize: false
-    },
-
-	devtool: 'source-map',
 }
