@@ -144,7 +144,6 @@ class GraphInputs {
 function handleDataSetChange(event) {
     console.log('attempting to load data: ', event.target.value);
     loadDataSet(event.target.value)
-        .then(module => module.default)
         .then(d => [d, new GraphInputs(d.game)])
         .then(postDataChange)
         .then(inputsChanged);
@@ -158,6 +157,7 @@ function postDataChange([new_data, new_graph_inputs]) {
 
 function loadDataSet(str) {
     return import(/* webpackChunkName: 'game_data' */`process-mgmt/src/${str}/data.js`)
+        .then(module => module.default);
 }
 
 function onEnter(e, cb) {
@@ -214,7 +214,19 @@ function updateRequirementsTable() {
             let row = replacement.insertRow(-1);
             let buttons = setBgColour(row.insertCell(-1), idx);
             buttons.appendChild(createItemRemovalButton(stack));
-            setBgColour(row.insertCell(-1), idx).textContent = stack.quantity;
+            let quantity_cell = setBgColour(row.insertCell(-1), idx);
+            let quantity_input = document.createElement('input');
+            quantity_input.value = stack.quantity;
+            let update_quantity_action = (e) => {
+                graph_inputs.add_requirement(new Stack(stack.item, Number(quantity_input.value)));
+                inputsChanged();
+            };
+            quantity_input.addEventListener('keyup', e => onEnter(e, update_quantity_action));
+            let update_button = document.createElement('button');
+            update_button.innerText = 'Update';
+            update_button.addEventListener('click', update_quantity_action);
+            quantity_cell.appendChild(quantity_input);
+            quantity_cell.appendChild(update_button);
             setBgColour(row.insertCell(-1), idx).textContent = stack.item.id;
             idx++;
         });
@@ -611,6 +623,12 @@ graph_inputs = new GraphInputs(null);
 
 document.getElementById('data_set').addEventListener('change', handleDataSetChange);
 document.getElementById('requirement_selection_id').addEventListener('keyup', handleRequirementSelectionId);
+document.getElementById('requirement_selection_quantity').addEventListener('keyup', e => onEnter(e, evt => {
+    performRequirementSearch(document.getElementById('requirement_selection_id').value, updateRequirementSearchResults);
+}));
+document.getElementById('do_item_search').addEventListener('click', evt => {
+    performRequirementSearch(document.getElementById('requirement_selection_id').value, updateRequirementSearchResults);
+});
 document.getElementById('process_selection_id').addEventListener('keyup', handleProcessSearchById);
 
 document.getElementById('process_selection_output').addEventListener('keyup', handleProcessSearchByOutput);
@@ -626,7 +644,7 @@ document.getElementById('process_selection_input').addEventListener('keyup', han
 if (window.location.hash) {
     console.log('hash detected', window.location.hash);
     let blob = JSON.parse(atob(window.location.hash.slice(1)));
-
+    console.log('decoded hash', blob);
     loadDataSet(blob.game_id)
         .then(d => [d, GraphInputs.fromSerial(blob, d)])
         .then(postDataChange)
