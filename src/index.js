@@ -189,6 +189,25 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
 
 function inputsChanged() {
     window.location.hash = '#' + btoa(JSON.stringify(graph_inputs.toSerial()));
+    updateRequirementsTable();
+    updateIncludedProcessesTable();
+    updateDefaultFactoriesTable();
+    updateMatrix(graph_inputs);
+}
+
+function updateIncludedProcessesTable() {
+    changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody', (cell, process) => {
+        let b = document.createElement('button');
+        b.innerText = 'Remove';
+        b.addEventListener('click', event => {
+            graph_inputs.remove_process(process);
+            inputsChanged();
+        });
+        cell.appendChild(b);
+    });
+}
+
+function updateRequirementsTable() {
     changeTableBody('input_table', 'input_table_tbody', replacement => {
         let idx = 0;
         graph_inputs.requirements.forEach(stack => {
@@ -210,17 +229,6 @@ function inputsChanged() {
         graph_inputs.imports.forEach(item => import_export(item, createImportRemovalButton, '(import)'));
         graph_inputs.exports.forEach(item => import_export(item, createExportRemovalButton, '(export)'));
     });
-    changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody', (cell, process) => {
-        let b = document.createElement('button');
-        b.innerText = 'Remove';
-        b.addEventListener('click', event => {
-            graph_inputs.remove_process(process);
-            inputsChanged();
-        });
-        cell.appendChild(b);
-    });
-    updateDefaultFactoriesTable();
-    updateMatrix(graph_inputs);
 }
 
 function factoriesForFactoryGroup(factory_group_id) {
