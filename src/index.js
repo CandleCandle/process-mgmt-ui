@@ -66,14 +66,25 @@ class GraphInputs {
     }
 
     getFactoryForProcess(process) {
+
         if (this.default_factory_groups[process.factory_group.id]) {
-            return this.default_factory_groups[process.factory_group.id].modify(1, 1);
+            return this.default_factory_groups[process.factory_group.id];
         }
         let all_suitable_factories = factoriesForFactoryGroup(process.factory_group.id);
         if (all_suitable_factories.length > 0) {
             return all_suitable_factories[0];
         }
         return new Factory('__default__', '__default__', null, 1, 1);
+    }
+
+    getModifiedFactoryForProcess(process) {
+        let d = this.process_modifiers[process.id] && this.process_modifiers[process.id].duration
+            ? this.process_modifiers[process.id].duration
+            : 1;
+        let o = this.process_modifiers[process.id] && this.process_modifiers[process.id].output
+            ? this.process_modifiers[process.id].output
+            : 1;
+        return this.getFactoryForProcess(process).modify(d, o);
     }
 
     add_requirement(req) {
@@ -204,7 +215,7 @@ function updateIncludedProcessesTable() {
             inputsChanged();
         });
         cell.appendChild(b);
-    });
+    }, graph_inputs.process_modifiers);
 }
 
 function updateRequirementsTable() {
@@ -410,22 +421,23 @@ function performProcessSearch(matcher) {
 }
 
 function updateProcessSearchResults(results) {
-    changeProcessTableBody(results, "process_search_results", "process_search_results_tbody", createProcessUseButton);
+    changeProcessTableBody(results, "process_search_results", "process_search_results_tbody", createProcessUseButton, {});
 }
 
-function changeProcessTableBody(processes, table_id, tbody_id, button_cb) {
+function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifiers) {
     changeTableBody(table_id, tbody_id, replacement =>{
         processes.forEach((process, idx) => {
             let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
             for (let row_idx = 0; row_idx < max_rowspan; ++row_idx) {
                 let row = replacement.insertRow(-1);
                 if (row_idx === 0) {
-                    let cells = []
-                    cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
+                    let cells = [];
+                    cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
                     button_cb(cells[0], process);
                     cells[1].innerText = process.id;
                     cells[2].innerText = process.factory_group.id;
-                    cells[3].innerText = process.duration;
+                    cells[3].innerText = modifyDuration(process, modifiers);
+                    cells[4].innerText = process.duration;
                     cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
                 }
                 if (process.inputs.length > row_idx) {
@@ -437,14 +449,30 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb) {
                 }
                 if (process.outputs.length > row_idx) {
                     setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].item.id;
+                    setBgColour(row.insertCell(-1), idx).innerText = modifyOutput(process, modifiers, row_idx);
                     setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].quantity;
                 } else {
+                    setBgColour(row.insertCell(-1), idx).innerText = '';
                     setBgColour(row.insertCell(-1), idx).innerText = '';
                     setBgColour(row.insertCell(-1), idx).innerText = '';
                 }
             }
         });
     });
+}
+
+function modifyDuration(process, modifiers) {
+    if (modifiers[process.id] && modifiers[process.id].duration) {
+        return modifiers[process.id].duration * process.duration;
+    }
+    return process.duration;
+}
+
+function modifyOutput(process, modifiers, index) {
+    if (modifiers[process.id] && modifiers[process.id].output) {
+        return modifiers[process.id].output * process.outputs[index].quantity;
+    }
+    return process.outputs[index].quantity;
 }
 
 function createProcessUseButton(cell, process) {
@@ -491,7 +519,7 @@ function updateMatrix(inputs) {
     let linear_algebra_visitor = new LinearAlgebra(inputs.requirements, inputs.imports.map(i => i.id), inputs.exports.map(i => i.id));
     linear_algebra_visitor.print_matricies = true;
     let chain = new ProcessChain(inputs.processes)
-        .accept(new RateVisitor(proc => graph_inputs.getFactoryForProcess(proc)))
+        .accept(new RateVisitor(proc => graph_inputs.getModifiedFactoryForProcess(proc)))
         .accept(new ProcessCountVisitor())
         .accept(linear_algebra_visitor);
     updateMatrixTable(linear_algebra_visitor, 'augmented_matrix_table', linear_algebra_visitor.augmented_matrix);
