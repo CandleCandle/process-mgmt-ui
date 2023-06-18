@@ -8,11 +8,9 @@ class ModifierStyle {
     }
 
     createDurationModifierInput(process, modifiers) {
-        console.log('duration modifier', modifiers);
         return this.createModifierInput(this.getDurationModifierValue(process, modifiers));
     }
     createOutputModifierInput(process, modifiers) {
-        console.log('output modifier', modifiers);
         return this.createModifierInput(this.getOutputModifierValue(process, modifiers));
     }
 
@@ -43,7 +41,6 @@ class RawNumber extends ModifierStyle {
         super('r', 'raw multiplier', 1);
     }
     createModifierInput(val) {
-        console.log('modifier', val);
         let input = document.createElement('input');
         input.size = 5;
         input.value = val;
@@ -60,7 +57,6 @@ class NormalPercentage extends ModifierStyle {
         super('p', 'percent multiplier', 100);
     }
     createModifierInput(val) {
-        console.log('modifier', val);
         let input = document.createElement('input');
         input.size = 5;
         input.value = val;
@@ -84,7 +80,6 @@ class AdditionalPercentage extends ModifierStyle {
         super('a', 'percent addition', 0);
     }
     createModifierInput(val) {
-        console.log('modifier', val);
         let input = document.createElement('input');
         input.size = 5;
         input.value = val;

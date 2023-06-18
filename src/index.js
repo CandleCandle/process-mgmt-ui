@@ -78,7 +78,7 @@ function updateIncludedProcessesTable() {
             inputsChanged();
         });
         cell.appendChild(b);
-    }, graph_inputs.process_modifiers);
+    }, graph_inputs.process_modifiers, 'disabled');
 }
 
 function updateRequirementsTable() {
@@ -287,7 +287,7 @@ function updateProcessSearchResults(results) {
     changeProcessTableBody(results, "process_search_results", "process_search_results_tbody", createProcessUseButton, {});
 }
 
-function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifiers) {
+function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifiers, modifiers_mode) {
     changeTableBody(table_id, tbody_id, replacement =>{
         processes.forEach((process, idx) => {
             let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
@@ -297,6 +297,12 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
                 let duration_modifier_style_selection = createModifierStyleSelection(process, modifiers, 'duration_style')
                 let output_modifier_inputs = createOutputModifierInput(process, modifiers)
                 let output_modifier_style_selection = createModifierStyleSelection(process, modifiers, 'output_style')
+                if (modifiers_mode === 'disabled') {
+                    duration_modifier_inputs[0].disabled = true;
+                    output_modifier_inputs[0].disabled = true;
+                    duration_modifier_style_selection.disabled = true;
+                    output_modifier_style_selection.disabled = true;
+                }
                 if (row_idx === 0) {
                     let cells = new Array(7).fill(null).map(() => row.insertCell(-1));
                     // addModifierEventListeners(duration_modifier_style_selection, duration_modifier_inputs[0]);
