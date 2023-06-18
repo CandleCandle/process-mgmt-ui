@@ -4,6 +4,9 @@ import { LinearAlgebra } from 'process-mgmt/src/visit/linear_algebra_visitor.js'
 import { RateGraphRenderer } from 'process-mgmt/src/visit/rate_graph_renderer.js';
 import { ProcessCountVisitor } from 'process-mgmt/src/visit/process_count_visitor.js';
 
+import { GraphInputs } from './graph_inputs.js';
+import { Modifiers, modifier_styles } from './modifiers.js';
+
 const ROW_A = 'row_a';
 const ROW_B = 'row_b';
 
@@ -11,208 +14,6 @@ const ROW_B = 'row_b';
 let data = null;
 let graph_inputs = null;
 
-class ModifierStyle {
-    get serial() {
-        return this.serial_key;
-    }
-}
-
-class RawNumber extends ModifierStyle {
-    // faster is a multiplier of 0.6
-    // slower is a multiplier of 1.2
-    constructor() {
-        super();
-        this.serial_key = 'r';
-        this.name = 'raw multiplier';
-    }
-}
-
-class NormalPercentage extends ModifierStyle {
-    // "100%" is standard, multiplier of 1.
-    // slower is "75%", multiplier of 4/3 (duration gets larger)
-    constructor() {
-        super();
-        this.serial_key = 'p';
-        this.name = 'percent multiplier';
-    }
-}
-
-class AdditionalPercentage extends ModifierStyle {
-    // "+0%" is standard, multiplier of 1.
-    // faster is "+75%", multiplier of 1/1.75.
-    constructor() {
-        super();
-        this.serial_key = 'a';
-        this.name = 'percent addition';
-    }
-}
-let modifier_styles = [new RawNumber(), new NormalPercentage(), new AdditionalPercentage()]
-    .reduce((p, m) => {p[m.serial] = m; return p}, {});
-
-class Modifiers {
-    constructor(duration = 1, output = 1, duration_style = modifier_styles['r'], output_style = modifier_styles['r']) {
-        this.duration = duration;
-        this.duration_style = duration_style;
-        this.output = output;
-        this.output_style = output_style;
-    }
-}
-
-function reduceEntriesToObject(prev, [k,v]) {
-    prev[k] = v;
-    return prev;
-}
-
-class GraphInputs {
-    constructor(game_id) {
-        this.game_id = game_id;
-        this.requirements = []; // [Stack]
-        this.imports = []; // [Item]
-        this.exports = []; // [Item]
-        this.processes = []; // [Process]
-        this.default_factory_groups = {}; // factory_group.id => factory type
-        this.process_modifiers = {}; // process.id => Modifiers
-    }
-
-    static fromSerial(serial, data) {
-        switch(serial.v) {
-            case 1: return GraphInputs.fromSerialV1(serial, data);
-            default: return GraphInputs.fromSerialV0(serial, data);
-        }
-    }
-    static fromSerialV1(serial, data) {
-        let gi = new GraphInputs(serial.game_id);
-        gi.requirements = serial.requirements.map(req => new Stack(data.items[req.id], req.q));
-        gi.imports = serial.imports.map(i => data.items[i]);
-        gi.exports = serial.exports.map(e => data.items[e]);
-        gi.processes = serial.processes.map(p => data.processes[p]);
-        gi.default_factory_groups = Object.entries(serial.default_factory_groups)
-            .map(([k, v]) => [k, data.factories[v]])
-            .reduce(reduceEntriesToObject, {});
-        gi.process_modifiers = Object.entries(serial.process_modifiers)
-            .map(([k, v]) => [k, new Modifiers(v.d, v.o, modifier_styles[v.ds], modifier_styles[v.os])])
-            .reduce(reduceEntriesToObject, {});
-        return gi;
-    }
-
-    static fromSerialV0(serial, data) {
-        let gi = new GraphInputs(serial.game_id);
-        gi.requirements = serial.requirements.map(req => new Stack(data.items[req.id], req.q));
-        gi.imports = serial.imports.map(i => data.items[i]);
-        gi.exports = serial.exports.map(e => data.items[e]);
-        gi.processes = serial.processes.map(p => data.processes[p]);
-        gi.default_factory_groups = Object.entries(serial.default_factory_groups)
-            .map(([k, v]) => [k, data.factories[v]])
-            .reduce(reduceEntriesToObject, {});
-        gi.process_modifiers = Object.entries(serial.process_modifiers)
-            .map(([k, v]) => [k, new Modifiers(v.d, v.o)])
-            .reduce(reduceEntriesToObject, {});
-        return gi;
-    }
-
-    toSerial() {
-        return {
-            v: 1,
-            game_id: this.game_id,
-            requirements: this.requirements.map(req => {return {id: req.item.id, q: req.quantity}}),
-            imports: this.imports.map(item => item.id),
-            exports: this.exports.map(item => item.id),
-            processes: this.processes.map(proc => proc.id),
-            default_factory_groups: Object.entries(this.default_factory_groups)
-                .map(([k, v]) => [k, v.id])
-                .reduce(reduceEntriesToObject, {}),
-            process_modifiers: Object.entries(this.process_modifiers)
-                .map(([k, v]) => [k, {d: v.duration, o: v.output, ds: v.duration_style.serial_key, os: v.output_style.serial_key}])
-                .reduce(reduceEntriesToObject, {})
-        };
-    }
-
-    getFactoryForProcess(process) {
-
-        if (this.default_factory_groups[process.factory_group.id]) {
-            return this.default_factory_groups[process.factory_group.id];
-        }
-        let all_suitable_factories = factoriesForFactoryGroup(process.factory_group.id);
-        if (all_suitable_factories.length > 0) {
-            return all_suitable_factories[0];
-        }
-        return new Factory('__default__', '__default__', null, 1, 1);
-    }
-
-    getModifiedFactoryForProcess(process) {
-        let d = this.process_modifiers[process.id] && this.process_modifiers[process.id].duration
-            ? this.process_modifiers[process.id].duration
-            : 1;
-        let o = this.process_modifiers[process.id] && this.process_modifiers[process.id].output
-            ? this.process_modifiers[process.id].output
-            : 1;
-        return this.getFactoryForProcess(process).modify(d, o);
-    }
-
-    add_requirement(req) {
-        if (this.contains_requirement(req.item)) {
-            let i = this.requirements.findIndex(stack => stack.item.id === req.item.id);
-            this.requirements[i] = req;
-        } else {
-            this.requirements.push(req);
-        }
-    }
-    setFactoryForFactoryGroup(factory_group_id, factory) {
-        this.default_factory_groups[factory_group_id] = factory;
-    }
-
-    add_process(process) {
-        if (!this.contains_process(process)) {
-            this.processes.push(process);
-        }
-    }
-
-    addImport(item) {
-        if (!this.imports.some(i => i.id === item.id)) {
-            this.imports.push(item);
-        }
-    }
-    removeImport(item) {
-        let i = this.imports.findIndex(i => i.id === item.id);
-        if (i >= 0) {
-            this.imports.splice(i, 1);
-        }
-    }
-
-    addExport(item) {
-        if (!this.exports.some(i => i.id === item.id)) {
-            this.exports.push(item);
-        }
-    }
-    removeExport(item) {
-        let i = this.exports.findIndex(i => i.id === item.id);
-        if (i >= 0) {
-            this.exports.splice(i, 1);
-        }
-    }
-
-    contains_requirement(item) {
-        return this.requirements.some(stack => stack.item.id === item.id);
-    }
-
-    contains_process(process) {
-        return this.processes.some(proc => proc.id === process.id);
-    }
-
-    remove_requirement(item) {
-        if (this.contains_requirement(item)){
-            let i = this.requirements.findIndex(stack => stack.item.id === item.id);
-            this.requirements.splice(i, 1);
-        }
-    }
-
-    remove_process(process) {
-        if (this.contains_process(process)) {
-            let i = this.processes.findIndex(proc => proc.id === process.id);
-            this.processes.splice(i, 1);
-        }
-    }
-}
 
 function handleDataSetChange(event) {
     console.log('attempting to load data: ', event.target.value);
@@ -492,13 +293,21 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
             let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
             for (let row_idx = 0; row_idx < max_rowspan; ++row_idx) {
                 let row = replacement.insertRow(-1);
+                let duration_modifier_inputs = createDurationModifierInput(process, modifiers)
+                let duration_modifier_style_selection = createModifierStyleSelection(process, modifiers, 'duration_style')
+                let output_modifier_inputs = createOutputModifierInput(process, modifiers)
+                let output_modifier_style_selection = createModifierStyleSelection(process, modifiers, 'output_style')
                 if (row_idx === 0) {
                     let cells = new Array(7).fill(null).map(() => row.insertCell(-1));
-                    button_cb(cells[0], process);
+                    // addModifierEventListeners(duration_modifier_style_selection, duration_modifier_inputs[0]);
+                    button_cb(cells[0], process,
+                        duration_modifier_style_selection, duration_modifier_inputs[0],
+                        output_modifier_style_selection, output_modifier_inputs[0]
+                    );
                     cells[1].innerText = process.id;
                     cells[2].innerText = process.factory_group.id;
-                    cells[3].appendChild(createModifierStyleSelection(process, modifiers, 'duration_style'));
-                    cells[4].innerText = 'mod value';
+                    cells[3].appendChild(duration_modifier_style_selection);
+                    cells[4].appendChild(duration_modifier_inputs[1]);
                     cells[5].innerText = modifyDuration(process, modifiers);
                     cells[6].innerText = process.duration;
                     cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
@@ -512,8 +321,8 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
                 }
                 if (row_idx === 0) {
                     let cells = new Array(2).fill(null).map(() => row.insertCell(-1));
-                    cells[0].appendChild(createModifierStyleSelection(process, modifiers, 'output_style'));
-                    cells[1].innerText = 'mod value';
+                    cells[0].appendChild(output_modifier_style_selection);
+                    cells[1].appendChild(output_modifier_inputs[1]);
                     cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
                 }
                 if (process.outputs.length > row_idx) {
@@ -530,20 +339,54 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
     });
 }
 
+function createDurationModifierInput(process, modifiers) {
+    if (modifiers[process.id] && modifiers[process.id].duration_style) {
+        return modifiers[process.id].duration_style.createDurationModifierInput(process, modifiers);
+    } else if (data_sets[graph_inputs.game_id] && data_sets[graph_inputs.game_id].duration_style) {
+        return data_sets[graph_inputs.game_id].duration_style.createDurationModifierInput(process, modifiers);
+    }
+    let input = document.createElement('span');
+    input.innerText = 'disabled'
+    let value = document.createElement('span');
+    value.appendChild(input);
+    return [input, value];
+}
+
+function createOutputModifierInput(process, modifiers) {
+    if (modifiers[process.id] && modifiers[process.id].output_style) {
+        return modifiers[process.id].output_style.createOutputModifierInput(process, modifiers);
+    } else if (data_sets[graph_inputs.game_id] && data_sets[graph_inputs.game_id].output_style) {
+        return data_sets[graph_inputs.game_id].output_style.createOutputModifierInput(process, modifiers);
+    }
+    let input = document.createElement('span');
+    input.innerText = 'disabled'
+    let value = document.createElement('span');
+    value.appendChild(input);
+    return [input, value];
+}
+
 function createModifierStyleSelection(process, modifiers, style_group) {
     let select = document.createElement('select');
     Object.values(modifier_styles).forEach(style => {
         let e = document.createElement('option');
         e.value = style.serial_key;
         e.text = style.name;
-        if (modifiers[process.id]
-            && modifiers[process.id][style_group]
+        if (modifiers[process.id] && modifiers[process.id][style_group]
             && style.serial_key === modifiers[process.id][style_group].serial_key) {
-                e.selected = true;
+            e.selected = true;
+        } else if (data_sets[graph_inputs.game_id]
+            && style.serial_key === data_sets[graph_inputs.game_id][style_group].serial_key) {
+            e.selected = true;
         }
         select.appendChild(e);
     });
     return select;
+}
+
+function addModifierEventListeners(selector, input) {
+    // selector.onChange ... update inputs
+    // input.onChange/onfocusout
+
 
 }
 
@@ -561,11 +404,21 @@ function modifyOutput(process, modifiers, index) {
     return process.outputs[index].quantity;
 }
 
-function createProcessUseButton(cell, process) {
+function createProcessUseButton(cell, process, dur_selector, dur_input, out_selector, out_input) {
     let button = document.createElement('button');
     button.innerText = 'Use';
     button.addEventListener('click', event => {
         graph_inputs.add_process(process);
+        let mod_style_d = modifier_styles[dur_selector.value];
+        let mod_style_o = modifier_styles[out_selector.value];
+        let dmv = Number(dur_input.value);
+        let omv = Number(out_input.value);
+        if (dmv !== mod_style_d.default && omv !== mod_style_o.default) {
+            graph_inputs.addModifier(process, new Modifiers(
+                mod_style_d.durationToRaw(dmv),
+                mod_style_o.outputToRaw(omv),
+                mod_style_d, mod_style_o));
+        }
         inputsChanged();
         changeTableBody("process_search_results", "process_search_results_tbody", () => {});
     });
@@ -605,7 +458,7 @@ function updateMatrix(inputs) {
     let linear_algebra_visitor = new LinearAlgebra(inputs.requirements, inputs.imports.map(i => i.id), inputs.exports.map(i => i.id));
     linear_algebra_visitor.print_matricies = true;
     let chain = new ProcessChain(inputs.processes)
-        .accept(new RateVisitor(proc => graph_inputs.getModifiedFactoryForProcess(proc)))
+        .accept(new RateVisitor(proc => graph_inputs.getModifiedFactoryForProcess(data, proc)))
         .accept(new ProcessCountVisitor())
         .accept(linear_algebra_visitor);
     updateMatrixTable(linear_algebra_visitor, 'augmented_matrix_table', linear_algebra_visitor.augmented_matrix);
@@ -613,11 +466,11 @@ function updateMatrix(inputs) {
     updateUnknownsTable(linear_algebra_visitor);
 
 
-    let data = chain.accept(new RateGraphRenderer()).join('\n');
-    console.log(data);
+    let graph_data = chain.accept(new RateGraphRenderer()).join('\n');
+    console.log(graph_data);
 
     document.getElementById('image_container').innerHTML = Viz(
-        data,
+        graph_data,
         {
             format: 'svg',
             engine: 'dot'
@@ -718,8 +571,8 @@ class DataSet {
     constructor(id, name, duration_modifier_style, output_modifier_style) {
         this.id = id;
         this.name = name;
-        this.duration_modifier_style = duration_modifier_style;
-        this.output_modifier_style = output_modifier_style;
+        this.duration_style = duration_modifier_style;
+        this.output_style = output_modifier_style;
     }
 }
 
@@ -733,15 +586,7 @@ let data_sets = [
     new DataSet('vt', "Voxel Tycoon", modifier_styles['r'], modifier_styles['r']),
 ].reduce((p, d) => {p[d.id] = d; return p;}, {});
 console.log(data_sets);
-// let data_sets = {
-//     'dsp': 'DSP',
-//     'factorio-ab-1.1.38': 'Factorio AB (1.1.38)',
-//     'factorio-py-1.1.53': 'Factorio PY (1.1.53)',
-//     'factorio-ff-1.1.76': 'Factorio FF (1.1.76)',
-//     'plan-b-terraform': 'Plan B, Terraform',
-//     'satisfactory': "Satisfactory",
-//     'vt': "Voxel Tycoon",
-// };
+
 
 let sets = document.getElementById('data_set');
 Object.values(data_sets).forEach(element => {
