@@ -306,15 +306,22 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
                     );
                     cells[1].innerText = process.id;
                     cells[2].innerText = process.factory_group.id;
-                    cells[3].appendChild(duration_modifier_style_selection);
-                    cells[4].appendChild(duration_modifier_inputs[1]);
-                    cells[5].innerText = modifyDuration(process, modifiers);
-                    cells[6].innerText = process.duration;
+                    cells[3].innerText = process.duration;
+                    cells[4].appendChild(duration_modifier_style_selection);
+                    cells[5].appendChild(duration_modifier_inputs[1]);
+                    cells[6].innerText = modifyDuration(process, modifiers);
                     cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
                 }
                 if (process.inputs.length > row_idx) {
                     setBgColour(row.insertCell(-1), idx).innerText = process.inputs[row_idx].item.id;
                     setBgColour(row.insertCell(-1), idx).innerText = process.inputs[row_idx].quantity;
+                } else {
+                    setBgColour(row.insertCell(-1), idx).innerText = '';
+                    setBgColour(row.insertCell(-1), idx).innerText = '';
+                }
+                if (process.outputs.length > row_idx) {
+                    setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].item.id;
+                    setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].quantity;
                 } else {
                     setBgColour(row.insertCell(-1), idx).innerText = '';
                     setBgColour(row.insertCell(-1), idx).innerText = '';
@@ -326,12 +333,8 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
                     cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
                 }
                 if (process.outputs.length > row_idx) {
-                    setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].item.id;
                     setBgColour(row.insertCell(-1), idx).innerText = modifyOutput(process, modifiers, row_idx);
-                    setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].quantity;
                 } else {
-                    setBgColour(row.insertCell(-1), idx).innerText = '';
-                    setBgColour(row.insertCell(-1), idx).innerText = '';
                     setBgColour(row.insertCell(-1), idx).innerText = '';
                 }
             }
