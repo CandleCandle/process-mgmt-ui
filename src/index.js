@@ -11,10 +11,50 @@ const ROW_B = 'row_b';
 let data = null;
 let graph_inputs = null;
 
+class ModifierStyle {
+    get serial() {
+        return this.serial_key;
+    }
+}
+
+class RawNumber extends ModifierStyle {
+    // faster is a multiplier of 0.6
+    // slower is a multiplier of 1.2
+    constructor() {
+        super();
+        this.serial_key = 'r';
+        this.name = 'raw multiplier';
+    }
+}
+
+class NormalPercentage extends ModifierStyle {
+    // "100%" is standard, multiplier of 1.
+    // slower is "75%", multiplier of 4/3 (duration gets larger)
+    constructor() {
+        super();
+        this.serial_key = 'p';
+        this.name = 'percent multiplier';
+    }
+}
+
+class AdditionalPercentage extends ModifierStyle {
+    // "+0%" is standard, multiplier of 1.
+    // faster is "+75%", multiplier of 1/1.75.
+    constructor() {
+        super();
+        this.serial_key = 'a';
+        this.name = 'percent addition';
+    }
+}
+let modifier_styles = [new RawNumber(), new NormalPercentage(), new AdditionalPercentage()]
+    .reduce((p, m) => {p[m.serial] = m; return p}, {});
+
 class Modifiers {
-    constructor(duration = 1, output = 1) {
+    constructor(duration = 1, output = 1, duration_style = modifier_styles['r'], output_style = modifier_styles['r']) {
         this.duration = duration;
+        this.duration_style = duration_style;
         this.output = output;
+        this.output_style = output_style;
     }
 }
 
@@ -35,6 +75,27 @@ class GraphInputs {
     }
 
     static fromSerial(serial, data) {
+        switch(serial.v) {
+            case 1: return GraphInputs.fromSerialV1(serial, data);
+            default: return GraphInputs.fromSerialV0(serial, data);
+        }
+    }
+    static fromSerialV1(serial, data) {
+        let gi = new GraphInputs(serial.game_id);
+        gi.requirements = serial.requirements.map(req => new Stack(data.items[req.id], req.q));
+        gi.imports = serial.imports.map(i => data.items[i]);
+        gi.exports = serial.exports.map(e => data.items[e]);
+        gi.processes = serial.processes.map(p => data.processes[p]);
+        gi.default_factory_groups = Object.entries(serial.default_factory_groups)
+            .map(([k, v]) => [k, data.factories[v]])
+            .reduce(reduceEntriesToObject, {});
+        gi.process_modifiers = Object.entries(serial.process_modifiers)
+            .map(([k, v]) => [k, new Modifiers(v.d, v.o, modifier_styles[v.ds], modifier_styles[v.os])])
+            .reduce(reduceEntriesToObject, {});
+        return gi;
+    }
+
+    static fromSerialV0(serial, data) {
         let gi = new GraphInputs(serial.game_id);
         gi.requirements = serial.requirements.map(req => new Stack(data.items[req.id], req.q));
         gi.imports = serial.imports.map(i => data.items[i]);
@@ -51,6 +112,7 @@ class GraphInputs {
 
     toSerial() {
         return {
+            v: 1,
             game_id: this.game_id,
             requirements: this.requirements.map(req => {return {id: req.item.id, q: req.quantity}}),
             imports: this.imports.map(item => item.id),
@@ -60,7 +122,7 @@ class GraphInputs {
                 .map(([k, v]) => [k, v.id])
                 .reduce(reduceEntriesToObject, {}),
             process_modifiers: Object.entries(this.process_modifiers)
-                .map(([k, v]) => [k, {d: v.duration, o: v.output}])
+                .map(([k, v]) => [k, {d: v.duration, o: v.output, ds: v.duration_style.serial_key, os: v.output_style.serial_key}])
                 .reduce(reduceEntriesToObject, {})
         };
     }
@@ -431,13 +493,14 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
             for (let row_idx = 0; row_idx < max_rowspan; ++row_idx) {
                 let row = replacement.insertRow(-1);
                 if (row_idx === 0) {
-                    let cells = [];
-                    cells.push(row.insertCell(-1), row.insertCell(-1), row.insertCell(-1), row.insertCell(-1), row.insertCell(-1));
+                    let cells = new Array(7).fill(null).map(() => row.insertCell(-1));
                     button_cb(cells[0], process);
                     cells[1].innerText = process.id;
                     cells[2].innerText = process.factory_group.id;
-                    cells[3].innerText = modifyDuration(process, modifiers);
-                    cells[4].innerText = process.duration;
+                    cells[3].appendChild(createModifierStyleSelection(process, modifiers, 'duration_style'));
+                    cells[4].innerText = 'mod value';
+                    cells[5].innerText = modifyDuration(process, modifiers);
+                    cells[6].innerText = process.duration;
                     cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
                 }
                 if (process.inputs.length > row_idx) {
@@ -446,6 +509,12 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
                 } else {
                     setBgColour(row.insertCell(-1), idx).innerText = '';
                     setBgColour(row.insertCell(-1), idx).innerText = '';
+                }
+                if (row_idx === 0) {
+                    let cells = new Array(2).fill(null).map(() => row.insertCell(-1));
+                    cells[0].appendChild(createModifierStyleSelection(process, modifiers, 'output_style'));
+                    cells[1].innerText = 'mod value';
+                    cells.forEach(c => setBgColour(c, idx).rowSpan = max_rowspan);
                 }
                 if (process.outputs.length > row_idx) {
                     setBgColour(row.insertCell(-1), idx).innerText = process.outputs[row_idx].item.id;
@@ -459,6 +528,23 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
             }
         });
     });
+}
+
+function createModifierStyleSelection(process, modifiers, style_group) {
+    let select = document.createElement('select');
+    Object.values(modifier_styles).forEach(style => {
+        let e = document.createElement('option');
+        e.value = style.serial_key;
+        e.text = style.name;
+        if (modifiers[process.id]
+            && modifiers[process.id][style_group]
+            && style.serial_key === modifiers[process.id][style_group].serial_key) {
+                e.selected = true;
+        }
+        select.appendChild(e);
+    });
+    return select;
+
 }
 
 function modifyDuration(process, modifiers) {
@@ -628,22 +714,40 @@ function createUnknownExportButtons(cell, item) {
 }
 
 
+class DataSet {
+    constructor(id, name, duration_modifier_style, output_modifier_style) {
+        this.id = id;
+        this.name = name;
+        this.duration_modifier_style = duration_modifier_style;
+        this.output_modifier_style = output_modifier_style;
+    }
+}
 
-let data_sets = {
-    'dsp': 'DSP',
-    'factorio-ab-1.1.38': 'Factorio AB (1.1.38)',
-    'factorio-py-1.1.53': 'Factorio PY (1.1.53)',
-    'factorio-ff-1.1.76': 'Factorio FF (1.1.76)',
-    'plan-b-terraform': 'Plan B, Terraform',
-    'satisfactory': "Satisfactory",
-    'vt': "Voxel Tycoon",
-};
+let data_sets = [
+    new DataSet('dsp', 'DSP', modifier_styles['r'], modifier_styles['r']),
+    new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles['a'], modifier_styles['a']),
+    new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles['a'], modifier_styles['a']),
+    new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles['a'], modifier_styles['a']),
+    new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles['r'], modifier_styles['r']),
+    new DataSet('satisfactory', "Satisfactory", modifier_styles['p'], modifier_styles['p']),
+    new DataSet('vt', "Voxel Tycoon", modifier_styles['r'], modifier_styles['r']),
+].reduce((p, d) => {p[d.id] = d; return p;}, {});
+console.log(data_sets);
+// let data_sets = {
+//     'dsp': 'DSP',
+//     'factorio-ab-1.1.38': 'Factorio AB (1.1.38)',
+//     'factorio-py-1.1.53': 'Factorio PY (1.1.53)',
+//     'factorio-ff-1.1.76': 'Factorio FF (1.1.76)',
+//     'plan-b-terraform': 'Plan B, Terraform',
+//     'satisfactory': "Satisfactory",
+//     'vt': "Voxel Tycoon",
+// };
 
 let sets = document.getElementById('data_set');
-Object.entries(data_sets).forEach(element => {
+Object.values(data_sets).forEach(element => {
     let e = document.createElement('option');
-    e.value = element[0];
-    e.innerText = element[1];
+    e.value = element.id;
+    e.innerText = element.name;
     sets.appendChild(e);
 });
 
