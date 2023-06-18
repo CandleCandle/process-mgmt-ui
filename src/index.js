@@ -367,19 +367,24 @@ function createOutputModifierInput(process, modifiers) {
 
 function createModifierStyleSelection(process, modifiers, style_group) {
     let select = document.createElement('select');
-    Object.values(modifier_styles).forEach(style => {
+    let selected = -1;
+    Object.values(modifier_styles).forEach((style, idx) => {
         let e = document.createElement('option');
         e.value = style.serial_key;
         e.text = style.name;
-        if (modifiers[process.id] && modifiers[process.id][style_group]
-            && style.serial_key === modifiers[process.id][style_group].serial_key) {
-            e.selected = true;
+        if (modifiers[process.id]) {
+            if (style.serial_key === modifiers[process.id][style_group].serial_key) {
+                selected = idx;
+                select.selectedIndex = idx;
+            }
         } else if (data_sets[graph_inputs.game_id]
             && style.serial_key === data_sets[graph_inputs.game_id][style_group].serial_key) {
-            e.selected = true;
+            selected = idx;
+            select.selectedIndex = idx;
         }
         select.appendChild(e);
     });
+    select.selectedIndex = selected;
     return select;
 }
 
