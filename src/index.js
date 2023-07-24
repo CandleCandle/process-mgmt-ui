@@ -63,13 +63,12 @@ function changeTableBody(table_id, tbody_id, create_tbody_cb) {
 
 function inputsChanged() {
     window.location.hash = '#' + btoa(JSON.stringify(graph_inputs.toSerial()));
-    updateRequirementsTable();
-    updateIncludedProcessesTable();
-    updateDefaultFactoriesTable();
+    updateRequirementsTable(graph_inputs);
+    updateIncludedProcessesTable(graph_inputs);
     updateMatrix(graph_inputs);
 }
 
-function updateIncludedProcessesTable() {
+function updateIncludedProcessesTable(graph_inputs) {
     changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody', (cell, process) => {
         let b = document.createElement('button');
         b.innerText = 'Remove';
@@ -81,7 +80,7 @@ function updateIncludedProcessesTable() {
     }, graph_inputs.process_modifiers, 'disabled');
 }
 
-function updateRequirementsTable() {
+function updateRequirementsTable(graph_inputs) {
     changeTableBody('input_table', 'input_table_tbody', replacement => {
         let idx = 0;
         graph_inputs.requirements.forEach(stack => {
@@ -142,18 +141,19 @@ function createFactorySelectForFactoryGroup(factory_group_id, selected_factory) 
     return select;
 }
 
-function updateDefaultFactoriesTable() {
+function updateDefaultFactoriesTable(graph_inputs, process_counts) {
     changeTableBody('default_factories', 'default_factories_tbody', replacement => {
-        graph_inputs.processes
-            .map(p => p.factory_group.id)
-            .reduce((prev, cur) => {
-                if (!prev.includes(cur)) {
-                    prev.push(cur);
+        Object.entries(graph_inputs.processes
+            .reduce((prev, process) => {
+                if (!prev[process.factory_group.id]) {
+                    prev[process.factory_group.id] = {count: 0};
                 }
-                return prev;
-            }, [])
-            .sort((a, b) => a.localeCompare(b))
-            .forEach((factory_group_id, idx) => {
+                prev[process.factory_group.id].count += process_counts[process.id];
+                return prev;  // {factory_group_id: {count: ...}, ...}
+            }, {})) // [ [factory_group_id, {count: ..., }], ]
+            .sort((a, b) => a[0].localeCompare(b[0]))
+            .forEach(([factory_group_id, value], idx) => {
+                console.log(factory_group_id, value);
                 let row = replacement.insertRow(-1);
                 setBgColour(row.insertCell(-1), idx).innerText = factory_group_id;
                 setBgColour(row.insertCell(-1), idx).appendChild(
@@ -161,6 +161,7 @@ function updateDefaultFactoriesTable() {
                         factory_group_id,
                         graph_inputs.default_factory_groups[factory_group_id])
                 )
+                setBgColour(row.insertCell(-1), idx).innerText = (value.count === null ? 'n/a' : Math.round((value.count + Number.EPSILON) * 1e5)/1e5);
             });
     });
 }
@@ -478,6 +479,7 @@ function updateMatrix(inputs) {
     updateMatrixTable(linear_algebra_visitor, 'augmented_matrix_table', linear_algebra_visitor.augmented_matrix);
     updateMatrixTable(linear_algebra_visitor, 'reduced_matrix_table', linear_algebra_visitor.reduced_matrix);
     updateUnknownsTable(linear_algebra_visitor);
+    updateDefaultFactoriesTable(inputs, chain.process_counts);
 
 
     let graph_data = chain.accept(new RateGraphRenderer()).join('\n');
