@@ -428,7 +428,8 @@ function createProcessUseButton(cell, process, dur_selector, dur_input, out_sele
         let mod_style_o = modifier_styles[out_selector.value];
         let dmv = Number(dur_input.value);
         let omv = Number(out_input.value);
-        if (dmv !== mod_style_d.default && omv !== mod_style_o.default) {
+        if (mod_style_d && dmv !== mod_style_d.default
+             && mod_style_o && omv !== mod_style_o.default) {
             graph_inputs.addModifier(process, new Modifiers(
                 mod_style_d.durationToRaw(dmv),
                 mod_style_o.outputToRaw(omv),
@@ -593,6 +594,7 @@ class DataSet {
 }
 
 let data_sets = [
+    new DataSet('for-the-crown-3.8.3', 'For The Crown (3.8.3)', modifier_styles['r'], modifier_styles['r']),
     new DataSet('dsp', 'DSP', modifier_styles['r'], modifier_styles['r']),
     new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles['a'], modifier_styles['a']),
     new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles['a'], modifier_styles['a']),
