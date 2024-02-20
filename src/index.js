@@ -69,7 +69,7 @@ function inputsChanged() {
 }
 
 function updateIncludedProcessesTable(graph_inputs) {
-    changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody', (cell, process) => {
+    changeProcessTableBody(graph_inputs.processes, 'processes_included', 'processes_included_tbody',  (cell, process, dur_selector, dur_input, out_selector, out_input) => {
         let b = document.createElement('button');
         b.innerText = 'Remove';
         b.addEventListener('click', event => {
@@ -77,7 +77,16 @@ function updateIncludedProcessesTable(graph_inputs) {
             inputsChanged();
         });
         cell.appendChild(b);
-    }, graph_inputs.process_modifiers, 'disabled');
+        createProcessUseButton(cell, process, dur_selector, dur_input, out_selector, out_input);
+        // let u = document.createElement('button');
+        // u.innerText = 'Use';
+        // u.addEventListener('click', event => {
+        //     // UPDATE process;
+        //     inputsChanged();
+        // });
+        // cell.appendChild(u);
+
+    }, graph_inputs.process_modifiers);
 }
 
 function updateRequirementsTable(graph_inputs) {
@@ -288,7 +297,7 @@ function updateProcessSearchResults(results) {
     changeProcessTableBody(results, "process_search_results", "process_search_results_tbody", createProcessUseButton, {});
 }
 
-function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifiers, modifiers_mode) {
+function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifiers/*, modifiers_mode */) {
     changeTableBody(table_id, tbody_id, replacement =>{
         processes.forEach((process, idx) => {
             let max_rowspan = Math.max(process.inputs.length, process.outputs.length);
@@ -298,12 +307,6 @@ function changeProcessTableBody(processes, table_id, tbody_id, button_cb, modifi
                 let duration_modifier_style_selection = createModifierStyleSelection(process, modifiers, 'duration_style')
                 let output_modifier_inputs = createOutputModifierInput(process, modifiers)
                 let output_modifier_style_selection = createModifierStyleSelection(process, modifiers, 'output_style')
-                if (modifiers_mode === 'disabled') {
-                    duration_modifier_inputs[0].disabled = true;
-                    output_modifier_inputs[0].disabled = true;
-                    duration_modifier_style_selection.disabled = true;
-                    output_modifier_style_selection.disabled = true;
-                }
                 if (row_idx === 0) {
                     let cells = new Array(7).fill(null).map(() => row.insertCell(-1));
                     // addModifierEventListeners(duration_modifier_style_selection, duration_modifier_inputs[0]);
@@ -428,8 +431,8 @@ function createProcessUseButton(cell, process, dur_selector, dur_input, out_sele
         let mod_style_o = modifier_styles[out_selector.value];
         let dmv = Number(dur_input.value);
         let omv = Number(out_input.value);
-        if (mod_style_d && dmv !== mod_style_d.default
-             && mod_style_o && omv !== mod_style_o.default) {
+        if ((mod_style_d && dmv !== mod_style_d.default)
+             || (mod_style_o && omv !== mod_style_o.default)) {
             graph_inputs.addModifier(process, new Modifiers(
                 mod_style_d.durationToRaw(dmv),
                 mod_style_o.outputToRaw(omv),
