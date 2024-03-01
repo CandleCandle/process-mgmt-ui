@@ -10,7 +10,7 @@ function reduceEntriesToObject(prev, [k,v]) {
 function factoriesForFactoryGroup(data, factory_group_id) {
     return Object.values(data.factories)
         .filter(factory => factory.groups.some(fg => fg.id === factory_group_id))
-        .sort((fa, fb) => fa.duration_modifier > fb.duration_modifier);
+        .sort((fa, fb) => fa.duration_modifier - fb.duration_modifier);
 }
 
 class GraphInputs {

@@ -128,7 +128,7 @@ function updateRequirementsTable(graph_inputs) {
 function factoriesForFactoryGroup(factory_group_id) {
     return Object.values(data.factories)
         .filter(factory => factory.groups.some(fg => fg.id === factory_group_id))
-        .sort((fa, fb) => fa.duration_modifier > fb.duration_modifier);
+        .sort((fa, fb) => fa.duration_modifier - fb.duration_modifier);
 }
 
 function createFactorySelectForFactoryGroup(factory_group_id, selected_factory) {
