@@ -128,7 +128,7 @@ function updateRequirementsTable(graph_inputs) {
 function factoriesForFactoryGroup(factory_group_id) {
     return Object.values(data.factories)
         .filter(factory => factory.groups.some(fg => fg.id === factory_group_id))
-        .sort((fa, fb) => fa.duration_modifier > fb.duration_modifier);
+        .sort((fa, fb) => fa.duration_modifier - fb.duration_modifier);
 }
 
 function createFactorySelectForFactoryGroup(factory_group_id, selected_factory) {
@@ -603,6 +603,7 @@ let data_sets = [
     new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles['a'], modifier_styles['a']),
     new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles['a'], modifier_styles['a']),
     new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles['a'], modifier_styles['a']),
+    new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles['a'], modifier_styles['a']),
     new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles['r'], modifier_styles['r']),
     new DataSet('satisfactory', "Satisfactory", modifier_styles['p'], modifier_styles['p']),
     new DataSet('vt', "Voxel Tycoon", modifier_styles['r'], modifier_styles['r']),
