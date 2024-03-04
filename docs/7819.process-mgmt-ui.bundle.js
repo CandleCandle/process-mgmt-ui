@@ -1,2 +1,576 @@
-/*! For license information please see 7819.process-mgmt-ui.bundle.js.LICENSE.txt */
-(self.webpackChunkprocess_mgmt_ui=self.webpackChunkprocess_mgmt_ui||[]).push([[7819],{9191:(t,r,e)=>{var n={"./active_mods.json":[5466,5466],"./assembling-machine.json":[1235,1235],"./boiler.json":[5896,5896],"./equipment-grid.json":[6561,6561],"./equipment.json":[3981,3981],"./fluid.json":[968,968],"./furnace.json":[448,448],"./generator.json":[6379,6379],"./inserter.json":[2584,2584],"./item.json":[9421,9421],"./lab.json":[8865,8865],"./mining-drill.json":[1956,1956],"./projectile.json":[484,484],"./reactor.json":[6030,6030],"./recipe.json":[3519,3519],"./resource.json":[2459,2459],"./rocket-silo.json":[1429,1429],"./solar-panel.json":[5471,5471],"./technology.json":[4264,4264],"./transport-belt.json":[8220,8220]};function o(t){if(!e.o(n,t))return Promise.resolve().then((()=>{var r=new Error("Cannot find module '"+t+"'");throw r.code="MODULE_NOT_FOUND",r}));var r=n[t],o=r[0];return e.e(r[1]).then((()=>e.t(o,17)))}o.keys=()=>Object.keys(n),o.id=9191,t.exports=o},4214:(t,r,e)=>{"use strict";e.d(r,{V:()=>a});var n=e(6968);function o(t){return o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},o(t)}function i(t,r){for(var e=0;e<r.length;e++){var n=r[e];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,(void 0,i=function(t,r){if("object"!==o(t)||null===t)return t;var e=t[Symbol.toPrimitive];if(void 0!==e){var n=e.call(t,"string");if("object"!==o(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(n.key),"symbol"===o(i)?i:String(i)),n)}var i}var a=function(){function t(r,e){!function(t,r){if(!(t instanceof r))throw new TypeError("Cannot call a class as a function")}(this,t),(0,n.B)("game",r,"version",e),this.game=r,this.version=e,this.items={},this.factory_groups={},this.factories={},this.processes={}}var r,e;return r=t,(e=[{key:"_check_add",value:function(t,r){if(void 0!==this[t][r.id])throw new Error("duplicate "+t+" id created: "+r);this[t][r.id]=r}},{key:"add_item",value:function(t){this._check_add("items",t)}},{key:"add_factory_group",value:function(t){this._check_add("factory_groups",t)}},{key:"add_factory",value:function(t){this._check_add("factories",t)}},{key:"add_process",value:function(t){this._check_add("processes",t)}},{key:"add_items",value:function(t){var r=this;t.forEach((function(t){return r.add_item(t)}))}},{key:"add_factory_groups",value:function(t){var r=this;t.forEach((function(t){return r.add_factory_group(t)}))}},{key:"add_factories",value:function(t){var r=this;t.forEach((function(t){return r.add_factory(t)}))}},{key:"add_processes",value:function(t){var r=this;t.forEach((function(t){return r.add_process(t)}))}}])&&i(r.prototype,e),Object.defineProperty(r,"prototype",{writable:!1}),t}()},5359:(t,r,e)=>{"use strict";e.a(t,(async(t,n)=>{try{e.r(r),e.d(r,{default:()=>t});var o=e(5035);const t=await(0,o.Z)("factorio-py-1.1.53","0.0.1");n()}catch(t){n(t)}}),1)},5035:(t,r,e)=>{"use strict";e.d(r,{Z:()=>k});var n=e(3658),o=e(8604),i=e(4700),a=e(4214),u=e(1341);function c(t){return c="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},c(t)}function f(){f=function(){return t};var t={},r=Object.prototype,e=r.hasOwnProperty,n=Object.defineProperty||function(t,r,e){t[r]=e.value},o="function"==typeof Symbol?Symbol:{},i=o.iterator||"@@iterator",a=o.asyncIterator||"@@asyncIterator",u=o.toStringTag||"@@toStringTag";function s(t,r,e){return Object.defineProperty(t,r,{value:e,enumerable:!0,configurable:!0,writable:!0}),t[r]}try{s({},"")}catch(t){s=function(t,r,e){return t[r]=e}}function l(t,r,e,o){var i=r&&r.prototype instanceof h?r:h,a=Object.create(i.prototype),u=new O(o||[]);return n(a,"_invoke",{value:E(t,e,u)}),a}function m(t,r,e){try{return{type:"normal",arg:t.call(r,e)}}catch(t){return{type:"throw",arg:t}}}t.wrap=l;var p={};function h(){}function y(){}function d(){}var v={};s(v,i,(function(){return this}));var g=Object.getPrototypeOf,b=g&&g(g(L([])));b&&b!==r&&e.call(b,i)&&(v=b);var _=d.prototype=h.prototype=Object.create(v);function w(t){["next","throw","return"].forEach((function(r){s(t,r,(function(t){return this._invoke(r,t)}))}))}function j(t,r){function o(n,i,a,u){var f=m(t[n],t,i);if("throw"!==f.type){var s=f.arg,l=s.value;return l&&"object"==c(l)&&e.call(l,"__await")?r.resolve(l.__await).then((function(t){o("next",t,a,u)}),(function(t){o("throw",t,a,u)})):r.resolve(l).then((function(t){s.value=t,a(s)}),(function(t){return o("throw",t,a,u)}))}u(f.arg)}var i;n(this,"_invoke",{value:function(t,e){function n(){return new r((function(r,n){o(t,e,r,n)}))}return i=i?i.then(n,n):n()}})}function E(t,r,e){var n="suspendedStart";return function(o,i){if("executing"===n)throw new Error("Generator is already running");if("completed"===n){if("throw"===o)throw i;return{value:void 0,done:!0}}for(e.method=o,e.arg=i;;){var a=e.delegate;if(a){var u=x(a,e);if(u){if(u===p)continue;return u}}if("next"===e.method)e.sent=e._sent=e.arg;else if("throw"===e.method){if("suspendedStart"===n)throw n="completed",e.arg;e.dispatchException(e.arg)}else"return"===e.method&&e.abrupt("return",e.arg);n="executing";var c=m(t,r,e);if("normal"===c.type){if(n=e.done?"completed":"suspendedYield",c.arg===p)continue;return{value:c.arg,done:e.done}}"throw"===c.type&&(n="completed",e.method="throw",e.arg=c.arg)}}}function x(t,r){var e=r.method,n=t.iterator[e];if(void 0===n)return r.delegate=null,"throw"===e&&t.iterator.return&&(r.method="return",r.arg=void 0,x(t,r),"throw"===r.method)||"return"!==e&&(r.method="throw",r.arg=new TypeError("The iterator does not provide a '"+e+"' method")),p;var o=m(n,t.iterator,r.arg);if("throw"===o.type)return r.method="throw",r.arg=o.arg,r.delegate=null,p;var i=o.arg;return i?i.done?(r[t.resultName]=i.value,r.next=t.nextLoc,"return"!==r.method&&(r.method="next",r.arg=void 0),r.delegate=null,p):i:(r.method="throw",r.arg=new TypeError("iterator result is not an object"),r.delegate=null,p)}function k(t){var r={tryLoc:t[0]};1 in t&&(r.catchLoc=t[1]),2 in t&&(r.finallyLoc=t[2],r.afterLoc=t[3]),this.tryEntries.push(r)}function S(t){var r=t.completion||{};r.type="normal",delete r.arg,t.completion=r}function O(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(k,this),this.reset(!0)}function L(t){if(t){var r=t[i];if(r)return r.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var n=-1,o=function r(){for(;++n<t.length;)if(e.call(t,n))return r.value=t[n],r.done=!1,r;return r.value=void 0,r.done=!0,r};return o.next=o}}return{next:A}}function A(){return{value:void 0,done:!0}}return y.prototype=d,n(_,"constructor",{value:d,configurable:!0}),n(d,"constructor",{value:y,configurable:!0}),y.displayName=s(d,u,"GeneratorFunction"),t.isGeneratorFunction=function(t){var r="function"==typeof t&&t.constructor;return!!r&&(r===y||"GeneratorFunction"===(r.displayName||r.name))},t.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,d):(t.__proto__=d,s(t,u,"GeneratorFunction")),t.prototype=Object.create(_),t},t.awrap=function(t){return{__await:t}},w(j.prototype),s(j.prototype,a,(function(){return this})),t.AsyncIterator=j,t.async=function(r,e,n,o,i){void 0===i&&(i=Promise);var a=new j(l(r,e,n,o),i);return t.isGeneratorFunction(e)?a:a.next().then((function(t){return t.done?t.value:a.next()}))},w(_),s(_,u,"Generator"),s(_,i,(function(){return this})),s(_,"toString",(function(){return"[object Generator]"})),t.keys=function(t){var r=Object(t),e=[];for(var n in r)e.push(n);return e.reverse(),function t(){for(;e.length;){var n=e.pop();if(n in r)return t.value=n,t.done=!1,t}return t.done=!0,t}},t.values=L,O.prototype={constructor:O,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=void 0,this.done=!1,this.delegate=null,this.method="next",this.arg=void 0,this.tryEntries.forEach(S),!t)for(var r in this)"t"===r.charAt(0)&&e.call(this,r)&&!isNaN(+r.slice(1))&&(this[r]=void 0)},stop:function(){this.done=!0;var t=this.tryEntries[0].completion;if("throw"===t.type)throw t.arg;return this.rval},dispatchException:function(t){if(this.done)throw t;var r=this;function n(e,n){return a.type="throw",a.arg=t,r.next=e,n&&(r.method="next",r.arg=void 0),!!n}for(var o=this.tryEntries.length-1;o>=0;--o){var i=this.tryEntries[o],a=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=e.call(i,"catchLoc"),c=e.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,r){for(var n=this.tryEntries.length-1;n>=0;--n){var o=this.tryEntries[n];if(o.tryLoc<=this.prev&&e.call(o,"finallyLoc")&&this.prev<o.finallyLoc){var i=o;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=r&&r<=i.finallyLoc&&(i=null);var a=i?i.completion:{};return a.type=t,a.arg=r,i?(this.method="next",this.next=i.finallyLoc,p):this.complete(a)},complete:function(t,r){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&r&&(this.next=r),p},finish:function(t){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.finallyLoc===t)return this.complete(e.completion,e.afterLoc),S(e),p}},catch:function(t){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc===t){var n=e.completion;if("throw"===n.type){var o=n.arg;S(e)}return o}}throw new Error("illegal catch attempt")},delegateYield:function(t,r,e){return this.delegate={iterator:L(t),resultName:r,nextLoc:e},"next"===this.method&&(this.arg=void 0),p}},t}function s(t,r){(null==r||r>t.length)&&(r=t.length);for(var e=0,n=new Array(r);e<r;e++)n[e]=t[e];return n}function l(t,r,e,n,o,i,a){try{var u=t[i](a),c=u.value}catch(t){return void e(t)}u.done?r(c):Promise.resolve(c).then(n,o)}var m=function(t,r){try{return r()}catch(r){throw console.log("error processing item:",t),r}},p=function(t,r,e){return t.items[r]||(e?t.add_item(new i.c(r,e)):t.add_item(new i.c(r,r))),t.items[r]},h=function(t){var r=t.amount;void 0===r&&(r=(t.amount_min+t.amount_max)/2);var e=t.probability;return e&&(r*=e),r},y=function(t,r){var e=h(r);return r.temperature?new o.K(t.items[r.name+"_"+r.temperature],e):new o.K(t.items[r.name],e)},d=function(t){var r=t.ingredients.some((function(t){return t.minimum_temperature||t.maximum_temperature||t.temperature})),e=t.products.some((function(t){return t.minimum_temperature||t.maximum_temperature||t.temperature}));return r||e},v=function(t,r){r.ingredients.forEach((function(e){m([r,e],(function(){return p(t,e.name)}))})),r.products.forEach((function(e){m([r,e],(function(){return p(t,e.name)}))})),m([r,r.category],(function(){t.factory_groups[r.category]||t.add_factory_group(new n.a(r.category))})),m(r,(function(){t.add_process(new u.A(r.name,r.ingredients.map((function(r){return y(t,r)})),r.products.map((function(r){return y(t,r)})),r.energy,t.factory_groups[r.category]))}))},g=function(t,r,e){m([r,r.category],(function(){t.factory_groups[r.category]||t.add_factory_group(new n.a(r.category))})),r.ingredients.forEach((function(e){e.minimum_temperature||e.maximum_temperature||m([r,e],(function(){return p(t,e.name)}))})),r.products.forEach((function(e){m([r,e],(function(){return p(t,e.name)}))}));var o=_(t,r.ingredients,e);m(r,(function(){o.forEach((function(e,n){t.add_process(new u.A(r.name+"--"+n,e,r.products.map((function(r){return y(t,r)})),r.energy,t.factory_groups[r.category]))}))}))},b=function t(r,e){if(0==r.length)return e;var n=r.shift();if(e){var o=[];return e.forEach((function(t){n.forEach((function(r){o.push(t.concat(r))}))})),t(r,o)}return t(r,n.map((function(t){return[t]})))},_=function(t,r,e){var n=r.map((function(r){return r.minimum_temperature||r.maximum_temperature?Object.keys(e[r.name]).filter((function(t){return r.minimum_temperature<=t&&t<=r.maximum_temperature})).map((function(t){return e[r.name][t]})).map((function(t){return new o.K(t,h(r))})):[y(t,r)]}));return b(n.map((function(t){for(var r=[],e=0;e<t.length;++e)r.push(e);return r}))).map((function(t){return t.map((function(t,r){return n[r][t]}))}))},w=function(t,r){Object.values(r).forEach((function(r){m([r,r.crafting_categories],(function(){Object.keys(r.crafting_categories).forEach((function(r){t.factory_groups[r]||t.add_factory_group(new n.a(r))}))})),m(r,(function(){t.add_factory(new n.F(r.name,r.name,Object.keys(r.crafting_categories).map((function(r){return t.factory_groups[r]})),1/r.crafting_speed))}))}))},j=function(t,r,e){t[r.name]||(t[r.name]={}),t[r.name][r.temperature]=e},E=function(t){return e(9191)("./"+t).catch((function(t){console.log("failed to read recipe.json:",t)})).then((function(t){return t.default}))};function x(){var t;return t=f().mark((function t(r,e,n){var o,i;return f().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:return n||(n=E),o=n("recipe.json").then((function(t){var n=new a.V(r,e),o={};return Object.values(t).forEach((function(t){Array.isArray(t.ingredients)||(t.ingredients=[]),Array.isArray(t.products)||(t.products=[]),t.products.forEach((function(r){if(r.temperature){var e=r.temperature,i=m([t,r],(function(){return p(n,r.name+"_"+e,r.name+" ("+e+")")}));j(o,r,i)}else m([t,r],(function(){return p(n,r.name)}))}))})),Object.values(t).forEach((function(t){m(t,(function(){Array.isArray(t.ingredients)||(t.ingredients=[]),Array.isArray(t.products)||(t.products=[]),t.ingredients.forEach((function(r){if(r.temperature&&(r.minimum_temperature=r.temperature,r.maximum_temperature=r.temperature),r.minimum_temperature>-1e207){var e=r.minimum_temperature,i=m([t,r],(function(){return p(n,r.name+"_"+e,r.name+" ("+e+")")}));j(o,r,i)}if(r.maximum_temperature<1e207){var a=r.maximum_temperature,u=m([t,r],(function(){return p(n,r.name+"_"+a,r.name+" ("+a+")")}));j(o,r,u)}})),d(t)?g(n,t,o):v(n,t)}))})),n})),i=["assembling-machine.json","furnace.json","rocket-silo.json"].map(E),t.abrupt("return",Promise.all([o].concat((u=i,function(t){if(Array.isArray(t))return s(t)}(u)||function(t){if("undefined"!=typeof Symbol&&null!=t[Symbol.iterator]||null!=t["@@iterator"])return Array.from(t)}(u)||function(t,r){if(t){if("string"==typeof t)return s(t,r);var e=Object.prototype.toString.call(t).slice(8,-1);return"Object"===e&&t.constructor&&(e=t.constructor.name),"Map"===e||"Set"===e?Array.from(t):"Arguments"===e||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(e)?s(t,r):void 0}}(u)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()))).then((function(t){var r=t.shift();return t.forEach((function(t){w(r,t)})),r})));case 4:case"end":return t.stop()}var u}),t)})),x=function(){var r=this,e=arguments;return new Promise((function(n,o){var i=t.apply(r,e);function a(t){l(i,n,o,a,u,"next",t)}function u(t){l(i,n,o,a,u,"throw",t)}a(void 0)}))},x.apply(this,arguments)}const k=function(t,r,e){return x.apply(this,arguments)}},4700:(t,r,e)=>{"use strict";e.d(r,{c:()=>a});var n=e(6968);function o(t){return o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},o(t)}function i(t,r){for(var e=0;e<r.length;e++){var n=r[e];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,(void 0,i=function(t,r){if("object"!==o(t)||null===t)return t;var e=t[Symbol.toPrimitive];if(void 0!==e){var n=e.call(t,"string");if("object"!==o(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(n.key),"symbol"===o(i)?i:String(i)),n)}var i}var a=function(){function t(r,e,o){!function(t,r){if(!(t instanceof r))throw new TypeError("Cannot call a class as a function")}(this,t),(0,n.B)("id",r,"name",e),this.id=r,this.name=e,this.group=o}var r,e;return r=t,(e=[{key:"toString",value:function(){return"Item: [name: "+this.name+", group: "+this.group+"]"}}])&&i(r.prototype,e),Object.defineProperty(r,"prototype",{writable:!1}),t}()}}]);
+(self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[7819],{
+
+/***/ 6949:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var map = {
+	"./active_mods.json": [
+		2446,
+		2446
+	],
+	"./assembling-machine.json": [
+		5343,
+		5343
+	],
+	"./boiler.json": [
+		254,
+		254
+	],
+	"./equipment-grid.json": [
+		4596,
+		4596
+	],
+	"./equipment.json": [
+		4806,
+		4806
+	],
+	"./fluid.json": [
+		4064,
+		4064
+	],
+	"./furnace.json": [
+		8247,
+		8247
+	],
+	"./generator.json": [
+		8084,
+		8084
+	],
+	"./inserter.json": [
+		8732,
+		8732
+	],
+	"./item.json": [
+		3732,
+		3732
+	],
+	"./lab.json": [
+		2509,
+		2509
+	],
+	"./mining-drill.json": [
+		4563,
+		4563
+	],
+	"./projectile.json": [
+		9289,
+		9289
+	],
+	"./reactor.json": [
+		3850,
+		3850
+	],
+	"./recipe.json": [
+		7215,
+		7215
+	],
+	"./resource.json": [
+		3496,
+		3496
+	],
+	"./rocket-silo.json": [
+		9849,
+		9849
+	],
+	"./solar-panel.json": [
+		2294,
+		2294
+	],
+	"./technology.json": [
+		2460,
+		2460
+	],
+	"./transport-belt.json": [
+		8911,
+		8911
+	]
+};
+function webpackAsyncContext(req) {
+	if(!__webpack_require__.o(map, req)) {
+		return Promise.resolve().then(() => {
+			var e = new Error("Cannot find module '" + req + "'");
+			e.code = 'MODULE_NOT_FOUND';
+			throw e;
+		});
+	}
+
+	var ids = map[req], id = ids[0];
+	return __webpack_require__.e(ids[1]).then(() => {
+		return __webpack_require__.t(id, 1 | 16);
+	});
+}
+webpackAsyncContext.keys = () => (Object.keys(map));
+webpackAsyncContext.id = 6949;
+module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ 4214:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "V": () => (/* binding */ Data)
+/* harmony export */ });
+/* harmony import */ var _structures_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6968);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+var Data = /*#__PURE__*/function () {
+  function Data(game, version) {
+    _classCallCheck(this, Data);
+    (0,_structures_base_js__WEBPACK_IMPORTED_MODULE_0__/* .check */ .B)('game', game, 'version', version);
+    this.game = game;
+    this.version = version;
+    this.items = {};
+    this.factory_groups = {};
+    this.factories = {};
+    this.processes = {};
+  }
+  _createClass(Data, [{
+    key: "_check_add",
+    value: function _check_add(type, thing) {
+      if (!(typeof this[type][thing.id] === 'undefined')) {
+        throw new Error('duplicate ' + type + ' id created: ' + thing);
+      }
+      this[type][thing.id] = thing;
+    }
+  }, {
+    key: "add_item",
+    value: function add_item(item) {
+      this._check_add('items', item);
+    }
+  }, {
+    key: "add_factory_group",
+    value: function add_factory_group(factory_group) {
+      this._check_add('factory_groups', factory_group);
+    }
+  }, {
+    key: "add_factory",
+    value: function add_factory(factory) {
+      this._check_add('factories', factory);
+    }
+  }, {
+    key: "add_process",
+    value: function add_process(process) {
+      this._check_add('processes', process);
+    }
+  }, {
+    key: "add_items",
+    value: function add_items(items) {
+      var _this = this;
+      items.forEach(function (i) {
+        return _this.add_item(i);
+      });
+    }
+  }, {
+    key: "add_factory_groups",
+    value: function add_factory_groups(factory_groups) {
+      var _this2 = this;
+      factory_groups.forEach(function (f) {
+        return _this2.add_factory_group(f);
+      });
+    }
+  }, {
+    key: "add_factories",
+    value: function add_factories(factories) {
+      var _this3 = this;
+      factories.forEach(function (f) {
+        return _this3.add_factory(f);
+      });
+    }
+  }, {
+    key: "add_processes",
+    value: function add_processes(processes) {
+      var _this4 = this;
+      processes.forEach(function (p) {
+        return _this4.add_process(p);
+      });
+    }
+  }]);
+  return Data;
+}();
+
+
+/***/ }),
+
+/***/ 9656:
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _data_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4599);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await (0,_data_base_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)('factorio-ff-1.1.94', '0.0.1'));
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ 4599:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _factory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3658);
+/* harmony import */ var _stack_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8604);
+/* harmony import */ var _item_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4700);
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4214);
+/* harmony import */ var _process_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1341);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+var check_add = function check_add(item, fn) {
+  try {
+    return fn();
+  } catch (error) {
+    console.log("error processing item:", item);
+    throw error;
+  }
+};
+var add_item = function add_item(data, name, i18n) {
+  if (!data.items[name]) {
+    if (i18n) {
+      data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_0__/* .Item */ .c(name, i18n));
+    } else {
+      data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_0__/* .Item */ .c(name, name));
+      ;
+    }
+  }
+  return data.items[name];
+};
+var get_ingredient_amount = function get_ingredient_amount(ingredient) {
+  var amount = ingredient.amount;
+  if (typeof amount === "undefined") {
+    amount = (ingredient.amount_min + ingredient.amount_max) / 2;
+  }
+  var probability = ingredient.probability;
+  if (probability) {
+    amount = amount * probability;
+  }
+  return amount;
+};
+var convert_ingredient = function convert_ingredient(data, ingredient) {
+  var amount = get_ingredient_amount(ingredient);
+  if (ingredient.temperature) {
+    return new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items[ingredient.name + '_' + ingredient.temperature], amount);
+  }
+  return new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items[ingredient.name], amount);
+};
+var _recipe_has_fluid_temperature = function _recipe_has_fluid_temperature(recipe) {
+  var i = recipe.ingredients.some(function (ingredient) {
+    return  false || ingredient.minimum_temperature || ingredient.maximum_temperature || ingredient.temperature;
+  });
+  var p = recipe.products.some(function (ingredient) {
+    return  false || ingredient.minimum_temperature || ingredient.maximum_temperature || ingredient.temperature;
+  });
+  return i || p;
+};
+var _add_basic_recipe = function _add_basic_recipe(data, recipe) {
+  recipe.ingredients.forEach(function (ingredient) {
+    check_add([recipe, ingredient], function () {
+      return add_item(data, ingredient.name);
+    });
+  });
+  recipe.products.forEach(function (product) {
+    check_add([recipe, product], function () {
+      return add_item(data, product.name);
+    });
+  });
+  check_add([recipe, recipe.category], function () {
+    if (!data.factory_groups[recipe.category]) {
+      data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a(recipe.category));
+    }
+  });
+  check_add(recipe, function () {
+    data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A(recipe.name, recipe.ingredients.map(function (i) {
+      return convert_ingredient(data, i);
+    }), recipe.products.map(function (i) {
+      return convert_ingredient(data, i);
+    }), recipe.energy, data.factory_groups[recipe.category]));
+  });
+};
+var _hack_add_reactor = function _hack_add_reactor(data) {
+  // reactor has C constant consumption (MW)
+  // fuel cell has E energy (GJ)
+  // e.g. breeder has 5MW consumption; breeder cell has 5GJ
+  // therefore 5,000MJ / 5M(J/S) = 1000s to convert 1 breeder-fuel-cell into a used-up-breeder-fuel-cell
+
+  // reactor[id].max_energy_usage = C
+  // item[id].fuel_value = E
+  // reactor[id].energy_source.burner.fuel_categories (set) tells us what types of fuel can be used
+  // item[id].fuel_category tells us the category for that particular fuel.
+
+  // uranium 40MW, 8GJ ==> 200s
+  // breeder 5MW, 5GJ ==> 1000s
+  // MOX 20MW, 20GJ ==> 1000s
+
+  data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('basic-reactor'));
+  data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('breeder-reactor'));
+  data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('mox-reactor'));
+  check_add('uranium-fuel-cell', function () {
+    data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('burn-uranium-fuel-cell', [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['uranium-fuel-cell'], 1)], [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['used-up-uranium-fuel-cell'], 1)], 200, data.factory_groups['basic-reactor']));
+  });
+  check_add('breeder-fuel-cell', function () {
+    data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('burn-breeder-fuel-cell', [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['breeder-fuel-cell'], 1)], [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['used-up-breeder-fuel-cell'], 1)], 1000, data.factory_groups['breeder-reactor']));
+  });
+  check_add('MOX-fuel', function () {
+    data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('burn-MOX-fuel', [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['MOX-fuel'], 1)], [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['used-up-MOX-fuel'], 1)], 1000, data.factory_groups['mox-reactor']));
+  });
+  data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('basic-reactor', 'basic-reactor', [data.factory_groups['basic-reactor']], 1));
+  data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('breeder-reactor', 'breeder-reactor', [data.factory_groups['breeder-reactor']], 1));
+  data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('mox-reactor', 'mox-reactor', [data.factory_groups['mox-reactor']], 1));
+};
+var _add_temperature_recipe = function _add_temperature_recipe(data, recipe, temperature_based_items) {
+  check_add([recipe, recipe.category], function () {
+    if (!data.factory_groups[recipe.category]) {
+      data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a(recipe.category));
+    }
+  });
+  recipe.ingredients.forEach(function (ingredient) {
+    if (ingredient.minimum_temperature || ingredient.maximum_temperature) {
+      // pass; should already be added?
+    } else {
+      check_add([recipe, ingredient], function () {
+        return add_item(data, ingredient.name);
+      });
+    }
+  });
+  recipe.products.forEach(function (product) {
+    check_add([recipe, product], function () {
+      return add_item(data, product.name);
+    });
+  });
+  var ingredient_variations = cross_product_ingredients(data, recipe.ingredients, temperature_based_items);
+  check_add(recipe, function () {
+    ingredient_variations.forEach(function (variation, idx) {
+      data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A(recipe.name + '--' + idx, variation, recipe.products.map(function (i) {
+        return convert_ingredient(data, i);
+      }), recipe.energy, data.factory_groups[recipe.category]));
+    });
+  });
+};
+var compute_permutations = function compute_permutations(input, out) {
+  if (input.length == 0) return out;
+  var entry = input.shift();
+  if (out) {
+    var r = [];
+    out.forEach(function (o) {
+      entry.forEach(function (e) {
+        r.push(o.concat(e));
+      });
+    });
+    return compute_permutations(input, r);
+  } else {
+    return compute_permutations(input, entry.map(function (e) {
+      return [e];
+    }));
+  }
+};
+var cross_product_ingredients = function cross_product_ingredients(data, ingredients, temperature_based_items) {
+  var ingredients_with_temperature_lists = ingredients.map(function (i) {
+    if (i.minimum_temperature || i.maximum_temperature) {
+      var stack_in_range = Object.keys(temperature_based_items[i.name]).filter(function (t) {
+        return i.minimum_temperature <= t && t <= i.maximum_temperature;
+      }).map(function (t) {
+        return temperature_based_items[i.name][t];
+      }).map(function (item) {
+        return new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(item, get_ingredient_amount(i));
+      });
+      return stack_in_range;
+    } else {
+      return [convert_ingredient(data, i)];
+    }
+  });
+  var permutations = compute_permutations(ingredients_with_temperature_lists.map(function (ingredient_list) {
+    var r = [];
+    for (var i = 0; i < ingredient_list.length; ++i) r.push(i);
+    return r;
+  })).map(function (permutation) {
+    return permutation.map(function (val, idx) {
+      return ingredients_with_temperature_lists[idx][val];
+    });
+  });
+  return permutations;
+};
+var add_factory_groups = function add_factory_groups(data, group) {
+  Object.values(group).forEach(function (factory) {
+    check_add([factory, factory.crafting_categories], function () {
+      Object.keys(factory.crafting_categories).forEach(function (category_name) {
+        if (!data.factory_groups[category_name]) {
+          data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a(category_name));
+        }
+      });
+    });
+    check_add(factory, function () {
+      data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F(factory.name, factory.name, Object.keys(factory.crafting_categories).map(function (c) {
+        return data.factory_groups[c];
+      }), 1 / factory.crafting_speed));
+    });
+  });
+};
+var _add_temperature_based_item = function _add_temperature_based_item(temperature_based_items, product, item) {
+  if (!!!temperature_based_items[product.name]) {
+    temperature_based_items[product.name] = {};
+  }
+  temperature_based_items[product.name][product.temperature] = item;
+};
+function create_data(_x, _x2) {
+  return _create_data.apply(this, arguments);
+}
+function _create_data() {
+  _create_data = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(game, version) {
+    var data_p, groups_p;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          data_p = __webpack_require__.e(/* import() */ 7215).then(__webpack_require__.t.bind(__webpack_require__, 7215, 17))["catch"](function (e) {
+            console.log('failed to read recipe.json:', e);
+          }).then(function (m) {
+            return m["default"];
+          }).then(function (recipe_raw) {
+            var data = new _data_js__WEBPACK_IMPORTED_MODULE_4__/* .Data */ .V(game, version);
+            var temperature_based_items = {}; // [base name][temperature] => Item
+
+            // enumerate all possible temperatures for fluids.
+            // create temperature based items for each.
+
+            Object.values(recipe_raw).forEach(function (recipe) {
+              if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
+              if (!Array.isArray(recipe.products)) recipe.products = [];
+              recipe.products.forEach(function (product) {
+                if (product.temperature) {
+                  var temp = product.temperature;
+                  var item = check_add([recipe, product], function () {
+                    return add_item(data, product.name + "_" + temp, product.name + " (" + temp + ")");
+                  });
+                  _add_temperature_based_item(temperature_based_items, product, item);
+                } else {
+                  check_add([recipe, product], function () {
+                    return add_item(data, product.name);
+                  });
+                }
+              });
+            });
+
+            // if a process has one of the temperature fluids as an input then create multiple variants
+
+            Object.values(recipe_raw).forEach(function (recipe) {
+              check_add(recipe, function () {
+                if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
+                if (!Array.isArray(recipe.products)) recipe.products = [];
+                recipe.ingredients.forEach(function (i) {
+                  if (i.temperature) {
+                    i.minimum_temperature = i.temperature;
+                    i.maximum_temperature = i.temperature;
+                  }
+                  if (i.minimum_temperature > -1e+207) {
+                    var temp = i.minimum_temperature;
+                    var item = check_add([recipe, i], function () {
+                      return add_item(data, i.name + "_" + temp, i.name + " (" + temp + ")");
+                    });
+                    _add_temperature_based_item(temperature_based_items, i, item);
+                  }
+                  if (i.maximum_temperature < 1e+207) {
+                    var _temp = i.maximum_temperature;
+                    var _item = check_add([recipe, i], function () {
+                      return add_item(data, i.name + "_" + _temp, i.name + " (" + _temp + ")");
+                    });
+                    _add_temperature_based_item(temperature_based_items, i, _item);
+                  }
+                });
+                if (_recipe_has_fluid_temperature(recipe)) {
+                  _add_temperature_recipe(data, recipe, temperature_based_items);
+                } else {
+                  _add_basic_recipe(data, recipe);
+                }
+              });
+            });
+            _hack_add_reactor(data);
+            return data;
+          });
+          groups_p = ['assembling-machine.json', 'furnace.json', 'rocket-silo.json'].map(function (f) {
+            return __webpack_require__(6949)("./" + f).then(function (m) {
+              return m["default"];
+            })["catch"](function (e) {
+              return console.error('failed to read .json:', f, e);
+            });
+          });
+          return _context.abrupt("return", Promise.all([data_p].concat(_toConsumableArray(groups_p))).then(function (arr) {
+            var data = arr.shift();
+            arr.forEach(function (g) {
+              add_factory_groups(data, g);
+            });
+            return data;
+          }));
+        case 3:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _create_data.apply(this, arguments);
+}
+;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (create_data);
+
+/***/ }),
+
+/***/ 4700:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "c": () => (/* binding */ Item)
+/* harmony export */ });
+/* harmony import */ var _structures_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6968);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+var Item = /*#__PURE__*/function () {
+  function Item(id, name, group) {
+    _classCallCheck(this, Item);
+    (0,_structures_base_js__WEBPACK_IMPORTED_MODULE_0__/* .check */ .B)('id', id, 'name', name);
+    this.id = id;
+    this.name = name;
+    this.group = group;
+  }
+  _createClass(Item, [{
+    key: "toString",
+    value: function toString() {
+      return 'Item: [name: ' + this.name + ', group: ' + this.group + ']';
+    }
+  }]);
+  return Item;
+}();
+
+
+/***/ })
+
+}]);

@@ -1,1 +1,281 @@
-"use strict";(self.webpackChunkprocess_mgmt_ui=self.webpackChunkprocess_mgmt_ui||[]).push([[2416],{4214:(e,r,t)=>{t.d(r,{V:()=>o});var n=t(6968);function i(e){return i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},i(e)}function a(e,r){for(var t=0;t<r.length;t++){var n=r[t];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,(void 0,a=function(e,r){if("object"!==i(e)||null===e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!==i(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(n.key),"symbol"===i(a)?a:String(a)),n)}var a}var o=function(){function e(r,t){!function(e,r){if(!(e instanceof r))throw new TypeError("Cannot call a class as a function")}(this,e),(0,n.B)("game",r,"version",t),this.game=r,this.version=t,this.items={},this.factory_groups={},this.factories={},this.processes={}}var r,t;return r=e,(t=[{key:"_check_add",value:function(e,r){if(void 0!==this[e][r.id])throw new Error("duplicate "+e+" id created: "+r);this[e][r.id]=r}},{key:"add_item",value:function(e){this._check_add("items",e)}},{key:"add_factory_group",value:function(e){this._check_add("factory_groups",e)}},{key:"add_factory",value:function(e){this._check_add("factories",e)}},{key:"add_process",value:function(e){this._check_add("processes",e)}},{key:"add_items",value:function(e){var r=this;e.forEach((function(e){return r.add_item(e)}))}},{key:"add_factory_groups",value:function(e){var r=this;e.forEach((function(e){return r.add_factory_group(e)}))}},{key:"add_factories",value:function(e){var r=this;e.forEach((function(e){return r.add_factory(e)}))}},{key:"add_processes",value:function(e){var r=this;e.forEach((function(e){return r.add_process(e)}))}}])&&a(r.prototype,t),Object.defineProperty(r,"prototype",{writable:!1}),e}()},3968:(e,r,t)=>{t.r(r),t.d(r,{default:()=>_});var n=t(4214),i=t(4700),a=t(3658),o=t(1341),s=t(8604),u=new n.V("factorio-ab","0.0.1");["saphirite","stiratite","rubyte","bobmonium","crotinnium","jivolite"].forEach((function(e){u.add_item(new i.c("ore_"+e,e+" ore")),u.add_item(new i.c("crushed_"+e,e+" crushed")),u.add_item(new i.c("chunks_"+e,e+" chunks"))})),u.add_items([new i.c("crushed_stone","crushed stone"),new i.c("sludge_mineral","mineral sludge"),new i.c("catalyst_mineral","mineral catalyst"),new i.c("catalyst_crystal","crystal catalyst"),new i.c("catalyst_hybrid","hybrid catalyst"),new i.c("water_purified","purified water"),new i.c("water_mineralized","mineralised water"),new i.c("water_waste_sulfuric","sulphuric waste water"),new i.c("slurry_slag","slag slurry"),new i.c("sulfur","sulphur"),new i.c("acid_sulfuric","sulphuric acid"),new i.c("gas_sulfur_dioxide","sulphur dioxide gas"),new i.c("gas_oxygen","oxygen gas"),new i.c("ore_iron","iron ore"),new i.c("ore_copper","copper ore"),new i.c("iron_plate","iron plate"),new i.c("copper_plate","copper plate"),new i.c("circuit","circuit")]);var c=u.items;u.add_factory_groups([new a.a("crusher"),new a.a("sorter"),new a.a("smelter"),new a.a("crystallizer"),new a.a("filtration_unit"),new a.a("liquifier"),new a.a("assembler"),new a.a("chemical_plant"),new a.a("hydro_plant")]);var l=u.factory_groups;u.add_processes([[c.ore_saphirite,c.crushed_saphirite],[c.ore_stiratite,c.crushed_stiratite],[c.ore_rubyte,c.crushed_rubyte],[c.ore_bobmonium,c.crushed_bobmonium],[c.ore_crotinnium,c.crushed_crotinnium],[c.ore_jivolite,c.crushed_jivolite]].map((function(e){return new o.A(e[0].id+"_crushing",[new s.K(e[0],2)],[new s.K(e[1],2),new s.K(c.crushed_stone,1)],1,l.crusher)}))),u.add_processes([new o.A("slag_slurry_from_crushed_stone",[new s.K(c.crushed_stone,25),new s.K(c.acid_sulfuric,15)],[new s.K(c.slurry_slag,50)],1,l.liquifier),new o.A("mineral_sludge_from_slag_slurry",[new s.K(c.slurry_slag,50),new s.K(c.water_purified,50)],[new s.K(c.sludge_mineral,50),new s.K(c.water_waste_sulfuric,40)],1,l.filtration_unit),new o.A("mineral_catalyst",[new s.K(c.sludge_mineral,25)],[new s.K(c.catalyst_mineral,2)],1,l.crystallizer)]),u.add_processes([new o.A("iron_ore_by_sorting",[new s.K(c.catalyst_mineral,1),new s.K(c.crushed_saphirite,2),new s.K(c.crushed_jivolite,2)],[new s.K(c.ore_iron,4)],1,l.sorter)]),u.add_processes([new o.A("acid_sulfuric",[new s.K(c.gas_sulfur_dioxide,90),new s.K(c.water_purified,40)],[new s.K(c.acid_sulfuric,60)],1,l.chemical_plant),new o.A("gas_sulfur_dioxide",[new s.K(c.sulfur,1),new s.K(c.gas_oxygen,60)],[new s.K(c.gas_sulfur_dioxide,60)],1,l.chemical_plant),new o.A("waste_water_purification_sulfuric",[new s.K(c.water_waste_sulfuric,100)],[new s.K(c.sulfur,1),new s.K(c.water_purified,70),new s.K(c.water_mineralized,20)],1,l.hydro_plant)]);const _=u},4700:(e,r,t)=>{t.d(r,{c:()=>o});var n=t(6968);function i(e){return i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},i(e)}function a(e,r){for(var t=0;t<r.length;t++){var n=r[t];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,(void 0,a=function(e,r){if("object"!==i(e)||null===e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,"string");if("object"!==i(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(n.key),"symbol"===i(a)?a:String(a)),n)}var a}var o=function(){function e(r,t,i){!function(e,r){if(!(e instanceof r))throw new TypeError("Cannot call a class as a function")}(this,e),(0,n.B)("id",r,"name",t),this.id=r,this.name=t,this.group=i}var r,t;return r=e,(t=[{key:"toString",value:function(){return"Item: [name: "+this.name+", group: "+this.group+"]"}}])&&a(r.prototype,t),Object.defineProperty(r,"prototype",{writable:!1}),e}()}}]);
+"use strict";
+(self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[2416],{
+
+/***/ 4214:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "V": () => (/* binding */ Data)
+/* harmony export */ });
+/* harmony import */ var _structures_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6968);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+var Data = /*#__PURE__*/function () {
+  function Data(game, version) {
+    _classCallCheck(this, Data);
+    (0,_structures_base_js__WEBPACK_IMPORTED_MODULE_0__/* .check */ .B)('game', game, 'version', version);
+    this.game = game;
+    this.version = version;
+    this.items = {};
+    this.factory_groups = {};
+    this.factories = {};
+    this.processes = {};
+  }
+  _createClass(Data, [{
+    key: "_check_add",
+    value: function _check_add(type, thing) {
+      if (!(typeof this[type][thing.id] === 'undefined')) {
+        throw new Error('duplicate ' + type + ' id created: ' + thing);
+      }
+      this[type][thing.id] = thing;
+    }
+  }, {
+    key: "add_item",
+    value: function add_item(item) {
+      this._check_add('items', item);
+    }
+  }, {
+    key: "add_factory_group",
+    value: function add_factory_group(factory_group) {
+      this._check_add('factory_groups', factory_group);
+    }
+  }, {
+    key: "add_factory",
+    value: function add_factory(factory) {
+      this._check_add('factories', factory);
+    }
+  }, {
+    key: "add_process",
+    value: function add_process(process) {
+      this._check_add('processes', process);
+    }
+  }, {
+    key: "add_items",
+    value: function add_items(items) {
+      var _this = this;
+      items.forEach(function (i) {
+        return _this.add_item(i);
+      });
+    }
+  }, {
+    key: "add_factory_groups",
+    value: function add_factory_groups(factory_groups) {
+      var _this2 = this;
+      factory_groups.forEach(function (f) {
+        return _this2.add_factory_group(f);
+      });
+    }
+  }, {
+    key: "add_factories",
+    value: function add_factories(factories) {
+      var _this3 = this;
+      factories.forEach(function (f) {
+        return _this3.add_factory(f);
+      });
+    }
+  }, {
+    key: "add_processes",
+    value: function add_processes(processes) {
+      var _this4 = this;
+      processes.forEach(function (p) {
+        return _this4.add_process(p);
+      });
+    }
+  }]);
+  return Data;
+}();
+
+
+/***/ }),
+
+/***/ 4241:
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3658);
+/* harmony import */ var _stack_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8604);
+/* harmony import */ var _item_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4700);
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4214);
+/* harmony import */ var _process_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1341);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+
+
+
+
+var fix_identifier = function fix_identifier(id) {
+  return id.replace(/-/g, '_');
+};
+var check_add = function check_add(item, fn) {
+  try {
+    return fn();
+  } catch (error) {
+    console.log("error processing item:", item);
+    throw error;
+  }
+};
+var convert_ingredient = function convert_ingredient(data, ingredient, recipe) {
+  var ingredient_name = fix_identifier(ingredient.name);
+  var amount = ingredient.amount;
+  var probability = ingredient.probability;
+  if (typeof amount === "undefined") {
+    amount = (ingredient.amount_min + ingredient.amount_max) / 2;
+  }
+  if (probability) {
+    amount = amount * probability;
+  }
+  return check_add(recipe, function () {
+    return new _stack_js__WEBPACK_IMPORTED_MODULE_0__/* .Stack */ .K(data.items[ingredient_name], amount);
+  });
+};
+var data_p = __webpack_require__.e(/* import() */ 682).then(__webpack_require__.t.bind(__webpack_require__, 682, 17)).then(function (module) {
+  return module["default"];
+}).then(function (raw) {
+  var data = new _data_js__WEBPACK_IMPORTED_MODULE_1__/* .Data */ .V('factorio-ab-1.1.38', '0.0.1');
+  Object.values(raw.recipe).forEach(function (recipe) {
+    if (!recipe.name) return; // ignore '{}'
+    if (recipe.normal) {
+      recipe.ingredients = recipe.normal.ingredients;
+      recipe.results = recipe.normal.results;
+      recipe.result = recipe.normal.result;
+      recipe.energy_required = recipe.normal.energy_required;
+      recipe.result_count = recipe.normal.result_count;
+    }
+    if (recipe.result) {
+      var result_count = 1;
+      if (recipe.result_count) {
+        result_count = recipe.result_count;
+      }
+      recipe.results = [{
+        "type": "item",
+        "name": recipe.result,
+        "amount": result_count
+      }];
+    }
+    if ("undefined" === typeof recipe.category) {
+      //console.warn("missing category for ", recipe.name);
+      recipe.category = "crafting";
+    }
+    if ("undefined" === typeof recipe.energy_required) {
+      //console.warn("missing energy_required for ", recipe.name);
+      recipe.energy_required = 1;
+    }
+    if (_typeof(recipe.ingredients) === "object" && Object.entries(recipe.ingredients).length === 0) {
+      recipe.ingredients = [];
+    }
+    if (_typeof(recipe.results) === "object" && Object.entries(recipe.results).length === 0) {
+      recipe.results = [];
+    }
+    check_add(recipe, function () {
+      var name = fix_identifier(recipe.name);
+      recipe.ingredients.forEach(function (ing) {
+        var ing_name = fix_identifier(ing.name);
+        if (!data.items[ing_name]) {
+          data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
+        }
+      });
+    });
+    check_add(recipe, function () {
+      recipe.results.forEach(function (ing) {
+        var ing_name = fix_identifier(ing.name);
+        if (!data.items[ing_name]) {
+          check_add(recipe, function () {
+            return data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
+          });
+        }
+      });
+    });
+    var inputs = recipe.ingredients.map(function (ing) {
+      return convert_ingredient(data, ing, recipe);
+    });
+    var outputs = recipe.results.map(function (ing) {
+      return convert_ingredient(data, ing, recipe);
+    }).reduce(function (acc, cur) {
+      // collect outputs of processes that output the same type multiple times.
+      if (acc[cur.item.id]) {
+        acc[cur.item.id] = acc[cur.item.id].add(cur);
+      } else {
+        acc[cur.item.id] = cur;
+      }
+      return acc;
+    }, {});
+    outputs = Object.values(outputs);
+    var category = fix_identifier(recipe.category);
+    if (!data.factory_groups[category]) {
+      check_add(recipe, function () {
+        return data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category));
+      });
+    }
+    check_add(recipe, function () {
+      data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_4__/* .Process */ .A(fix_identifier(recipe.name), inputs, outputs, recipe.energy_required === 0 ? 0.1 : recipe.energy_required, data.factory_groups[category]));
+    });
+  });
+  Object.values(raw['assembling-machine']).concat(Object.values(raw['furnace'])).forEach(function (machine) {
+    if (!machine.name) return; // ignore '{}'
+    check_add(machine, function () {
+      machine.crafting_categories.forEach(function (cat) {
+        var category_name = fix_identifier(cat);
+        if (!data.factory_groups[category_name]) {
+          data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category_name));
+        }
+      });
+      var machine_name = fix_identifier(machine.name);
+      data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .Factory */ .F(machine_name, machine_name, machine.crafting_categories.map(function (cat) {
+        return fix_identifier(cat);
+      }).map(function (cat) {
+        return data.factory_groups[cat];
+      }), 1 / machine.crafting_speed));
+    });
+  });
+  return data;
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await data_p);
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ 4700:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "c": () => (/* binding */ Item)
+/* harmony export */ });
+/* harmony import */ var _structures_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6968);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+var Item = /*#__PURE__*/function () {
+  function Item(id, name, group) {
+    _classCallCheck(this, Item);
+    (0,_structures_base_js__WEBPACK_IMPORTED_MODULE_0__/* .check */ .B)('id', id, 'name', name);
+    this.id = id;
+    this.name = name;
+    this.group = group;
+  }
+  _createClass(Item, [{
+    key: "toString",
+    value: function toString() {
+      return 'Item: [name: ' + this.name + ', group: ' + this.group + ']';
+    }
+  }]);
+  return Item;
+}();
+
+
+/***/ })
+
+}]);
