@@ -14,7 +14,8 @@ open dist/index.html in a browser
 2. `git merge --ff main` (or other sensible merge)
 3. `rm docs/*.js`
 4. `npm run prod`
-5. push `dist` branch.
+5. `git commit -m`
+6. push `dist` branch.
 
 ## Manual Creation of URI Fragment
 
