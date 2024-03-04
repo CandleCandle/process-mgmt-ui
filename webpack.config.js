@@ -50,6 +50,8 @@ export default (env, argv) => {
 	if (argv.mode === 'development') {
 		config.devtool = 'source-map';
 		config.optimization.minimize = false;
+	} else if (argv.mode === "production") {
+		config.optimization.minimize = false;
 	}
 	return config;
 };
