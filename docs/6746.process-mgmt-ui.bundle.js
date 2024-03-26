@@ -1,114 +1,9 @@
-(self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[1422],{
-
-/***/ 9191:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var map = {
-	"./active_mods.json": [
-		5466,
-		5466
-	],
-	"./assembling-machine.json": [
-		1235,
-		1235
-	],
-	"./boiler.json": [
-		5896,
-		5896
-	],
-	"./equipment-grid.json": [
-		6561,
-		6561
-	],
-	"./equipment.json": [
-		7115,
-		7115
-	],
-	"./fluid.json": [
-		968,
-		968
-	],
-	"./furnace.json": [
-		448,
-		448
-	],
-	"./generator.json": [
-		6379,
-		6379
-	],
-	"./inserter.json": [
-		2584,
-		2584
-	],
-	"./item.json": [
-		9421,
-		9421
-	],
-	"./lab.json": [
-		8865,
-		8865
-	],
-	"./mining-drill.json": [
-		1956,
-		1956
-	],
-	"./projectile.json": [
-		484,
-		484
-	],
-	"./reactor.json": [
-		6030,
-		6030
-	],
-	"./recipe.json": [
-		3519,
-		3519
-	],
-	"./resource.json": [
-		2459,
-		2459
-	],
-	"./rocket-silo.json": [
-		1429,
-		1429
-	],
-	"./solar-panel.json": [
-		5471,
-		5471
-	],
-	"./technology.json": [
-		4264,
-		4264
-	],
-	"./transport-belt.json": [
-		8220,
-		8220
-	]
-};
-function webpackAsyncContext(req) {
-	if(!__webpack_require__.o(map, req)) {
-		return Promise.resolve().then(() => {
-			var e = new Error("Cannot find module '" + req + "'");
-			e.code = 'MODULE_NOT_FOUND';
-			throw e;
-		});
-	}
-
-	var ids = map[req], id = ids[0];
-	return __webpack_require__.e(ids[1]).then(() => {
-		return __webpack_require__.t(id, 1 | 16);
-	});
-}
-webpackAsyncContext.keys = () => (Object.keys(map));
-webpackAsyncContext.id = 9191;
-module.exports = webpackAsyncContext;
-
-/***/ }),
+"use strict";
+(self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[6746],{
 
 /***/ 4214:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "V": () => (/* binding */ Data)
 /* harmony export */ });
@@ -198,27 +93,9 @@ var Data = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 5359:
-/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _data_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5035);
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await (0,_data_base_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)('factorio-py-1.1.53', '0.0.1'));
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } }, 1);
-
-/***/ }),
-
-/***/ 5035:
+/***/ 6746:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
@@ -405,13 +282,14 @@ var _add_temperature_based_item = function _add_temperature_based_item(temperatu
   }
   temperature_based_items[product.name][product.temperature] = item;
 };
-var _import_file = function _import_file(name) {
-  return __webpack_require__(9191)("./" + name)["catch"](function (e) {
-    console.log('failed to read recipe.json:', e);
-  }).then(function (m) {
-    return m["default"];
-  });
-};
+
+// const _import_file = function(name) {
+//     return import('./recipe-lister/' + name, {assert: { type: 'json'}})
+//         .catch(e => {
+//         console.log('failed to read recipe.json:', e);
+//     })
+//     .then(m => m.default)
+// };
 function create_data(_x, _x2, _x3) {
   return _create_data.apply(this, arguments);
 }
@@ -421,7 +299,7 @@ function _create_data() {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          if (!!!json_promise_cb) json_promise_cb = _import_file;
+          // if (!!!json_promise_cb) json_promise_cb = _import_file;
           data_p = json_promise_cb('recipe.json').then(function (recipe_raw) {
             var data = new _data_js__WEBPACK_IMPORTED_MODULE_4__/* .Data */ .V(game, version);
             var temperature_based_items = {}; // [base name][temperature] => Item
@@ -482,7 +360,7 @@ function _create_data() {
             });
             return data;
           });
-          groups_p = ['assembling-machine.json', 'furnace.json', 'rocket-silo.json'].map(_import_file);
+          groups_p = ['assembling-machine.json', 'furnace.json', 'rocket-silo.json'].map(json_promise_cb);
           return _context.abrupt("return", Promise.all([data_p].concat(_toConsumableArray(groups_p))).then(function (arr) {
             var data = arr.shift();
             arr.forEach(function (g) {
@@ -490,7 +368,7 @@ function _create_data() {
             });
             return data;
           }));
-        case 4:
+        case 3:
         case "end":
           return _context.stop();
       }
@@ -505,7 +383,6 @@ function _create_data() {
 /***/ 4700:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "c": () => (/* binding */ Item)
 /* harmony export */ });

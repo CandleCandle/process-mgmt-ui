@@ -11,47 +11,53 @@ var map = {
 	],
 	"./factorio-1.1.104-very-bz-0.5.1/data.js": [
 		8468,
+		6746,
 		9201
+	],
+	"./factorio-1.1.94-k2se/data.js": [
+		1443,
+		6746,
+		5312
 	],
 	"./factorio-ab-01/data.js": [
 		5410,
-		5312
+		2416
 	],
 	"./factorio-ab-1.1.38/data.js": [
 		4241,
-		2416
+		2351
 	],
 	"./factorio-ab/data.js": [
 		3968,
-		2351
+		7876
 	],
 	"./factorio-ff-1.1.76/data.js": [
 		2057,
-		7876
+		7819
 	],
 	"./factorio-ff-1.1.94/data.js": [
 		9656,
-		7819
+		7028
 	],
 	"./factorio-py-1.1.53/data.js": [
 		5359,
-		7028
+		1422
 	],
 	"./for-the-crown-3.8.3/data.js": [
 		5386,
-		1422
+		4532
 	],
 	"./plan-b-terraform/data.js": [
 		1290,
-		4532
+		9688
 	],
 	"./satisfactory/data.js": [
 		8704,
-		9688
+		3402
 	],
 	"./vt/data.js": [
 		6397,
-		3402
+		4208
 	]
 };
 function webpackAsyncContext(req) {
@@ -64,7 +70,7 @@ function webpackAsyncContext(req) {
 	}
 
 	var ids = map[req], id = ids[0];
-	return __webpack_require__.e(ids[1]).then(() => {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(() => {
 		return __webpack_require__(id);
 	});
 }
@@ -17879,7 +17885,7 @@ var ProcessChain = /*#__PURE__*/function () {
             return result.push('  ' + _this3._render_item_node(item));
           });
         } else {
-          if (_this3.settings.generate_item_groupings) result.push('  subgraph cluster_' + id + " {");
+          if (_this3.settings.generate_item_groupings) result.push('  subgraph cluster_' + id + ' {');
           contents.forEach(function (item) {
             return result.push('    ' + _this3._render_item_node(item));
           });
@@ -18720,7 +18726,7 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
   linear_algebra_visitor_createClass(LinearAlgebra, [{
     key: "check",
     value: function check(chain) {
-      if (!chain.rebuild_materials) throw new Error("`LinearAlgebra` requires `rebuild_materials` (Provided by `ProcessCountVisitor`)");
+      if (!chain.rebuild_materials) throw new Error('`LinearAlgebra` requires `rebuild_materials` (Provided by `ProcessCountVisitor`)');
       return {
         init: true,
         visit_process: true
@@ -18866,7 +18872,7 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
       return arr.map(function (im) {
         return {
           process: {
-            id: name + ": " + im
+            id: name + ': ' + im
           }
         };
       });
@@ -18879,9 +18885,9 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
       this.initial_matrix = this._build_initial_matrix();
       this.augmented_matrix = this.initial_matrix;
       this.augmented_matrix = this._augment_matrix_with_imports_or_exports(this.augmented_matrix, this.imported, this.items, 1);
-      (_this$columns = this.columns).push.apply(_this$columns, _toConsumableArray(this._create_imports_exports_columns(this.imported, "import")));
+      (_this$columns = this.columns).push.apply(_this$columns, _toConsumableArray(this._create_imports_exports_columns(this.imported, 'import')));
       this.augmented_matrix = this._augment_matrix_with_imports_or_exports(this.augmented_matrix, this.exported, this.items, -1);
-      (_this$columns2 = this.columns).push.apply(_this$columns2, _toConsumableArray(this._create_imports_exports_columns(this.exported, "export")));
+      (_this$columns2 = this.columns).push.apply(_this$columns2, _toConsumableArray(this._create_imports_exports_columns(this.exported, 'export')));
       this.columns.push({
         process: {
           id: 'req'
@@ -18942,7 +18948,7 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
             m1 = this.replace_row(m1, replacement, ii);
           }
         }
-        this._print_matrix("lead: " + lead + " r: " + r, m1);
+        this._print_matrix('lead: ' + lead + ' r: ' + r, m1);
       }
       return m1;
     }
@@ -18992,15 +18998,15 @@ var RateGraphRenderer = /*#__PURE__*/function (_ProcessChainVisitor) {
     var _this;
     rate_graph_renderer_classCallCheck(this, RateGraphRenderer);
     _this = _super.call(this);
-    _this.out = ["digraph {"];
+    _this.out = ['digraph {'];
     return _this;
   }
   rate_graph_renderer_createClass(RateGraphRenderer, [{
     key: "check",
     value: function check(chain) {
-      if (!chain.process_counts) throw new Error("`RateGraphRenderer` requires `process_counts` (Provided by `RateCalculator`)");
-      if (!chain.materials) throw new Error("`RateGraphRenderer` requires `materials` (Can be calculated from `process_counts`) (Provided by `RateCalculator`)");
-      if (!chain.processes[0].factory_type) throw new Error("`RateGraphRenderer` requires processes with assigned factory types (Provided by `RateVisitor`)");
+      if (!chain.process_counts) throw new Error('`RateGraphRenderer` requires `process_counts` (Provided by `RateCalculator`)');
+      if (!chain.materials) throw new Error('`RateGraphRenderer` requires `materials` (Can be calculated from `process_counts`) (Provided by `RateCalculator`)');
+      if (!chain.processes[0].factory_type) throw new Error('`RateGraphRenderer` requires processes with assigned factory types (Provided by `RateVisitor`)');
       return {
         visit_item: true,
         visit_process: true,
@@ -19011,9 +19017,9 @@ var RateGraphRenderer = /*#__PURE__*/function (_ProcessChainVisitor) {
   }, {
     key: "_determine_item_node_colour",
     value: function _determine_item_node_colour(produce, consume) {
-      if (produce > consume) return "red";
-      if (consume > produce) return "green";
-      return "";
+      if (produce > consume) return 'red';
+      if (consume > produce) return 'green';
+      return '';
     }
   }, {
     key: "visit_item",
@@ -19057,7 +19063,7 @@ var RateGraphRenderer = /*#__PURE__*/function (_ProcessChainVisitor) {
   }, {
     key: "build",
     value: function build() {
-      this.out.push("}");
+      this.out.push('}');
       return this.out;
     }
   }]);
@@ -20193,7 +20199,7 @@ var DataSet = /*#__PURE__*/src_createClass(function DataSet(id, name, duration_m
   this.duration_style = duration_modifier_style;
   this.output_style = output_modifier_style;
 });
-var data_sets = [new DataSet('for-the-crown-3.8.3', 'For The Crown (3.8.3)', modifier_styles.r, modifier_styles.r), new DataSet('dsp', 'DSP', modifier_styles.r, modifier_styles.r), new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles.a, modifier_styles.a), new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles.r, modifier_styles.r), new DataSet('satisfactory', "Satisfactory", modifier_styles.p, modifier_styles.p), new DataSet('vt', "Voxel Tycoon", modifier_styles.r, modifier_styles.r)].reduce(function (p, d) {
+var data_sets = [new DataSet('for-the-crown-3.8.3', 'For The Crown (3.8.3)', modifier_styles.r, modifier_styles.r), new DataSet('dsp', 'DSP', modifier_styles.r, modifier_styles.r), new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.94-k2se', 'Factorio K2+SE (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles.a, modifier_styles.a), new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles.r, modifier_styles.r), new DataSet('satisfactory', "Satisfactory", modifier_styles.p, modifier_styles.p), new DataSet('vt', "Voxel Tycoon", modifier_styles.r, modifier_styles.r)].reduce(function (p, d) {
   p[d.id] = d;
   return p;
 }, {});

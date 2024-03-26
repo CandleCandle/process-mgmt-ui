@@ -109,7 +109,7 @@ var check_add = function check_add(item, fn) {
   try {
     return fn();
   } catch (error) {
-    console.log("error processing item:", item);
+    console.log('error processing item:', item);
     throw error;
   }
 };
@@ -126,9 +126,9 @@ function data_from_standard_json(name, version, json_import_p) {
     });
     raw.processes.forEach(function (p) {
       if (!p.name) return;
-      if (!data.factory_groups["" + p.factory_group]) {
+      if (!data.factory_groups['' + p.factory_group]) {
         check_add(p, function () {
-          return data.add_factory_group(new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a("" + p.factory_group));
+          return data.add_factory_group(new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('' + p.factory_group));
         });
       }
       var inputs = Object.entries(p.inputs).map(function (e) {
@@ -143,12 +143,12 @@ function data_from_standard_json(name, version, json_import_p) {
       });
       check_add(p, function () {
         data.add_process(new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Process */ .A(p.name, inputs, outputs, p.duration, check_add(p, function () {
-          return data.factory_groups["" + p.factory_group];
+          return data.factory_groups['' + p.factory_group];
         })));
       });
     });
     raw.factory_types.map(function (f) {
-      return [f, new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F("" + f.id, "" + f.name, f.factory_groups.map(function (id) {
+      return [f, new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('' + f.id, '' + f.name, f.factory_groups.map(function (id) {
         return data.factory_groups[id];
       }), f.duration_modifier, f.output_modifier)];
     }).forEach(function (ff) {
@@ -197,7 +197,7 @@ var Item = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 6397:
+/***/ 8704:
 /***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -207,7 +207,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _data_basic_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8269);
 
-var data_p = (0,_data_basic_js__WEBPACK_IMPORTED_MODULE_0__/* .data_from_standard_json */ .v)('Voxel Tycoon', '0.0.1', __webpack_require__.e(/* import() */ 4936).then(__webpack_require__.t.bind(__webpack_require__, 4936, 17)));
+var data_p = (0,_data_basic_js__WEBPACK_IMPORTED_MODULE_0__/* .data_from_standard_json */ .v)('Satisfactory', '0.0.1', __webpack_require__.e(/* import() */ 9918).then(__webpack_require__.t.bind(__webpack_require__, 9918, 17)));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await data_p);
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);

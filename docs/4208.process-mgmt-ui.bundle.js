@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[2351],{
+(self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[4208],{
 
 /***/ 4214:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -93,28 +93,18 @@ var Data = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 4241:
-/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ 8269:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-__webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "v": () => (/* binding */ data_from_standard_json)
 /* harmony export */ });
-/* harmony import */ var _factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3658);
-/* harmony import */ var _stack_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8604);
-/* harmony import */ var _item_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4700);
-/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4214);
-/* harmony import */ var _process_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1341);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4214);
+/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4700);
+/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3658);
+/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8604);
+/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1341);
 
-
-
-
-
-var fix_identifier = function fix_identifier(id) {
-  return id.replace(/-/g, '_');
-};
 var check_add = function check_add(item, fn) {
   try {
     return fn();
@@ -123,124 +113,53 @@ var check_add = function check_add(item, fn) {
     throw error;
   }
 };
-var convert_ingredient = function convert_ingredient(data, ingredient, recipe) {
-  var ingredient_name = fix_identifier(ingredient.name);
-  var amount = ingredient.amount;
-  var probability = ingredient.probability;
-  if (typeof amount === 'undefined') {
-    amount = (ingredient.amount_min + ingredient.amount_max) / 2;
-  }
-  if (probability) {
-    amount = amount * probability;
-  }
-  return check_add(recipe, function () {
-    return new _stack_js__WEBPACK_IMPORTED_MODULE_0__/* .Stack */ .K(data.items[ingredient_name], amount);
-  });
-};
-var data_p = __webpack_require__.e(/* import() */ 682).then(__webpack_require__.t.bind(__webpack_require__, 682, 17)).then(function (module) {
-  return module["default"];
-}).then(function (raw) {
-  var data = new _data_js__WEBPACK_IMPORTED_MODULE_1__/* .Data */ .V('factorio-ab-1.1.38', '0.0.1');
-  Object.values(raw.recipe).forEach(function (recipe) {
-    if (!recipe.name) return; // ignore '{}'
-    if (recipe.normal) {
-      recipe.ingredients = recipe.normal.ingredients;
-      recipe.results = recipe.normal.results;
-      recipe.result = recipe.normal.result;
-      recipe.energy_required = recipe.normal.energy_required;
-      recipe.result_count = recipe.normal.result_count;
-    }
-    if (recipe.result) {
-      var result_count = 1;
-      if (recipe.result_count) {
-        result_count = recipe.result_count;
+function data_from_standard_json(name, version, json_import_p) {
+  return json_import_p.then(function (module) {
+    return module["default"];
+  }).then(function (raw) {
+    var data = new _structures_js__WEBPACK_IMPORTED_MODULE_0__/* .Data */ .V(name, version);
+    raw.items.forEach(function (i) {
+      return check_add(i, function () {
+        if (!i.id) return;
+        data.add_item(new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c(i.id, i.i18n.en, i.group));
+      });
+    });
+    raw.processes.forEach(function (p) {
+      if (!p.name) return;
+      if (!data.factory_groups['' + p.factory_group]) {
+        check_add(p, function () {
+          return data.add_factory_group(new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('' + p.factory_group));
+        });
       }
-      recipe.results = [{
-        type: 'item',
-        name: recipe.result,
-        amount: result_count
-      }];
-    }
-    if ('undefined' === typeof recipe.category) {
-      //console.warn("missing category for ", recipe.name);
-      recipe.category = 'crafting';
-    }
-    if ('undefined' === typeof recipe.energy_required) {
-      //console.warn("missing energy_required for ", recipe.name);
-      recipe.energy_required = 1;
-    }
-    if (_typeof(recipe.ingredients) === 'object' && Object.entries(recipe.ingredients).length === 0) {
-      recipe.ingredients = [];
-    }
-    if (_typeof(recipe.results) === 'object' && Object.entries(recipe.results).length === 0) {
-      recipe.results = [];
-    }
-    check_add(recipe, function () {
-      var name = fix_identifier(recipe.name);
-      recipe.ingredients.forEach(function (ing) {
-        var ing_name = fix_identifier(ing.name);
-        if (!data.items[ing_name]) {
-          data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
-        }
+      var inputs = Object.entries(p.inputs).map(function (e) {
+        return check_add(p, function () {
+          return new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Stack */ .K(data.items[e[0]], e[1]);
+        });
+      });
+      var outputs = Object.entries(p.outputs).map(function (e) {
+        return check_add(p, function () {
+          return new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Stack */ .K(data.items[e[0]], e[1]);
+        });
+      });
+      check_add(p, function () {
+        data.add_process(new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Process */ .A(p.name, inputs, outputs, p.duration, check_add(p, function () {
+          return data.factory_groups['' + p.factory_group];
+        })));
       });
     });
-    check_add(recipe, function () {
-      recipe.results.forEach(function (ing) {
-        var ing_name = fix_identifier(ing.name);
-        if (!data.items[ing_name]) {
-          check_add(recipe, function () {
-            return data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
-          });
-        }
+    raw.factory_types.map(function (f) {
+      return [f, new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('' + f.id, '' + f.name, f.factory_groups.map(function (id) {
+        return data.factory_groups[id];
+      }), f.duration_modifier, f.output_modifier)];
+    }).forEach(function (ff) {
+      return check_add(ff[0], function () {
+        return data.add_factory(ff[1]);
       });
     });
-    var inputs = recipe.ingredients.map(function (ing) {
-      return convert_ingredient(data, ing, recipe);
-    });
-    var outputs = recipe.results.map(function (ing) {
-      return convert_ingredient(data, ing, recipe);
-    }).reduce(function (acc, cur) {
-      // collect outputs of processes that output the same type multiple times.
-      if (acc[cur.item.id]) {
-        acc[cur.item.id] = acc[cur.item.id].add(cur);
-      } else {
-        acc[cur.item.id] = cur;
-      }
-      return acc;
-    }, {});
-    outputs = Object.values(outputs);
-    var category = fix_identifier(recipe.category);
-    if (!data.factory_groups[category]) {
-      check_add(recipe, function () {
-        return data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category));
-      });
-    }
-    check_add(recipe, function () {
-      data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_4__/* .Process */ .A(fix_identifier(recipe.name), inputs, outputs, recipe.energy_required === 0 ? 0.1 : recipe.energy_required, data.factory_groups[category]));
-    });
+    return data;
   });
-  Object.values(raw['assembling-machine']).concat(Object.values(raw['furnace'])).forEach(function (machine) {
-    if (!machine.name) return; // ignore '{}'
-    check_add(machine, function () {
-      machine.crafting_categories.forEach(function (cat) {
-        var category_name = fix_identifier(cat);
-        if (!data.factory_groups[category_name]) {
-          data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category_name));
-        }
-      });
-      var machine_name = fix_identifier(machine.name);
-      data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .Factory */ .F(machine_name, machine_name, machine.crafting_categories.map(function (cat) {
-        return fix_identifier(cat);
-      }).map(function (cat) {
-        return data.factory_groups[cat];
-      }), 1 / machine.crafting_speed));
-    });
-  });
-  return data;
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await data_p);
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } }, 1);
+}
+
 
 /***/ }),
 
@@ -275,6 +194,23 @@ var Item = /*#__PURE__*/function () {
   return Item;
 }();
 
+
+/***/ }),
+
+/***/ 6397:
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _data_basic_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8269);
+
+var data_p = (0,_data_basic_js__WEBPACK_IMPORTED_MODULE_0__/* .data_from_standard_json */ .v)('Voxel Tycoon', '0.0.1', __webpack_require__.e(/* import() */ 4936).then(__webpack_require__.t.bind(__webpack_require__, 4936, 17)));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await data_p);
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ })
 

@@ -1,88 +1,88 @@
 (self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[7028],{
 
-/***/ 9191:
+/***/ 6949:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
 	"./active_mods.json": [
-		5466,
-		5466
+		2446,
+		2446
 	],
 	"./assembling-machine.json": [
-		1235,
-		1235
+		5343,
+		5343
 	],
 	"./boiler.json": [
-		5896,
-		5896
+		254,
+		254
 	],
 	"./equipment-grid.json": [
-		6561,
-		6561
+		4596,
+		4596
 	],
 	"./equipment.json": [
-		3981,
-		3981
+		4806,
+		4806
 	],
 	"./fluid.json": [
-		968,
-		968
+		4064,
+		4064
 	],
 	"./furnace.json": [
-		448,
-		448
+		8247,
+		8247
 	],
 	"./generator.json": [
-		6379,
-		6379
+		8084,
+		8084
 	],
 	"./inserter.json": [
-		2584,
-		2584
+		8732,
+		8732
 	],
 	"./item.json": [
-		9421,
-		9421
+		3732,
+		3732
 	],
 	"./lab.json": [
-		8865,
-		8865
+		2509,
+		2509
 	],
 	"./mining-drill.json": [
-		1956,
-		1956
+		4563,
+		4563
 	],
 	"./projectile.json": [
-		484,
-		484
+		9289,
+		9289
 	],
 	"./reactor.json": [
-		6030,
-		6030
+		3850,
+		3850
 	],
 	"./recipe.json": [
-		3519,
-		3519
+		7215,
+		7215
 	],
 	"./resource.json": [
-		2459,
-		2459
+		3496,
+		3496
 	],
 	"./rocket-silo.json": [
-		1429,
-		1429
+		9849,
+		9849
 	],
 	"./solar-panel.json": [
-		5471,
-		5471
+		2294,
+		2294
 	],
 	"./technology.json": [
-		4264,
-		4264
+		2460,
+		2460
 	],
 	"./transport-belt.json": [
-		8220,
-		8220
+		8911,
+		8911
 	]
 };
 function webpackAsyncContext(req) {
@@ -100,7 +100,7 @@ function webpackAsyncContext(req) {
 	});
 }
 webpackAsyncContext.keys = () => (Object.keys(map));
-webpackAsyncContext.id = 9191;
+webpackAsyncContext.id = 6949;
 module.exports = webpackAsyncContext;
 
 /***/ }),
@@ -198,7 +198,7 @@ var Data = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 5359:
+/***/ 9656:
 /***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -207,15 +207,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _data_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5035);
+/* harmony import */ var _data_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4599);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await (0,_data_base_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)('factorio-py-1.1.53', '0.0.1'));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await (0,_data_base_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)('factorio-ff-1.1.94', '0.0.1'));
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 
-/***/ 5035:
+/***/ 4599:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -246,7 +246,7 @@ var check_add = function check_add(item, fn) {
   try {
     return fn();
   } catch (error) {
-    console.log("error processing item:", item);
+    console.log('error processing item:', item);
     throw error;
   }
 };
@@ -256,14 +256,13 @@ var add_item = function add_item(data, name, i18n) {
       data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_0__/* .Item */ .c(name, i18n));
     } else {
       data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_0__/* .Item */ .c(name, name));
-      ;
     }
   }
   return data.items[name];
 };
 var get_ingredient_amount = function get_ingredient_amount(ingredient) {
   var amount = ingredient.amount;
-  if (typeof amount === "undefined") {
+  if (typeof amount === 'undefined') {
     amount = (ingredient.amount_min + ingredient.amount_max) / 2;
   }
   var probability = ingredient.probability;
@@ -311,6 +310,37 @@ var _add_basic_recipe = function _add_basic_recipe(data, recipe) {
       return convert_ingredient(data, i);
     }), recipe.energy, data.factory_groups[recipe.category]));
   });
+};
+var _hack_add_reactor = function _hack_add_reactor(data) {
+  // reactor has C constant consumption (MW)
+  // fuel cell has E energy (GJ)
+  // e.g. breeder has 5MW consumption; breeder cell has 5GJ
+  // therefore 5,000MJ / 5M(J/S) = 1000s to convert 1 breeder-fuel-cell into a used-up-breeder-fuel-cell
+
+  // reactor[id].max_energy_usage = C
+  // item[id].fuel_value = E
+  // reactor[id].energy_source.burner.fuel_categories (set) tells us what types of fuel can be used
+  // item[id].fuel_category tells us the category for that particular fuel.
+
+  // uranium 40MW, 8GJ ==> 200s
+  // breeder 5MW, 5GJ ==> 1000s
+  // MOX 20MW, 20GJ ==> 1000s
+
+  data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('basic-reactor'));
+  data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('breeder-reactor'));
+  data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('mox-reactor'));
+  check_add('uranium-fuel-cell', function () {
+    data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('burn-uranium-fuel-cell', [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['uranium-fuel-cell'], 1)], [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['used-up-uranium-fuel-cell'], 1)], 200, data.factory_groups['basic-reactor']));
+  });
+  check_add('breeder-fuel-cell', function () {
+    data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('burn-breeder-fuel-cell', [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['breeder-fuel-cell'], 1)], [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['used-up-breeder-fuel-cell'], 1)], 1000, data.factory_groups['breeder-reactor']));
+  });
+  check_add('MOX-fuel', function () {
+    data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('burn-MOX-fuel', [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['MOX-fuel'], 1)], [new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items['used-up-MOX-fuel'], 1)], 1000, data.factory_groups['mox-reactor']));
+  });
+  data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('basic-reactor', 'basic-reactor', [data.factory_groups['basic-reactor']], 1));
+  data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('breeder-reactor', 'breeder-reactor', [data.factory_groups['breeder-reactor']], 1));
+  data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F('mox-reactor', 'mox-reactor', [data.factory_groups['mox-reactor']], 1));
 };
 var _add_temperature_recipe = function _add_temperature_recipe(data, recipe, temperature_based_items) {
   check_add([recipe, recipe.category], function () {
@@ -406,24 +436,20 @@ var _add_temperature_based_item = function _add_temperature_based_item(temperatu
   }
   temperature_based_items[product.name][product.temperature] = item;
 };
-var _import_file = function _import_file(name) {
-  return __webpack_require__(9191)("./" + name)["catch"](function (e) {
-    console.log('failed to read recipe.json:', e);
-  }).then(function (m) {
-    return m["default"];
-  });
-};
-function create_data(_x, _x2, _x3) {
+function create_data(_x, _x2) {
   return _create_data.apply(this, arguments);
 }
 function _create_data() {
-  _create_data = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(game, version, json_promise_cb) {
+  _create_data = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(game, version) {
     var data_p, groups_p;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          if (!!!json_promise_cb) json_promise_cb = _import_file;
-          data_p = json_promise_cb('recipe.json').then(function (recipe_raw) {
+          data_p = __webpack_require__.e(/* import() */ 7215).then(__webpack_require__.t.bind(__webpack_require__, 7215, 17))["catch"](function (e) {
+            console.log('failed to read recipe.json:', e);
+          }).then(function (m) {
+            return m["default"];
+          }).then(function (recipe_raw) {
             var data = new _data_js__WEBPACK_IMPORTED_MODULE_4__/* .Data */ .V(game, version);
             var temperature_based_items = {}; // [base name][temperature] => Item
 
@@ -437,7 +463,7 @@ function _create_data() {
                 if (product.temperature) {
                   var temp = product.temperature;
                   var item = check_add([recipe, product], function () {
-                    return add_item(data, product.name + "_" + temp, product.name + " (" + temp + ")");
+                    return add_item(data, product.name + '_' + temp, product.name + ' (' + temp + ')');
                   });
                   _add_temperature_based_item(temperature_based_items, product, item);
                 } else {
@@ -459,17 +485,17 @@ function _create_data() {
                     i.minimum_temperature = i.temperature;
                     i.maximum_temperature = i.temperature;
                   }
-                  if (i.minimum_temperature > -1e+207) {
+                  if (i.minimum_temperature > -1e207) {
                     var temp = i.minimum_temperature;
                     var item = check_add([recipe, i], function () {
-                      return add_item(data, i.name + "_" + temp, i.name + " (" + temp + ")");
+                      return add_item(data, i.name + '_' + temp, i.name + ' (' + temp + ')');
                     });
                     _add_temperature_based_item(temperature_based_items, i, item);
                   }
-                  if (i.maximum_temperature < 1e+207) {
+                  if (i.maximum_temperature < 1e207) {
                     var _temp = i.maximum_temperature;
                     var _item = check_add([recipe, i], function () {
-                      return add_item(data, i.name + "_" + _temp, i.name + " (" + _temp + ")");
+                      return add_item(data, i.name + '_' + _temp, i.name + ' (' + _temp + ')');
                     });
                     _add_temperature_based_item(temperature_based_items, i, _item);
                   }
@@ -481,9 +507,16 @@ function _create_data() {
                 }
               });
             });
+            _hack_add_reactor(data);
             return data;
           });
-          groups_p = ['assembling-machine.json', 'furnace.json', 'rocket-silo.json'].map(_import_file);
+          groups_p = ['assembling-machine.json', 'furnace.json', 'rocket-silo.json'].map(function (f) {
+            return __webpack_require__(6949)("./" + f).then(function (m) {
+              return m["default"];
+            })["catch"](function (e) {
+              return console.error('failed to read .json:', f, e);
+            });
+          });
           return _context.abrupt("return", Promise.all([data_p].concat(_toConsumableArray(groups_p))).then(function (arr) {
             var data = arr.shift();
             arr.forEach(function (g) {
@@ -491,7 +524,7 @@ function _create_data() {
             });
             return data;
           }));
-        case 4:
+        case 3:
         case "end":
           return _context.stop();
       }
@@ -499,7 +532,6 @@ function _create_data() {
   }));
   return _create_data.apply(this, arguments);
 }
-;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (create_data);
 
 /***/ }),
