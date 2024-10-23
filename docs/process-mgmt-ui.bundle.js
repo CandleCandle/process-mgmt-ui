@@ -19,45 +19,50 @@ var map = {
 		6746,
 		5312
 	],
+	"./factorio-2.0.7-sa-1.0.0/data.js": [
+		6136,
+		6746,
+		2416
+	],
 	"./factorio-ab-01/data.js": [
 		5410,
-		2416
+		2351
 	],
 	"./factorio-ab-1.1.38/data.js": [
 		4241,
-		2351
+		7876
 	],
 	"./factorio-ab/data.js": [
 		3968,
-		7876
+		7819
 	],
 	"./factorio-ff-1.1.76/data.js": [
 		2057,
-		7819
+		7028
 	],
 	"./factorio-ff-1.1.94/data.js": [
 		9656,
-		7028
+		1422
 	],
 	"./factorio-py-1.1.53/data.js": [
 		5359,
-		1422
+		4532
 	],
 	"./for-the-crown-3.8.3/data.js": [
 		5386,
-		4532
+		9688
 	],
 	"./plan-b-terraform/data.js": [
 		1290,
-		9688
+		3402
 	],
 	"./satisfactory/data.js": [
 		8704,
-		3402
+		4208
 	],
 	"./vt/data.js": [
 		6397,
-		4208
+		9788
 	]
 };
 function webpackAsyncContext(req) {
@@ -17579,13 +17584,18 @@ var Factory = /*#__PURE__*/function () {
 /* harmony export */ });
 /* harmony import */ var _structures_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6968);
 /* harmony import */ var _stack_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8604);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -17607,16 +17617,24 @@ var Process = /*#__PURE__*/function () {
   _createClass(Process, [{
     key: "clone",
     value: function clone() {
-      var _this = this;
       var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.id;
       var inputs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.inputs;
       var outputs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.outputs;
       var duration = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.duration;
       var factory_group = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : this.factory_group;
       var result = new Process(id, inputs, outputs, duration, factory_group);
-      this.clone_fields.forEach(function (f) {
-        return result[f] = _this[f];
-      });
+      var _iterator = _createForOfIteratorHelper(this.clone_fields),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var f = _step.value;
+          result[f] = this[f];
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
       return result;
     }
   }, {
@@ -17722,12 +17740,21 @@ var ProcessChain = /*#__PURE__*/function () {
     key: "_build_processes_by_output",
     value: function _build_processes_by_output() {
       return this.processes.reduce(function (acc, cur) {
-        cur.outputs.forEach(function (output) {
-          if (!acc[output.item.id]) {
-            acc[output.item.id] = [];
+        var _iterator2 = _createForOfIteratorHelper(cur.outputs),
+          _step2;
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var output = _step2.value;
+            if (!acc[output.item.id]) {
+              acc[output.item.id] = [];
+            }
+            acc[output.item.id].push(cur);
           }
-          acc[output.item.id].push(cur);
-        });
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
         return acc;
       }, {});
     }
@@ -17735,12 +17762,21 @@ var ProcessChain = /*#__PURE__*/function () {
     key: "_build_processes_by_input",
     value: function _build_processes_by_input() {
       return this.processes.reduce(function (acc, cur) {
-        cur.inputs.forEach(function (input) {
-          if (!acc[input.item.id]) {
-            acc[input.item.id] = [];
+        var _iterator3 = _createForOfIteratorHelper(cur.inputs),
+          _step3;
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var input = _step3.value;
+            if (!acc[input.item.id]) {
+              acc[input.item.id] = [];
+            }
+            acc[input.item.id].push(cur);
           }
-          acc[input.item.id].push(cur);
-        });
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
         return acc;
       }, {});
     }
@@ -17770,13 +17806,22 @@ var ProcessChain = /*#__PURE__*/function () {
         if (process && !visited_processes.includes(process.id)) {
           result.push(process);
           visited_processes.push(process.id);
-          process.inputs.filter(function (input) {
-            return !queue.includes(input.item.id);
-          }).filter(function (input) {
-            return !visited.includes(input.item.id);
-          }).forEach(function (input) {
-            return queue.push(input.item.id);
-          });
+          var _iterator4 = _createForOfIteratorHelper(process.inputs.filter(function (input) {
+              return !queue.includes(input.item.id);
+            }).filter(function (input) {
+              return !visited.includes(input.item.id);
+            })),
+            _step4;
+          try {
+            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+              var input = _step4.value;
+              queue.push(input.item.id);
+            }
+          } catch (err) {
+            _iterator4.e(err);
+          } finally {
+            _iterator4.f();
+          }
         }
       }
       return new ProcessChain(result);
@@ -17842,66 +17887,144 @@ var ProcessChain = /*#__PURE__*/function () {
   }, {
     key: "accept",
     value: function accept(visitor) {
-      var _this2 = this;
       var options = visitor.check(this);
       if (options.init) visitor.init(this);
-      if (options.visit_item) this.all_items().forEach(function (e) {
-        return visitor.visit_item(e, _this2);
-      });
+      if (options.visit_item) {
+        var _iterator5 = _createForOfIteratorHelper(this.all_items()),
+          _step5;
+        try {
+          for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+            var e = _step5.value;
+            visitor.visit_item(e, this);
+          }
+        } catch (err) {
+          _iterator5.e(err);
+        } finally {
+          _iterator5.f();
+        }
+      }
       if (options.visit_process || options.visit_item_process_edge || options.visit_process_item_edge) {
-        this.processes.forEach(function (p) {
-          if (options.visit_process) visitor.visit_process(p, _this2);
-          if (options.visit_item_process_edge) p.inputs.forEach(function (i, ix) {
-            return visitor.visit_item_process_edge(i, p, _this2, ix);
-          });
-          if (options.visit_process_item_edge) p.outputs.forEach(function (o, ox) {
-            return visitor.visit_process_item_edge(p, o, _this2, ox);
-          });
-        });
+        var _iterator6 = _createForOfIteratorHelper(this.processes),
+          _step6;
+        try {
+          for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+            var p = _step6.value;
+            if (options.visit_process) visitor.visit_process(p, this);
+            if (options.visit_item_process_edge) {
+              var _iterator7 = _createForOfIteratorHelper(p.inputs.entries()),
+                _step7;
+              try {
+                for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+                  var _step7$value = _slicedToArray(_step7.value, 2),
+                    ix = _step7$value[0],
+                    i = _step7$value[1];
+                  visitor.visit_item_process_edge(i, p, this, ix);
+                }
+              } catch (err) {
+                _iterator7.e(err);
+              } finally {
+                _iterator7.f();
+              }
+            }
+            if (options.visit_process_item_edge) {
+              var _iterator8 = _createForOfIteratorHelper(p.outputs.entries()),
+                _step8;
+              try {
+                for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+                  var _step8$value = _slicedToArray(_step8.value, 2),
+                    ox = _step8$value[0],
+                    o = _step8$value[1];
+                  visitor.visit_process_item_edge(p, o, this, ox);
+                }
+              } catch (err) {
+                _iterator8.e(err);
+              } finally {
+                _iterator8.f();
+              }
+            }
+          }
+        } catch (err) {
+          _iterator6.e(err);
+        } finally {
+          _iterator6.f();
+        }
       }
       return visitor.build();
     }
   }, {
     key: "to_graphviz",
     value: function to_graphviz() {
-      var _this3 = this;
+      var _this = this;
       var result = [];
       result.push('digraph {');
-      Object.entries(this.all_items().reduce(function (acc, cur) {
-        var g = cur.group;
-        if (!g) {
-          g = '__default__';
-        }
-        if (!acc[g]) {
-          acc[g] = [];
-        }
-        acc[g].push(cur);
-        return acc;
-      }, {})).forEach(function (g) {
+      for (var _i2 = 0, _Object$entries = Object.entries(this.all_items().reduce(function (acc, cur) {
+          var g = cur.group;
+          if (!g) {
+            g = '__default__';
+          }
+          if (!acc[g]) {
+            acc[g] = [];
+          }
+          acc[g].push(cur);
+          return acc;
+        }, {})); _i2 < _Object$entries.length; _i2++) {
+        var g = _Object$entries[_i2];
         var id = g[0];
         var contents = g[1];
         if (id === '__default__') {
-          contents.forEach(function (item) {
-            return result.push('  ' + _this3._render_item_node(item));
-          });
+          var _iterator9 = _createForOfIteratorHelper(contents),
+            _step9;
+          try {
+            for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+              var item = _step9.value;
+              result.push('  ' + this._render_item_node(item));
+            }
+          } catch (err) {
+            _iterator9.e(err);
+          } finally {
+            _iterator9.f();
+          }
         } else {
-          if (_this3.settings.generate_item_groupings) result.push('  subgraph cluster_' + id + ' {');
-          contents.forEach(function (item) {
-            return result.push('    ' + _this3._render_item_node(item));
-          });
-          if (_this3.settings.generate_item_groupings) result.push('  }');
+          if (this.settings.generate_item_groupings) result.push('  subgraph cluster_' + id + ' {');
+          var _iterator10 = _createForOfIteratorHelper(contents),
+            _step10;
+          try {
+            for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+              var _item = _step10.value;
+              result.push('    ' + this._render_item_node(_item));
+            }
+          } catch (err) {
+            _iterator10.e(err);
+          } finally {
+            _iterator10.f();
+          }
+          if (this.settings.generate_item_groupings) result.push('  }');
         }
-      });
-      this.processes.forEach(function (process, index) {
-        var node_id = 'process_' + index;
-        result.push('  ' + _this3._render_processor_node(node_id, process));
-        result.push.apply(result, _toConsumableArray(process.inputs.map(function (input, index) {
-          return '  ' + _this3._render_edge(node_id, input, process, index);
-        })));
-        result.push.apply(result, _toConsumableArray(process.outputs.map(function (output, index) {
-          return '  ' + _this3._render_edge(node_id, process, output, index);
-        })));
-      });
+      }
+      var _iterator11 = _createForOfIteratorHelper(this.processes.entries()),
+        _step11;
+      try {
+        var _loop = function _loop() {
+          var _step11$value = _slicedToArray(_step11.value, 2),
+            index = _step11$value[0],
+            process = _step11$value[1];
+          var node_id = 'process_' + index;
+          result.push('  ' + _this._render_processor_node(node_id, process));
+          result.push.apply(result, _toConsumableArray(process.inputs.map(function (input, index) {
+            return '  ' + _this._render_edge(node_id, input, process, index);
+          })));
+          result.push.apply(result, _toConsumableArray(process.outputs.map(function (output, index) {
+            return '  ' + _this._render_edge(node_id, process, output, index);
+          })));
+        };
+        for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+          _loop();
+        }
+      } catch (err) {
+        _iterator11.e(err);
+      } finally {
+        _iterator11.f();
+      }
       result.push('}');
       return result.join('\n');
     }
@@ -18657,10 +18780,8 @@ var node_matrices_matrix = __webpack_require__(856);
 function _construct(Parent, args, Class) { if (linear_algebra_visitor_isNativeReflectConstruct()) { _construct = Reflect.construct.bind(); } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) linear_algebra_visitor_setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function linear_algebra_visitor_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) linear_algebra_visitor_setPrototypeOf(subClass, superClass); }
 function linear_algebra_visitor_setPrototypeOf(o, p) { linear_algebra_visitor_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return linear_algebra_visitor_setPrototypeOf(o, p); }
 function linear_algebra_visitor_createSuper(Derived) { var hasNativeReflectConstruct = linear_algebra_visitor_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = linear_algebra_visitor_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = linear_algebra_visitor_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return linear_algebra_visitor_possibleConstructorReturn(this, result); }; }
@@ -18669,6 +18790,9 @@ function linear_algebra_visitor_assertThisInitialized(self) { if (self === void 
 function linear_algebra_visitor_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function linear_algebra_visitor_getPrototypeOf(o) { linear_algebra_visitor_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return linear_algebra_visitor_getPrototypeOf(o); }
 function linear_algebra_visitor_typeof(obj) { "@babel/helpers - typeof"; return linear_algebra_visitor_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, linear_algebra_visitor_typeof(obj); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function linear_algebra_visitor_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function linear_algebra_visitor_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, linear_algebra_visitor_toPropertyKey(descriptor.key), descriptor); } }
 function linear_algebra_visitor_createClass(Constructor, protoProps, staticProps) { if (protoProps) linear_algebra_visitor_defineProperties(Constructor.prototype, protoProps); if (staticProps) linear_algebra_visitor_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -18680,16 +18804,33 @@ function linear_algebra_visitor_toPrimitive(input, hint) { if (linear_algebra_vi
 
 var Column = /*#__PURE__*/function () {
   function Column(process) {
-    var _this = this;
     linear_algebra_visitor_classCallCheck(this, Column);
     this.process = process;
     this.entries = new src_stack/* StackSet */.O();
-    process.inputs.forEach(function (s) {
-      return _this.entries.sub(s);
-    });
-    process.outputs.forEach(function (s) {
-      return _this.entries.add(s);
-    });
+    var _iterator = _createForOfIteratorHelper(process.inputs),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var s = _step.value;
+        this.entries.sub(s);
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+    var _iterator2 = _createForOfIteratorHelper(process.outputs),
+      _step2;
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var _s = _step2.value;
+        this.entries.add(_s);
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
   }
   linear_algebra_visitor_createClass(Column, [{
     key: "items",
@@ -18713,15 +18854,15 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
   linear_algebra_visitor_inherits(LinearAlgebra, _ProcessChainVisitor);
   var _super = linear_algebra_visitor_createSuper(LinearAlgebra);
   function LinearAlgebra(requirements, imported, exported) {
-    var _this2;
+    var _this;
     var print_matricies = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     linear_algebra_visitor_classCallCheck(this, LinearAlgebra);
-    _this2 = _super.call(this);
-    _this2.requirements = requirements;
-    _this2.imported = imported;
-    _this2.exported = exported;
-    _this2.print_matricies = print_matricies;
-    return _this2;
+    _this = _super.call(this);
+    _this.requirements = requirements;
+    _this.imported = imported;
+    _this.exported = exported;
+    _this.print_matricies = print_matricies;
+    return _this;
   }
   linear_algebra_visitor_createClass(LinearAlgebra, [{
     key: "check",
@@ -18743,14 +18884,22 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
   }, {
     key: "visit_process",
     value: function visit_process(process, _chain) {
-      var _this3 = this;
       var c = new Column(process);
       this.columns.push(c);
-      c.items().forEach(function (i) {
-        if (!_this3.items.includes(i)) {
-          _this3.items.push(i);
+      var _iterator3 = _createForOfIteratorHelper(c.items()),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var i = _step3.value;
+          if (!this.items.includes(i)) {
+            this.items.push(i);
+          }
         }
-      });
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
     }
   }, {
     key: "_sort_columns_and_rows",
@@ -18770,12 +18919,24 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
     key: "_print_columns",
     value: function _print_columns() {
       if (!this.print_matricies) return;
-      this.columns.forEach(function (col) {
-        console.log(col.process.id, 'items: ', col.entries.items().flatMap(function (ssi) {
-          var total = col.entries.total(ssi);
-          return [total.item.name, total.quantity];
-        }).join(', '));
-      });
+      var _iterator4 = _createForOfIteratorHelper(this.columns),
+        _step4;
+      try {
+        var _loop = function _loop() {
+          var col = _step4.value;
+          console.log(col.process.id, 'items: ', col.entries.items().flatMap(function (ssi) {
+            var total = col.entries.total(ssi);
+            return [total.item.name, total.quantity];
+          }).join(', '));
+        };
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          _loop();
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
     }
   }, {
     key: "_print_matrix",
@@ -18783,7 +18944,7 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
       if (!this.print_matricies) return;
       console.log(identifier);
       console.log('columns', matrix.numColumns(), 'rows', matrix.numRows());
-      if (!!!this.items) {
+      if (!this.items) {
         console.table(matrix.data);
         return;
       }
@@ -18835,9 +18996,9 @@ var LinearAlgebra = /*#__PURE__*/function (_ProcessChainVisitor) {
   }, {
     key: "_build_initial_matrix",
     value: function _build_initial_matrix() {
-      var _this4 = this;
+      var _this2 = this;
       var rows = this.items.map(function (item) {
-        return _this4.columns.map(function (col) {
+        return _this2.columns.map(function (col) {
           return col.count_for(item);
         });
       });
@@ -19072,6 +19233,9 @@ var RateGraphRenderer = /*#__PURE__*/function (_ProcessChainVisitor) {
 
 ;// CONCATENATED MODULE: ../process-mgmt/src/visit/process_count_visitor.js
 function process_count_visitor_typeof(obj) { "@babel/helpers - typeof"; return process_count_visitor_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, process_count_visitor_typeof(obj); }
+function process_count_visitor_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = process_count_visitor_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function process_count_visitor_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return process_count_visitor_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return process_count_visitor_arrayLikeToArray(o, minLen); }
+function process_count_visitor_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function process_count_visitor_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function process_count_visitor_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, process_count_visitor_toPropertyKey(descriptor.key), descriptor); } }
 function process_count_visitor_createClass(Constructor, protoProps, staticProps) { if (protoProps) process_count_visitor_defineProperties(Constructor.prototype, protoProps); if (staticProps) process_count_visitor_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -19102,17 +19266,43 @@ var ProcessCountVisitor = /*#__PURE__*/function () {
     key: "build",
     value: function build() {
       this.chain.rebuild_materials = function () {
-        var _this = this;
         var materials = new src_stack/* StackSet */.O();
-        this.processes.forEach(function (proc) {
-          var process_count = _this.process_counts[proc.id];
-          proc.outputs.forEach(function (output) {
-            return materials.add(output.mul(process_count));
-          });
-          proc.inputs.forEach(function (input) {
-            return materials.sub(input.mul(process_count));
-          });
-        });
+        var _iterator = process_count_visitor_createForOfIteratorHelper(this.processes),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var proc = _step.value;
+            var process_count = this.process_counts[proc.id];
+            var _iterator2 = process_count_visitor_createForOfIteratorHelper(proc.outputs),
+              _step2;
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var output = _step2.value;
+                materials.add(output.mul(process_count));
+              }
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+            var _iterator3 = process_count_visitor_createForOfIteratorHelper(proc.inputs),
+              _step3;
+            try {
+              for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                var input = _step3.value;
+                materials.sub(input.mul(process_count));
+              }
+            } catch (err) {
+              _iterator3.e(err);
+            } finally {
+              _iterator3.f();
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
         this.materials = materials;
       };
       return this.chain;
@@ -20199,7 +20389,7 @@ var DataSet = /*#__PURE__*/src_createClass(function DataSet(id, name, duration_m
   this.duration_style = duration_modifier_style;
   this.output_style = output_modifier_style;
 });
-var data_sets = [new DataSet('for-the-crown-3.8.3', 'For The Crown (3.8.3)', modifier_styles.r, modifier_styles.r), new DataSet('dsp', 'DSP', modifier_styles.r, modifier_styles.r), new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.94-k2se', 'Factorio K2+SE (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles.a, modifier_styles.a), new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles.r, modifier_styles.r), new DataSet('satisfactory', "Satisfactory", modifier_styles.p, modifier_styles.p), new DataSet('vt', "Voxel Tycoon", modifier_styles.r, modifier_styles.r)].reduce(function (p, d) {
+var data_sets = [new DataSet('for-the-crown-3.8.3', 'For The Crown (3.8.3)', modifier_styles.r, modifier_styles.r), new DataSet('dsp', 'DSP', modifier_styles.r, modifier_styles.r), new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.94-k2se', 'Factorio K2+SE (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-2.0.7-sa-1.0.0', 'Factorio Space Age (2.0.7-1.0.0)', modifier_styles.a, modifier_styles.a), new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles.r, modifier_styles.r), new DataSet('satisfactory', "Satisfactory", modifier_styles.p, modifier_styles.p), new DataSet('vt', "Voxel Tycoon", modifier_styles.r, modifier_styles.r)].reduce(function (p, d) {
   p[d.id] = d;
   return p;
 }, {});

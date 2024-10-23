@@ -9,6 +9,9 @@
 /* harmony export */ });
 /* harmony import */ var _structures_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6968);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -57,34 +60,66 @@ var Data = /*#__PURE__*/function () {
   }, {
     key: "add_items",
     value: function add_items(items) {
-      var _this = this;
-      items.forEach(function (i) {
-        return _this.add_item(i);
-      });
+      var _iterator = _createForOfIteratorHelper(items),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var i = _step.value;
+          this.add_item(i);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
     }
   }, {
     key: "add_factory_groups",
     value: function add_factory_groups(factory_groups) {
-      var _this2 = this;
-      factory_groups.forEach(function (f) {
-        return _this2.add_factory_group(f);
-      });
+      var _iterator2 = _createForOfIteratorHelper(factory_groups),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var f = _step2.value;
+          this.add_factory_group(f);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
     }
   }, {
     key: "add_factories",
     value: function add_factories(factories) {
-      var _this3 = this;
-      factories.forEach(function (f) {
-        return _this3.add_factory(f);
-      });
+      var _iterator3 = _createForOfIteratorHelper(factories),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var f = _step3.value;
+          this.add_factory(f);
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
     }
   }, {
     key: "add_processes",
     value: function add_processes(processes) {
-      var _this4 = this;
-      processes.forEach(function (p) {
-        return _this4.add_process(p);
-      });
+      var _iterator4 = _createForOfIteratorHelper(processes),
+        _step4;
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var p = _step4.value;
+          this.add_process(p);
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
     }
   }]);
   return Data;
@@ -93,39 +128,205 @@ var Data = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 3968:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ 4241:
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4214);
-/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4700);
-/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3658);
-/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1341);
-/* harmony import */ var _structures_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8604);
+/* harmony import */ var _factory_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3658);
+/* harmony import */ var _stack_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8604);
+/* harmony import */ var _item_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4700);
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4214);
+/* harmony import */ var _process_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1341);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-var data = new _structures_js__WEBPACK_IMPORTED_MODULE_0__/* .Data */ .V('factorio-ab', '0.0.1');
-var mineable_ores = ['saphirite', 'stiratite', 'rubyte', 'bobmonium', 'crotinnium', 'jivolite'];
-mineable_ores.forEach(function (ore) {
-  data.add_item(new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('ore_' + ore, ore + ' ore'));
-  data.add_item(new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('crushed_' + ore, ore + ' crushed'));
-  data.add_item(new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('chunks_' + ore, ore + ' chunks'));
+
+
+
+
+var fix_identifier = function fix_identifier(id) {
+  return id.replace(/-/g, '_');
+};
+var check_add = function check_add(item, fn) {
+  try {
+    return fn();
+  } catch (error) {
+    console.log('error processing item:', item);
+    throw error;
+  }
+};
+var convert_ingredient = function convert_ingredient(data, ingredient, recipe) {
+  var ingredient_name = fix_identifier(ingredient.name);
+  var amount = ingredient.amount;
+  var probability = ingredient.probability;
+  if (typeof amount === 'undefined') {
+    amount = (ingredient.amount_min + ingredient.amount_max) / 2;
+  }
+  if (probability) {
+    amount = amount * probability;
+  }
+  return check_add(recipe, function () {
+    return new _stack_js__WEBPACK_IMPORTED_MODULE_0__/* .Stack */ .K(data.items[ingredient_name], amount);
+  });
+};
+var data_p = __webpack_require__.e(/* import() */ 682).then(__webpack_require__.t.bind(__webpack_require__, 682, 17)).then(function (module) {
+  return module["default"];
+}).then(function (raw) {
+  var data = new _data_js__WEBPACK_IMPORTED_MODULE_1__/* .Data */ .V('factorio-ab-1.1.38', '0.0.1');
+  var _loop = function _loop() {
+    var recipe = _Object$values[_i];
+    if (!recipe.name) return "continue"; // ignore '{}'
+    if (recipe.normal) {
+      recipe.ingredients = recipe.normal.ingredients;
+      recipe.results = recipe.normal.results;
+      recipe.result = recipe.normal.result;
+      recipe.energy_required = recipe.normal.energy_required;
+      recipe.result_count = recipe.normal.result_count;
+    }
+    if (recipe.result) {
+      var result_count = 1;
+      if (recipe.result_count) {
+        result_count = recipe.result_count;
+      }
+      recipe.results = [{
+        type: 'item',
+        name: recipe.result,
+        amount: result_count
+      }];
+    }
+    if ('undefined' === typeof recipe.category) {
+      //console.warn("missing category for ", recipe.name);
+      recipe.category = 'crafting';
+    }
+    if ('undefined' === typeof recipe.energy_required) {
+      //console.warn("missing energy_required for ", recipe.name);
+      recipe.energy_required = 1;
+    }
+    if (_typeof(recipe.ingredients) === 'object' && Object.entries(recipe.ingredients).length === 0) {
+      recipe.ingredients = [];
+    }
+    if (_typeof(recipe.results) === 'object' && Object.entries(recipe.results).length === 0) {
+      recipe.results = [];
+    }
+    check_add(recipe, function () {
+      var name = fix_identifier(recipe.name);
+      var _iterator = _createForOfIteratorHelper(recipe.ingredients),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var ing = _step.value;
+          var ing_name = fix_identifier(ing.name);
+          if (!data.items[ing_name]) {
+            data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    });
+    check_add(recipe, function () {
+      var _iterator2 = _createForOfIteratorHelper(recipe.results),
+        _step2;
+      try {
+        var _loop2 = function _loop2() {
+          var ing = _step2.value;
+          var ing_name = fix_identifier(ing.name);
+          if (!data.items[ing_name]) {
+            check_add(recipe, function () {
+              return data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
+            });
+          }
+        };
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          _loop2();
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+    });
+    var inputs = recipe.ingredients.map(function (ing) {
+      return convert_ingredient(data, ing, recipe);
+    });
+    var outputs = recipe.results.map(function (ing) {
+      return convert_ingredient(data, ing, recipe);
+    }).reduce(function (acc, cur) {
+      // collect outputs of processes that output the same type multiple times.
+      if (acc[cur.item.id]) {
+        acc[cur.item.id] = acc[cur.item.id].add(cur);
+      } else {
+        acc[cur.item.id] = cur;
+      }
+      return acc;
+    }, {});
+    outputs = Object.values(outputs);
+    var category = fix_identifier(recipe.category);
+    if (!data.factory_groups[category]) {
+      check_add(recipe, function () {
+        return data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category));
+      });
+    }
+    check_add(recipe, function () {
+      data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_4__/* .Process */ .A(fix_identifier(recipe.name), inputs, outputs, recipe.energy_required === 0 ? 0.1 : recipe.energy_required, data.factory_groups[category]));
+    });
+  };
+  for (var _i = 0, _Object$values = Object.values(raw.recipe); _i < _Object$values.length; _i++) {
+    var _ret = _loop();
+    if (_ret === "continue") continue;
+  }
+  var _iterator3 = _createForOfIteratorHelper(Object.values(raw['assembling-machine']).concat(Object.values(raw['furnace']))),
+    _step3;
+  try {
+    var _loop3 = function _loop3() {
+      var machine = _step3.value;
+      if (!machine.name) return "continue"; // ignore '{}'
+      check_add(machine, function () {
+        var _iterator4 = _createForOfIteratorHelper(machine.crafting_categories),
+          _step4;
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var cat = _step4.value;
+            var category_name = fix_identifier(cat);
+            if (!data.factory_groups[category_name]) {
+              data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category_name));
+            }
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
+        }
+        var machine_name = fix_identifier(machine.name);
+        data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .Factory */ .F(machine_name, machine_name, machine.crafting_categories.map(function (cat) {
+          return fix_identifier(cat);
+        }).map(function (cat) {
+          return data.factory_groups[cat];
+        }), 1 / machine.crafting_speed));
+      });
+    };
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var _ret2 = _loop3();
+      if (_ret2 === "continue") continue;
+    }
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+  return data;
 });
-data.add_items([new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('crushed_stone', 'crushed stone'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('sludge_mineral', 'mineral sludge'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('catalyst_mineral', 'mineral catalyst'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('catalyst_crystal', 'crystal catalyst'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('catalyst_hybrid', 'hybrid catalyst'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('water_purified', 'purified water'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('water_mineralized', 'mineralised water'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('water_waste_sulfuric', 'sulphuric waste water'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('slurry_slag', 'slag slurry'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('sulfur', 'sulphur'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('acid_sulfuric', 'sulphuric acid'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('gas_sulfur_dioxide', 'sulphur dioxide gas'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('gas_oxygen', 'oxygen gas'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('ore_iron', 'iron ore'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('ore_copper', 'copper ore'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('iron_plate', 'iron plate'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('copper_plate', 'copper plate'), new _structures_js__WEBPACK_IMPORTED_MODULE_1__/* .Item */ .c('circuit', 'circuit')]);
-var items = data.items;
-data.add_factory_groups([new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('crusher'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('sorter'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('smelter'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('crystallizer'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('filtration_unit'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('liquifier'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('assembler'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('chemical_plant'), new _structures_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a('hydro_plant')]);
-var factory_groups = data.factory_groups;
-data.add_processes([[items.ore_saphirite, items.crushed_saphirite], [items.ore_stiratite, items.crushed_stiratite], [items.ore_rubyte, items.crushed_rubyte], [items.ore_bobmonium, items.crushed_bobmonium], [items.ore_crotinnium, items.crushed_crotinnium], [items.ore_jivolite, items.crushed_jivolite]].map(function (i) {
-  return new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A(i[0].id + '_crushing', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(i[0], 2)], [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(i[1], 2), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.crushed_stone, 1)], 1, factory_groups.crusher);
-}));
-data.add_processes([new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('slag_slurry_from_crushed_stone', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.crushed_stone, 25), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.acid_sulfuric, 15)], [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.slurry_slag, 50)], 1, factory_groups.liquifier), new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('mineral_sludge_from_slag_slurry', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.slurry_slag, 50), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.water_purified, 50)],
-//TODO add the filter frames.
-[new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.sludge_mineral, 50), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.water_waste_sulfuric, 40)], 1, factory_groups.filtration_unit), new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('mineral_catalyst', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.sludge_mineral, 25)], [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.catalyst_mineral, 2)], 1, factory_groups.crystallizer)]);
-data.add_processes([new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('iron_ore_by_sorting', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.catalyst_mineral, 1), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.crushed_saphirite, 2), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.crushed_jivolite, 2)], [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.ore_iron, 4)], 1, factory_groups.sorter)]);
-data.add_processes([new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('acid_sulfuric', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.gas_sulfur_dioxide, 90), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.water_purified, 40)], [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.acid_sulfuric, 60)], 1, factory_groups.chemical_plant), new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('gas_sulfur_dioxide', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.sulfur, 1), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.gas_oxygen, 60)], [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.gas_sulfur_dioxide, 60)], 1, factory_groups.chemical_plant), new _structures_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A('waste_water_purification_sulfuric', [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.water_waste_sulfuric, 100)], [new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.sulfur, 1), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.water_purified, 70), new _structures_js__WEBPACK_IMPORTED_MODULE_4__/* .Stack */ .K(items.water_mineralized, 20)], 1, factory_groups.hydro_plant)]);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (data);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await data_p);
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } }, 1);
 
 /***/ }),
 

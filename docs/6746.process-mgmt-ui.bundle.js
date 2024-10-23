@@ -9,6 +9,9 @@
 /* harmony export */ });
 /* harmony import */ var _structures_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6968);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -57,34 +60,66 @@ var Data = /*#__PURE__*/function () {
   }, {
     key: "add_items",
     value: function add_items(items) {
-      var _this = this;
-      items.forEach(function (i) {
-        return _this.add_item(i);
-      });
+      var _iterator = _createForOfIteratorHelper(items),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var i = _step.value;
+          this.add_item(i);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
     }
   }, {
     key: "add_factory_groups",
     value: function add_factory_groups(factory_groups) {
-      var _this2 = this;
-      factory_groups.forEach(function (f) {
-        return _this2.add_factory_group(f);
-      });
+      var _iterator2 = _createForOfIteratorHelper(factory_groups),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var f = _step2.value;
+          this.add_factory_group(f);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
     }
   }, {
     key: "add_factories",
     value: function add_factories(factories) {
-      var _this3 = this;
-      factories.forEach(function (f) {
-        return _this3.add_factory(f);
-      });
+      var _iterator3 = _createForOfIteratorHelper(factories),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var f = _step3.value;
+          this.add_factory(f);
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
     }
   }, {
     key: "add_processes",
     value: function add_processes(processes) {
-      var _this4 = this;
-      processes.forEach(function (p) {
-        return _this4.add_process(p);
-      });
+      var _iterator4 = _createForOfIteratorHelper(processes),
+        _step4;
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var p = _step4.value;
+          this.add_process(p);
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
     }
   }]);
   return Data;
@@ -108,12 +143,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 
 
@@ -165,16 +205,40 @@ var _recipe_has_fluid_temperature = function _recipe_has_fluid_temperature(recip
   return i || p;
 };
 var _add_basic_recipe = function _add_basic_recipe(data, recipe) {
-  recipe.ingredients.forEach(function (ingredient) {
-    check_add([recipe, ingredient], function () {
-      return add_item(data, ingredient.name);
-    });
-  });
-  recipe.products.forEach(function (product) {
-    check_add([recipe, product], function () {
-      return add_item(data, product.name);
-    });
-  });
+  var _iterator = _createForOfIteratorHelper(recipe.ingredients),
+    _step;
+  try {
+    var _loop = function _loop() {
+      var ingredient = _step.value;
+      check_add([recipe, ingredient], function () {
+        return add_item(data, ingredient.name);
+      });
+    };
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  var _iterator2 = _createForOfIteratorHelper(recipe.products),
+    _step2;
+  try {
+    var _loop2 = function _loop2() {
+      var product = _step2.value;
+      check_add([recipe, product], function () {
+        return add_item(data, product.name);
+      });
+    };
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      _loop2();
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
   check_add([recipe, recipe.category], function () {
     if (!data.factory_groups[recipe.category]) {
       data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a(recipe.category));
@@ -194,27 +258,62 @@ var _add_temperature_recipe = function _add_temperature_recipe(data, recipe, tem
       data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a(recipe.category));
     }
   });
-  recipe.ingredients.forEach(function (ingredient) {
-    if (ingredient.minimum_temperature || ingredient.maximum_temperature) {
-      // pass; should already be added?
-    } else {
-      check_add([recipe, ingredient], function () {
-        return add_item(data, ingredient.name);
-      });
+  var _iterator3 = _createForOfIteratorHelper(recipe.ingredients),
+    _step3;
+  try {
+    var _loop3 = function _loop3() {
+      var ingredient = _step3.value;
+      if (ingredient.minimum_temperature || ingredient.maximum_temperature) {
+        // pass; should already be added?
+      } else {
+        check_add([recipe, ingredient], function () {
+          return add_item(data, ingredient.name);
+        });
+      }
+    };
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      _loop3();
     }
-  });
-  recipe.products.forEach(function (product) {
-    check_add([recipe, product], function () {
-      return add_item(data, product.name);
-    });
-  });
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+  var _iterator4 = _createForOfIteratorHelper(recipe.products),
+    _step4;
+  try {
+    var _loop4 = function _loop4() {
+      var product = _step4.value;
+      check_add([recipe, product], function () {
+        return add_item(data, product.name);
+      });
+    };
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      _loop4();
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
   var ingredient_variations = cross_product_ingredients(data, recipe.ingredients, temperature_based_items);
   check_add(recipe, function () {
-    ingredient_variations.forEach(function (variation, idx) {
-      data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A(recipe.name + '--' + idx, variation, recipe.products.map(function (i) {
-        return convert_ingredient(data, i);
-      }), recipe.energy, data.factory_groups[recipe.category]));
-    });
+    var _iterator5 = _createForOfIteratorHelper(ingredient_variations.entries()),
+      _step5;
+    try {
+      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+        var _step5$value = _slicedToArray(_step5.value, 2),
+          idx = _step5$value[0],
+          variation = _step5$value[1];
+        data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_3__/* .Process */ .A(recipe.name + '--' + idx, variation, recipe.products.map(function (i) {
+          return convert_ingredient(data, i);
+        }), recipe.energy, data.factory_groups[recipe.category]));
+      }
+    } catch (err) {
+      _iterator5.e(err);
+    } finally {
+      _iterator5.f();
+    }
   });
 };
 var compute_permutations = function compute_permutations(input, out) {
@@ -222,11 +321,29 @@ var compute_permutations = function compute_permutations(input, out) {
   var entry = input.shift();
   if (out) {
     var r = [];
-    out.forEach(function (o) {
-      entry.forEach(function (e) {
-        r.push(o.concat(e));
-      });
-    });
+    var _iterator6 = _createForOfIteratorHelper(out),
+      _step6;
+    try {
+      for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+        var o = _step6.value;
+        var _iterator7 = _createForOfIteratorHelper(entry),
+          _step7;
+        try {
+          for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+            var e = _step7.value;
+            r.push(o.concat(e));
+          }
+        } catch (err) {
+          _iterator7.e(err);
+        } finally {
+          _iterator7.f();
+        }
+      }
+    } catch (err) {
+      _iterator6.e(err);
+    } finally {
+      _iterator6.f();
+    }
     return compute_permutations(input, r);
   } else {
     return compute_permutations(input, entry.map(function (e) {
@@ -261,23 +378,28 @@ var cross_product_ingredients = function cross_product_ingredients(data, ingredi
   return permutations;
 };
 var add_factory_groups = function add_factory_groups(data, group) {
-  Object.values(group).forEach(function (factory) {
+  var _loop5 = function _loop5() {
+    var factory = _Object$values[_i2];
     check_add([factory, factory.crafting_categories], function () {
-      Object.keys(factory.crafting_categories).forEach(function (category_name) {
+      for (var _i3 = 0, _Object$keys = Object.keys(factory.crafting_categories); _i3 < _Object$keys.length; _i3++) {
+        var category_name = _Object$keys[_i3];
         if (!data.factory_groups[category_name]) {
           data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .FactoryGroup */ .a(category_name));
         }
-      });
+      }
     });
     check_add(factory, function () {
       data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_2__/* .Factory */ .F(factory.name, factory.name, Object.keys(factory.crafting_categories).map(function (c) {
         return data.factory_groups[c];
       }), 1 / factory.crafting_speed));
     });
-  });
+  };
+  for (var _i2 = 0, _Object$values = Object.values(group); _i2 < _Object$values.length; _i2++) {
+    _loop5();
+  }
 };
 var _add_temperature_based_item = function _add_temperature_based_item(temperature_based_items, product, item) {
-  if (!!!temperature_based_items[product.name]) {
+  if (!temperature_based_items[product.name]) {
     temperature_based_items[product.name] = {};
   }
   temperature_based_items[product.name][product.temperature] = item;
@@ -290,7 +412,7 @@ var _add_temperature_based_item = function _add_temperature_based_item(temperatu
 //     })
 //     .then(m => m.default)
 // };
-function create_data(_x, _x2, _x3) {
+function create_data(_x2, _x3, _x4) {
   return _create_data.apply(this, arguments);
 }
 function _create_data() {
@@ -307,65 +429,102 @@ function _create_data() {
             // enumerate all possible temperatures for fluids.
             // create temperature based items for each.
 
-            Object.values(recipe_raw).forEach(function (recipe) {
+            for (var _i4 = 0, _Object$values2 = Object.values(recipe_raw); _i4 < _Object$values2.length; _i4++) {
+              var recipe = _Object$values2[_i4];
               if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
               if (!Array.isArray(recipe.products)) recipe.products = [];
-              recipe.products.forEach(function (product) {
-                if (product.temperature) {
-                  var temp = product.temperature;
-                  var item = check_add([recipe, product], function () {
-                    return add_item(data, product.name + '_' + temp, product.name + ' (' + temp + ')');
-                  });
-                  _add_temperature_based_item(temperature_based_items, product, item);
-                } else {
-                  check_add([recipe, product], function () {
-                    return add_item(data, product.name);
-                  });
+              var _iterator8 = _createForOfIteratorHelper(recipe.products),
+                _step8;
+              try {
+                var _loop6 = function _loop6() {
+                  var product = _step8.value;
+                  if (product.temperature) {
+                    var temp = product.temperature;
+                    var item = check_add([recipe, product], function () {
+                      return add_item(data, product.name + '_' + temp, product.name + ' (' + temp + ')');
+                    });
+                    _add_temperature_based_item(temperature_based_items, product, item);
+                  } else {
+                    check_add([recipe, product], function () {
+                      return add_item(data, product.name);
+                    });
+                  }
+                };
+                for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+                  _loop6();
                 }
-              });
-            });
+              } catch (err) {
+                _iterator8.e(err);
+              } finally {
+                _iterator8.f();
+              }
+            }
 
             // if a process has one of the temperature fluids as an input then create multiple variants
-
-            Object.values(recipe_raw).forEach(function (recipe) {
+            var _loop7 = function _loop7() {
+              var recipe = _Object$values3[_i5];
               check_add(recipe, function () {
                 if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
                 if (!Array.isArray(recipe.products)) recipe.products = [];
-                recipe.ingredients.forEach(function (i) {
-                  if (i.temperature) {
-                    i.minimum_temperature = i.temperature;
-                    i.maximum_temperature = i.temperature;
+                var _iterator9 = _createForOfIteratorHelper(recipe.ingredients),
+                  _step9;
+                try {
+                  var _loop8 = function _loop8() {
+                    var i = _step9.value;
+                    if (i.temperature) {
+                      i.minimum_temperature = i.temperature;
+                      i.maximum_temperature = i.temperature;
+                    }
+                    if (i.minimum_temperature > -1e207) {
+                      var temp = i.minimum_temperature;
+                      var item = check_add([recipe, i], function () {
+                        return add_item(data, i.name + '_' + temp, i.name + ' (' + temp + ')');
+                      });
+                      _add_temperature_based_item(temperature_based_items, i, item);
+                    }
+                    if (i.maximum_temperature < 1e207) {
+                      var _temp = i.maximum_temperature;
+                      var _item = check_add([recipe, i], function () {
+                        return add_item(data, i.name + '_' + _temp, i.name + ' (' + _temp + ')');
+                      });
+                      _add_temperature_based_item(temperature_based_items, i, _item);
+                    }
+                  };
+                  for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+                    _loop8();
                   }
-                  if (i.minimum_temperature > -1e207) {
-                    var temp = i.minimum_temperature;
-                    var item = check_add([recipe, i], function () {
-                      return add_item(data, i.name + '_' + temp, i.name + ' (' + temp + ')');
-                    });
-                    _add_temperature_based_item(temperature_based_items, i, item);
-                  }
-                  if (i.maximum_temperature < 1e207) {
-                    var _temp = i.maximum_temperature;
-                    var _item = check_add([recipe, i], function () {
-                      return add_item(data, i.name + '_' + _temp, i.name + ' (' + _temp + ')');
-                    });
-                    _add_temperature_based_item(temperature_based_items, i, _item);
-                  }
-                });
+                } catch (err) {
+                  _iterator9.e(err);
+                } finally {
+                  _iterator9.f();
+                }
                 if (_recipe_has_fluid_temperature(recipe)) {
                   _add_temperature_recipe(data, recipe, temperature_based_items);
                 } else {
                   _add_basic_recipe(data, recipe);
                 }
               });
-            });
+            };
+            for (var _i5 = 0, _Object$values3 = Object.values(recipe_raw); _i5 < _Object$values3.length; _i5++) {
+              _loop7();
+            }
             return data;
           });
           groups_p = ['assembling-machine.json', 'furnace.json', 'rocket-silo.json'].map(json_promise_cb);
           return _context.abrupt("return", Promise.all([data_p].concat(_toConsumableArray(groups_p))).then(function (arr) {
             var data = arr.shift();
-            arr.forEach(function (g) {
-              add_factory_groups(data, g);
-            });
+            var _iterator10 = _createForOfIteratorHelper(arr),
+              _step10;
+            try {
+              for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                var g = _step10.value;
+                add_factory_groups(data, g);
+              }
+            } catch (err) {
+              _iterator10.e(err);
+            } finally {
+              _iterator10.f();
+            }
             return data;
           }));
         case 3:
