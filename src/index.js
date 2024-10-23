@@ -605,6 +605,7 @@ let data_sets = [
     new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles['a'], modifier_styles['a']),
     new DataSet('factorio-1.1.94-k2se', 'Factorio K2+SE (1.1.94)', modifier_styles['a'], modifier_styles['a']),
     new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles['a'], modifier_styles['a']),
+    new DataSet('factorio-2.0.7-sa-1.0.0', 'Factorio Space Age (2.0.7-1.0.0)', modifier_styles['a'], modifier_styles['a']),
     new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles['r'], modifier_styles['r']),
     new DataSet('satisfactory', "Satisfactory", modifier_styles['p'], modifier_styles['p']),
     new DataSet('vt', "Voxel Tycoon", modifier_styles['r'], modifier_styles['r']),
