@@ -19194,7 +19194,9 @@ var RateGraphRenderer = /*#__PURE__*/function (_ProcessChainVisitor) {
     value: function visit_process(process, chain) {
       var process_count = chain.process_counts[process.id];
       var inputs = process.inputs.map(function (input, index) {
-        return '<i' + index + '> ' + fix_identifier(input.item.name) + ' (' + Math.round(input.quantity * process_count * 100) / 100 + ')';
+        return '<i' + index + '> ' + input.item.name +
+        //fix_identifier(input.item.name) +
+        ' (' + Math.round(input.quantity * process_count * 100) / 100 + ')';
       }).join(' | ');
       var outputs = process.outputs.map(function (output, index) {
         return '<o' + index + '> ' + fix_identifier(output.item.name) + ' (' + Math.round(output.quantity * process_count * 100) / 100 + ')';

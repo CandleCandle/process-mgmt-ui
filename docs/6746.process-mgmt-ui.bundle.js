@@ -191,16 +191,17 @@ var get_ingredient_amount = function get_ingredient_amount(ingredient) {
 var convert_ingredient = function convert_ingredient(data, ingredient) {
   var amount = get_ingredient_amount(ingredient);
   if (ingredient.temperature) {
-    return new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items[ingredient.name + '_' + ingredient.temperature], amount);
+    return new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items[_item_id_name_from_data(ingredient.name, ingredient.temperature).id], amount);
   }
   return new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(data.items[ingredient.name], amount);
 };
-var _recipe_has_fluid_temperature = function _recipe_has_fluid_temperature(recipe) {
+var _recipe_has_fluid_temperature = function _recipe_has_fluid_temperature(recipe, temperature_based_items) {
+  // [base name][temperature] => Item
   var i = recipe.ingredients.some(function (ingredient) {
-    return  false || ingredient.minimum_temperature || ingredient.maximum_temperature || ingredient.temperature;
+    return  false || ingredient.minimum_temperature || ingredient.maximum_temperature || ingredient.temperature || temperature_based_items[ingredient.name];
   });
   var p = recipe.products.some(function (ingredient) {
-    return  false || ingredient.minimum_temperature || ingredient.maximum_temperature || ingredient.temperature;
+    return  false || ingredient.minimum_temperature || ingredient.maximum_temperature || ingredient.temperature || temperature_based_items[ingredient.name];
   });
   return i || p;
 };
@@ -296,6 +297,7 @@ var _add_temperature_recipe = function _add_temperature_recipe(data, recipe, tem
   } finally {
     _iterator4.f();
   }
+  console.log('recipe', recipe.name);
   var ingredient_variations = cross_product_ingredients(data, recipe.ingredients, temperature_based_items);
   check_add(recipe, function () {
     var _iterator5 = _createForOfIteratorHelper(ingredient_variations.entries()),
@@ -353,14 +355,21 @@ var compute_permutations = function compute_permutations(input, out) {
 };
 var cross_product_ingredients = function cross_product_ingredients(data, ingredients, temperature_based_items) {
   var ingredients_with_temperature_lists = ingredients.map(function (i) {
-    if (i.minimum_temperature || i.maximum_temperature) {
+    console.log('ingredient', i.name, i.minimum_temperature, i.maximum_temperature, i.temperature, temperature_based_items[i.name]);
+    if (i.minimum_temperature || i.maximum_temperature || temperature_based_items[i.name]) {
       var stack_in_range = Object.keys(temperature_based_items[i.name]).filter(function (t) {
-        return i.minimum_temperature <= t && t <= i.maximum_temperature;
+        return (
+          // temperature of this item is within the range of the ingredient restrictions
+          i.minimum_temperature <= t && t <= i.maximum_temperature
+          // no temperature restrictions specified for the ingredient
+          || !i.minimum_temperature && !i.maximum_temperature && !i.temperature
+        );
       }).map(function (t) {
         return temperature_based_items[i.name][t];
       }).map(function (item) {
         return new _stack_js__WEBPACK_IMPORTED_MODULE_1__/* .Stack */ .K(item, get_ingredient_amount(i));
       });
+      console.log('  ', stack_in_range);
       return stack_in_range;
     } else {
       return [convert_ingredient(data, i)];
@@ -404,14 +413,83 @@ var _add_temperature_based_item = function _add_temperature_based_item(temperatu
   }
   temperature_based_items[product.name][product.temperature] = item;
 };
-
-// const _import_file = function(name) {
-//     return import('./recipe-lister/' + name, {assert: { type: 'json'}})
-//         .catch(e => {
-//         console.log('failed to read recipe.json:', e);
-//     })
-//     .then(m => m.default)
-// };
+function _item_id_name_from_data(name, temp) {
+  var t;
+  if (temp < 0) {
+    t = '_' + Math.abs(temp);
+  } else {
+    t = temp;
+  }
+  return {
+    id: name + '_' + t,
+    name: name + ' (' + temp + ')'
+  };
+}
+function _add_temperature_items(data, recipe_raw) {
+  var temperature_based_items = {}; // [base name][temperature] => Item
+  for (var _i4 = 0, _Object$values2 = Object.values(recipe_raw); _i4 < _Object$values2.length; _i4++) {
+    var recipe = _Object$values2[_i4];
+    if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
+    if (!Array.isArray(recipe.products)) recipe.products = [];
+    var _iterator8 = _createForOfIteratorHelper(recipe.products),
+      _step8;
+    try {
+      var _loop6 = function _loop6() {
+        var product = _step8.value;
+        if (product.temperature) {
+          var item = check_add([recipe, product], function () {
+            return add_item(data, _item_id_name_from_data(product.name, product.temperature).id, _item_id_name_from_data(product.name, product.temperature).name);
+          });
+          _add_temperature_based_item(temperature_based_items, product, item);
+        } else {
+          check_add([recipe, product], function () {
+            return add_item(data, product.name);
+          });
+        }
+      };
+      for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+        _loop6();
+      }
+    } catch (err) {
+      _iterator8.e(err);
+    } finally {
+      _iterator8.f();
+    }
+    var _iterator9 = _createForOfIteratorHelper(recipe.ingredients),
+      _step9;
+    try {
+      var _loop7 = function _loop7() {
+        var i = _step9.value;
+        if (i.temperature) {
+          i.minimum_temperature = i.temperature;
+          i.maximum_temperature = i.temperature;
+        }
+        if (i.minimum_temperature > -1e207) {
+          var temp = i.minimum_temperature;
+          var item = check_add([recipe, i], function () {
+            return add_item(data, _item_id_name_from_data(i.name, temp).id, _item_id_name_from_data(i.name, temp).name);
+          });
+          _add_temperature_based_item(temperature_based_items, i, item);
+        }
+        if (i.maximum_temperature < 1e207) {
+          var _temp = i.maximum_temperature;
+          var _item = check_add([recipe, i], function () {
+            return add_item(data, _item_id_name_from_data(i.name, _temp).id, _item_id_name_from_data(i.name, _temp).name);
+          });
+          _add_temperature_based_item(temperature_based_items, i, _item);
+        }
+      };
+      for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+        _loop7();
+      }
+    } catch (err) {
+      _iterator9.e(err);
+    } finally {
+      _iterator9.f();
+    }
+  }
+  return temperature_based_items;
+}
 function create_data(_x2, _x3, _x4) {
   return _create_data.apply(this, arguments);
 }
@@ -421,84 +499,20 @@ function _create_data() {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          // if (!!!json_promise_cb) json_promise_cb = _import_file;
           data_p = json_promise_cb('recipe.json').then(function (recipe_raw) {
             var data = new _data_js__WEBPACK_IMPORTED_MODULE_4__/* .Data */ .V(game, version);
-            var temperature_based_items = {}; // [base name][temperature] => Item
 
             // enumerate all possible temperatures for fluids.
             // create temperature based items for each.
 
-            for (var _i4 = 0, _Object$values2 = Object.values(recipe_raw); _i4 < _Object$values2.length; _i4++) {
-              var recipe = _Object$values2[_i4];
-              if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
-              if (!Array.isArray(recipe.products)) recipe.products = [];
-              var _iterator8 = _createForOfIteratorHelper(recipe.products),
-                _step8;
-              try {
-                var _loop6 = function _loop6() {
-                  var product = _step8.value;
-                  if (product.temperature) {
-                    var temp = product.temperature;
-                    var item = check_add([recipe, product], function () {
-                      return add_item(data, product.name + '_' + temp, product.name + ' (' + temp + ')');
-                    });
-                    _add_temperature_based_item(temperature_based_items, product, item);
-                  } else {
-                    check_add([recipe, product], function () {
-                      return add_item(data, product.name);
-                    });
-                  }
-                };
-                for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-                  _loop6();
-                }
-              } catch (err) {
-                _iterator8.e(err);
-              } finally {
-                _iterator8.f();
-              }
-            }
+            // [base name][temperature] => Item
+            var temperature_based_items = _add_temperature_items(data, recipe_raw);
 
             // if a process has one of the temperature fluids as an input then create multiple variants
-            var _loop7 = function _loop7() {
+            var _loop8 = function _loop8() {
               var recipe = _Object$values3[_i5];
               check_add(recipe, function () {
-                if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
-                if (!Array.isArray(recipe.products)) recipe.products = [];
-                var _iterator9 = _createForOfIteratorHelper(recipe.ingredients),
-                  _step9;
-                try {
-                  var _loop8 = function _loop8() {
-                    var i = _step9.value;
-                    if (i.temperature) {
-                      i.minimum_temperature = i.temperature;
-                      i.maximum_temperature = i.temperature;
-                    }
-                    if (i.minimum_temperature > -1e207) {
-                      var temp = i.minimum_temperature;
-                      var item = check_add([recipe, i], function () {
-                        return add_item(data, i.name + '_' + temp, i.name + ' (' + temp + ')');
-                      });
-                      _add_temperature_based_item(temperature_based_items, i, item);
-                    }
-                    if (i.maximum_temperature < 1e207) {
-                      var _temp = i.maximum_temperature;
-                      var _item = check_add([recipe, i], function () {
-                        return add_item(data, i.name + '_' + _temp, i.name + ' (' + _temp + ')');
-                      });
-                      _add_temperature_based_item(temperature_based_items, i, _item);
-                    }
-                  };
-                  for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-                    _loop8();
-                  }
-                } catch (err) {
-                  _iterator9.e(err);
-                } finally {
-                  _iterator9.f();
-                }
-                if (_recipe_has_fluid_temperature(recipe)) {
+                if (_recipe_has_fluid_temperature(recipe, temperature_based_items)) {
                   _add_temperature_recipe(data, recipe, temperature_based_items);
                 } else {
                   _add_basic_recipe(data, recipe);
@@ -506,7 +520,7 @@ function _create_data() {
               });
             };
             for (var _i5 = 0, _Object$values3 = Object.values(recipe_raw); _i5 < _Object$values3.length; _i5++) {
-              _loop7();
+              _loop8();
             }
             return data;
           });
