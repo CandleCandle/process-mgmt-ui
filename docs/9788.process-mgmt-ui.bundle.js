@@ -272,7 +272,7 @@ var Item = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 6397:
+/***/ 8704:
 /***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -282,7 +282,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _data_basic_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8269);
 
-var data_p = (0,_data_basic_js__WEBPACK_IMPORTED_MODULE_0__/* .data_from_standard_json */ .v)('Voxel Tycoon', '0.0.1', __webpack_require__.e(/* import() */ 4936).then(__webpack_require__.t.bind(__webpack_require__, 4936, 17)));
+var data_p = (0,_data_basic_js__WEBPACK_IMPORTED_MODULE_0__/* .data_from_standard_json */ .v)('Satisfactory', '0.0.1', __webpack_require__.e(/* import() */ 9918).then(__webpack_require__.t.bind(__webpack_require__, 9918, 17)));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await data_p);
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);

@@ -1,88 +1,88 @@
 (self["webpackChunkprocess_mgmt_ui"] = self["webpackChunkprocess_mgmt_ui"] || []).push([[2416],{
 
-/***/ 4843:
+/***/ 8260:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
 	"./active_mods.json": [
-		7796,
-		7796
+		85,
+		85
 	],
 	"./assembling-machine.json": [
-		3030,
-		3030
+		2955,
+		2955
 	],
 	"./boiler.json": [
-		9161,
-		9161
+		2029,
+		2029
 	],
 	"./equipment-grid.json": [
-		2365,
-		2365
+		4958,
+		4958
 	],
 	"./equipment.json": [
-		6108,
-		6108
+		4040,
+		4040
 	],
 	"./fluid.json": [
-		5943,
-		5943
+		9256,
+		9256
 	],
 	"./furnace.json": [
-		9509,
-		9509
+		7716,
+		7716
 	],
 	"./generator.json": [
-		3698,
-		3698
+		7783,
+		7783
 	],
 	"./inserter.json": [
-		796,
-		796
+		2789,
+		2789
 	],
 	"./item.json": [
-		7108,
-		7108
+		3771,
+		3771
 	],
 	"./lab.json": [
-		1729,
-		1729
+		4167,
+		4167
 	],
 	"./mining-drill.json": [
-		1319,
-		1319
+		8383,
+		8383
 	],
 	"./projectile.json": [
-		1464,
-		1464
+		8588,
+		8588
 	],
 	"./reactor.json": [
-		7321,
-		7321
+		3373,
+		3373
 	],
 	"./recipe.json": [
-		8491,
-		8491
+		2576,
+		2576
 	],
 	"./resource.json": [
-		5104,
-		5104
+		7257,
+		7257
 	],
 	"./rocket-silo.json": [
-		7258,
-		7258
+		7386,
+		7386
 	],
 	"./solar-panel.json": [
-		6059,
-		6059
+		9795,
+		9795
 	],
 	"./technology.json": [
-		1001,
-		1001
+		6272,
+		6272
 	],
 	"./transport-belt.json": [
-		7314,
-		7314
+		7207,
+		7207
 	]
 };
 function webpackAsyncContext(req) {
@@ -100,12 +100,12 @@ function webpackAsyncContext(req) {
 	});
 }
 webpackAsyncContext.keys = () => (Object.keys(map));
-webpackAsyncContext.id = 4843;
+webpackAsyncContext.id = 8260;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 6136:
+/***/ 5498:
 /***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -117,13 +117,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _factorio_recipe_lister_data_base_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6746);
 
 var _import_file = function _import_file(name) {
-  return __webpack_require__(4843)("./" + name)["catch"](function (e) {
+  return __webpack_require__(8260)("./" + name)["catch"](function (e) {
     console.log('failed to read recipe.json:', e);
   }).then(function (m) {
     return m["default"];
   });
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await (0,_factorio_recipe_lister_data_base_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)('factorio-2.0.7-sa-1.0.0', '1.0.0', _import_file));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (await (0,_factorio_recipe_lister_data_base_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)('factorio-2.0.66-sa-2.0.66', '1.0.0', _import_file));
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 

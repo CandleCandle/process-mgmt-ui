@@ -128,7 +128,7 @@ var Data = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 4241:
+/***/ 5410:
 /***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -144,12 +144,12 @@ __webpack_require__.r(__webpack_exports__);
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
 
 
 
+var raw = require('./exported-data.json');
 var fix_identifier = function fix_identifier(id) {
   return id.replace(/-/g, '_');
 };
@@ -161,7 +161,7 @@ var check_add = function check_add(item, fn) {
     throw error;
   }
 };
-var convert_ingredient = function convert_ingredient(data, ingredient, recipe) {
+var convert_ingredient = function convert_ingredient(ingredient, recipe) {
   var ingredient_name = fix_identifier(ingredient.name);
   var amount = ingredient.amount;
   var probability = ingredient.probability;
@@ -175,69 +175,39 @@ var convert_ingredient = function convert_ingredient(data, ingredient, recipe) {
     return new _stack_js__WEBPACK_IMPORTED_MODULE_0__/* .Stack */ .K(data.items[ingredient_name], amount);
   });
 };
-var data_p = __webpack_require__.e(/* import() */ 682).then(__webpack_require__.t.bind(__webpack_require__, 682, 17)).then(function (module) {
+var data_p = __webpack_require__.e(/* import() */ 1628).then(__webpack_require__.t.bind(__webpack_require__, 1628, 17)).then(function (module) {
   return module["default"];
 }).then(function (raw) {
-  var data = new _data_js__WEBPACK_IMPORTED_MODULE_1__/* .Data */ .V('factorio-ab-1.1.38', '0.0.1');
-  var _loop = function _loop() {
-    var recipe = _Object$values[_i];
-    if (!recipe.name) return "continue"; // ignore '{}'
-    if (recipe.normal) {
-      recipe.ingredients = recipe.normal.ingredients;
-      recipe.results = recipe.normal.results;
-      recipe.result = recipe.normal.result;
-      recipe.energy_required = recipe.normal.energy_required;
-      recipe.result_count = recipe.normal.result_count;
-    }
-    if (recipe.result) {
-      var result_count = 1;
-      if (recipe.result_count) {
-        result_count = recipe.result_count;
-      }
-      recipe.results = [{
-        type: 'item',
-        name: recipe.result,
-        amount: result_count
-      }];
-    }
-    if ('undefined' === typeof recipe.category) {
-      //console.warn("missing category for ", recipe.name);
-      recipe.category = 'crafting';
-    }
-    if ('undefined' === typeof recipe.energy_required) {
-      //console.warn("missing energy_required for ", recipe.name);
-      recipe.energy_required = 1;
-    }
-    if (_typeof(recipe.ingredients) === 'object' && Object.entries(recipe.ingredients).length === 0) {
-      recipe.ingredients = [];
-    }
-    if (_typeof(recipe.results) === 'object' && Object.entries(recipe.results).length === 0) {
-      recipe.results = [];
-    }
-    check_add(recipe, function () {
-      var name = fix_identifier(recipe.name);
-      var _iterator = _createForOfIteratorHelper(recipe.ingredients),
-        _step;
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var ing = _step.value;
-          var ing_name = fix_identifier(ing.name);
-          if (!data.items[ing_name]) {
-            data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
+  var data = new _data_js__WEBPACK_IMPORTED_MODULE_1__/* .Data */ .V('factorio-ab-01', '0.0.1');
+  var _iterator = _createForOfIteratorHelper(raw.recipes),
+    _step;
+  try {
+    var _loop = function _loop() {
+      var recipe = _step.value;
+      if (!recipe.name) return "continue"; // ignore '{}'
+      check_add(recipe, function () {
+        var name = fix_identifier(recipe.name);
+        var _iterator3 = _createForOfIteratorHelper(recipe.ingredients),
+          _step3;
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var ing = _step3.value;
+            var ing_name = fix_identifier(ing.name);
+            if (!data.items[ing_name]) {
+              data.add_item(new _item_js__WEBPACK_IMPORTED_MODULE_2__/* .Item */ .c(ing_name, ing_name));
+            }
           }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
         }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-    });
-    check_add(recipe, function () {
-      var _iterator2 = _createForOfIteratorHelper(recipe.results),
-        _step2;
+      });
+      var _iterator4 = _createForOfIteratorHelper(recipe.products),
+        _step4;
       try {
         var _loop2 = function _loop2() {
-          var ing = _step2.value;
+          var ing = _step4.value;
           var ing_name = fix_identifier(ing.name);
           if (!data.items[ing_name]) {
             check_add(recipe, function () {
@@ -245,82 +215,76 @@ var data_p = __webpack_require__.e(/* import() */ 682).then(__webpack_require__.
             });
           }
         };
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
           _loop2();
         }
       } catch (err) {
-        _iterator2.e(err);
+        _iterator4.e(err);
       } finally {
-        _iterator2.f();
+        _iterator4.f();
       }
-    });
-    var inputs = recipe.ingredients.map(function (ing) {
-      return convert_ingredient(data, ing, recipe);
-    });
-    var outputs = recipe.results.map(function (ing) {
-      return convert_ingredient(data, ing, recipe);
-    }).reduce(function (acc, cur) {
-      // collect outputs of processes that output the same type multiple times.
-      if (acc[cur.item.id]) {
-        acc[cur.item.id] = acc[cur.item.id].add(cur);
-      } else {
-        acc[cur.item.id] = cur;
-      }
-      return acc;
-    }, {});
-    outputs = Object.values(outputs);
-    var category = fix_identifier(recipe.category);
-    if (!data.factory_groups[category]) {
-      check_add(recipe, function () {
-        return data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category));
+      var inputs = recipe.ingredients.map(function (ing) {
+        return convert_ingredient(ing, recipe);
       });
+      var outputs = recipe.products.map(function (ing) {
+        return convert_ingredient(ing, recipe);
+      }).reduce(function (acc, cur) {
+        // collect outputs of processes that output the same type multiple times.
+        if (acc[cur.item.id]) {
+          acc[cur.item.id] = acc[cur.item.id].add(cur);
+        } else {
+          acc[cur.item.id] = cur;
+        }
+        return acc;
+      }, {});
+      outputs = Object.values(outputs);
+      var category = fix_identifier(recipe.category);
+      if (!data.factory_groups[category]) {
+        check_add(recipe, function () {
+          return data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category));
+        });
+      }
+      data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_4__/* .Process */ .A(fix_identifier(recipe.name), inputs, outputs, recipe.energy === 0 ? 0.1 : recipe.energy, data.factory_groups[category]));
+    };
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var _ret = _loop();
+      if (_ret === "continue") continue;
     }
-    check_add(recipe, function () {
-      data.add_process(new _process_js__WEBPACK_IMPORTED_MODULE_4__/* .Process */ .A(fix_identifier(recipe.name), inputs, outputs, recipe.energy_required === 0 ? 0.1 : recipe.energy_required, data.factory_groups[category]));
-    });
-  };
-  for (var _i = 0, _Object$values = Object.values(raw.recipe); _i < _Object$values.length; _i++) {
-    var _ret = _loop();
-    if (_ret === "continue") continue;
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
   }
-  var _iterator3 = _createForOfIteratorHelper(Object.values(raw['assembling-machine']).concat(Object.values(raw['furnace']))),
-    _step3;
+  var _iterator2 = _createForOfIteratorHelper(raw.craftingMachines),
+    _step2;
   try {
     var _loop3 = function _loop3() {
-      var machine = _step3.value;
+      var machine = _step2.value;
       if (!machine.name) return "continue"; // ignore '{}'
       check_add(machine, function () {
-        var _iterator4 = _createForOfIteratorHelper(machine.crafting_categories),
-          _step4;
-        try {
-          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-            var cat = _step4.value;
-            var category_name = fix_identifier(cat);
-            if (!data.factory_groups[category_name]) {
-              data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category_name));
-            }
+        for (var _i = 0, _Object$keys = Object.keys(machine.categories); _i < _Object$keys.length; _i++) {
+          var cat = _Object$keys[_i];
+          var category_name = fix_identifier(cat);
+          if (!data.factory_groups[category_name]) {
+            data.add_factory_group(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .FactoryGroup */ .a(category_name));
           }
-        } catch (err) {
-          _iterator4.e(err);
-        } finally {
-          _iterator4.f();
         }
         var machine_name = fix_identifier(machine.name);
-        data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .Factory */ .F(machine_name, machine_name, machine.crafting_categories.map(function (cat) {
+        data.add_factory(new _factory_js__WEBPACK_IMPORTED_MODULE_3__/* .Factory */ .F(machine_name, machine_name, Object.keys(machine.categories).map(function (cat) {
           return fix_identifier(cat);
         }).map(function (cat) {
           return data.factory_groups[cat];
-        }), 1 / machine.crafting_speed));
+        }), 1 / machine.craftingSpeed));
       });
     };
-    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
       var _ret2 = _loop3();
       if (_ret2 === "continue") continue;
     }
   } catch (err) {
-    _iterator3.e(err);
+    _iterator2.e(err);
   } finally {
-    _iterator3.f();
+    _iterator2.f();
   }
   return data;
 });

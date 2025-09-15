@@ -19,50 +19,55 @@ var map = {
 		6746,
 		5312
 	],
-	"./factorio-2.0.7-sa-1.0.0/data.js": [
-		6136,
+	"./factorio-2.0.66-sa-2.0.66/data.js": [
+		5498,
 		6746,
 		2416
 	],
+	"./factorio-2.0.7-sa-1.0.0/data.js": [
+		6136,
+		6746,
+		2351
+	],
 	"./factorio-ab-01/data.js": [
 		5410,
-		2351
+		7876
 	],
 	"./factorio-ab-1.1.38/data.js": [
 		4241,
-		7876
+		7819
 	],
 	"./factorio-ab/data.js": [
 		3968,
-		7819
+		7028
 	],
 	"./factorio-ff-1.1.76/data.js": [
 		2057,
-		7028
+		1422
 	],
 	"./factorio-ff-1.1.94/data.js": [
 		9656,
-		1422
+		4532
 	],
 	"./factorio-py-1.1.53/data.js": [
 		5359,
-		4532
+		9688
 	],
 	"./for-the-crown-3.8.3/data.js": [
 		5386,
-		9688
+		3402
 	],
 	"./plan-b-terraform/data.js": [
 		1290,
-		3402
+		4208
 	],
 	"./satisfactory/data.js": [
 		8704,
-		4208
+		9788
 	],
 	"./vt/data.js": [
 		6397,
-		9788
+		3087
 	]
 };
 function webpackAsyncContext(req) {
@@ -20391,7 +20396,7 @@ var DataSet = /*#__PURE__*/src_createClass(function DataSet(id, name, duration_m
   this.duration_style = duration_modifier_style;
   this.output_style = output_modifier_style;
 });
-var data_sets = [new DataSet('for-the-crown-3.8.3', 'For The Crown (3.8.3)', modifier_styles.r, modifier_styles.r), new DataSet('dsp', 'DSP', modifier_styles.r, modifier_styles.r), new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.94-k2se', 'Factorio K2+SE (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-2.0.7-sa-1.0.0', 'Factorio Space Age (2.0.7-1.0.0)', modifier_styles.a, modifier_styles.a), new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles.r, modifier_styles.r), new DataSet('satisfactory', "Satisfactory", modifier_styles.p, modifier_styles.p), new DataSet('vt', "Voxel Tycoon", modifier_styles.r, modifier_styles.r)].reduce(function (p, d) {
+var data_sets = [new DataSet('for-the-crown-3.8.3', 'For The Crown (3.8.3)', modifier_styles.r, modifier_styles.r), new DataSet('dsp', 'DSP', modifier_styles.r, modifier_styles.r), new DataSet('factorio-ab-1.1.38', 'Factorio AB (1.1.38)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-py-1.1.53', 'Factorio PY (1.1.53)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.76', 'Factorio FF (1.1.76)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-ff-1.1.94', 'Factorio FF (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.94-k2se', 'Factorio K2+SE (1.1.94)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-1.1.104-very-bz-0.5.1', 'Factorio Very BZ (0.5.1)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-2.0.7-sa-1.0.0', 'Factorio Space Age (2.0.7-1.0.0)', modifier_styles.a, modifier_styles.a), new DataSet('factorio-2.0.66-sa-2.0.66', 'Factorio Space Age (2.0.66-2.0.66)', modifier_styles.a, modifier_styles.a), new DataSet('plan-b-terraform', 'Plan B, Terraform', modifier_styles.r, modifier_styles.r), new DataSet('satisfactory', "Satisfactory", modifier_styles.p, modifier_styles.p), new DataSet('vt', "Voxel Tycoon", modifier_styles.r, modifier_styles.r)].reduce(function (p, d) {
   p[d.id] = d;
   return p;
 }, {});
